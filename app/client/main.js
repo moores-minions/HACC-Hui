@@ -13,3 +13,5 @@ import '../imports/api/team';
 import '../imports/api/tool';
 import '../imports/api/user';
 import '../imports/api/suggestions';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
