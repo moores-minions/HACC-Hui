@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Icon, Image } from 'semantic-ui-react';
+// import { Col, Container, Row  } from 'react-bootstrap';
 
 /**
  * A simple static component to render some text for the landing page.
@@ -162,5 +163,15 @@ class Landing extends React.Component {
     );
   }
 }
+
+// const Landing = () => (
+//   <Container id='landing-page' fluid>
+//     <Row>
+//       <Col>
+//
+//       </Col>
+//     </Row>
+//   </Container>
+// );
 
 export default Landing;
