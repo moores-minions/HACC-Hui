@@ -7,7 +7,7 @@ import * as Icon from 'react-bootstrap-icons';
  * @memberOf ui/pages
  */
 const Landing = () => (
-  <Container fluid className='LandingPage'>
+  <Container id='landing-page' fluid className='LandingPage'>
     <Row style={{ margin: 50 }}>
       <Col
         style={{
