@@ -9,7 +9,7 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
-import Signout from '../pages/Signout';
+import SignoutB from '../pages/SignoutB';
 import withAllSubscriptions from './AllSubscriptionsHOC';
 import { ROLE } from '../../api/role/Role';
 import AgePage from '../pages/participant/AgePage';
@@ -83,7 +83,7 @@ class App extends React.Component {
           <Route exact path={ROUTES.LANDING} component={Landing} />
           <Route path={ROUTES.SIGN_IN} component={Signin} />
           <Route path={ROUTES.HELP_PAGE} component={HelpPage} />
-          <ProtectedRoute path={ROUTES.SIGN_OUT} component={Signout} />
+          <ProtectedRoute path={ROUTES.SIGN_OUT} component={SignoutB} />
           <ProtectedRoute path={ROUTES.AGE_CONSENT} component={AgePage} />
           <ProtectedRoute path={ROUTES.PARTICIPATION} component={ParticipationForm} />
           <ProtectedRoute path={ROUTES.UNDERAGE_PARTICIPATION} component={UnderParticipationForm} />
