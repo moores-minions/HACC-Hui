@@ -457,10 +457,6 @@
           "description": "Programming Language"
         },
         {
-          "name": "Dart",
-          "description": "Programming Language"
-        },
-        {
           "name": "Django",
           "description": "Web Application Framework"
         },

@@ -18,6 +18,7 @@
     "react": "^16.14.0",
     "react-addons-pure-render-mixin": "^15.6.3",
     "react-bootstrap": "^2.8.0",
+    "react-bootstrap-icons": "^1.10.3",
     "react-dom": "^16.14.0",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
@@ -50,7 +51,7 @@
     "jsdoc": "^3.6.7",
     "puppeteer": "^15.5.0",
     "sinon": "^9.2.4",
-    "testcafe": "^1.16.1"
+    "testcafe": "^1.20.1"
   },
   "scripts": {
     "start": "cross-env METEOR_NO_RELEASE_CHECK=1 meteor --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json --port 3400",
@@ -59,6 +60,11 @@
     "test-integration": "cross-env METEOR_NO_RELEASE_CHECK=1 TEST_BROWSER_DRIVER=puppeteer MOCHA_TIMEOUT=150000 meteor test --exclude-archs web.browser.legacy,web.cordova --full-app --once --driver-package meteortesting:mocha --port 3500",
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json",
     "move-docs": "cp -r ../docs/ ../../docusaurus/static/jsdoc/",
-    "deploy": "cross-env DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy hacchui.meteorapp.com --settings ../config/settings.production.json"
+    "deploy": "cross-env DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy hacchui.meteorapp.com --settings ../config/settings.production.json",
+    "testcafe": "testcafe chrome tests/*.testcafe.js",
+    "testcafe-single": "testcafe chrome tests/*.testcafe.js -t \"Test that landing page shows up and all pages work\"",
+    "testcafe-ci": "testcafe chrome:headless tests/*.testcafe.js -q --app \"meteor npm run start\"",
+    "test-all": "meteor reset && meteor npm run lint && meteor npm run unimported && meteor npm run testcafe-ci",
+    "unimported": "npx unimported"
   }
 }
