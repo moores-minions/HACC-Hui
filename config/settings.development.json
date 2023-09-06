@@ -7,6 +7,9 @@
   "pollingInterval": 3,
   "databaseRestoreFileName": "database/2020-10-08-10-55-53.json",
   "defaultAccounts": [
+    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
+    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
+    { "email": "jenny@foo.com", "password": "changeme" }
   ],
   "defaultData": [
   ]
