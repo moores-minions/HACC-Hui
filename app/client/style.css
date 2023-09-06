@@ -45,3 +45,12 @@
 .LandingPage {
   font-family: "Lato";
 }
+
+label {
+  font-weight:bold;
+}
+
+.required label:after {
+  content:'*';
+  color:red;
+}
