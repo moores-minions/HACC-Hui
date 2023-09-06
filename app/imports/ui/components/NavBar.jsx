@@ -82,7 +82,8 @@ class NavBar extends React.Component {
           ) : ''}
           {isAdmin ? (
               [
-                <Menu.Item as={NavLink}
+                <Menu.Item id="configHACC"
+                           as={NavLink}
                            activeClassName="active"
                            exact
                            to={ROUTES.CONFIGURE_HACC}

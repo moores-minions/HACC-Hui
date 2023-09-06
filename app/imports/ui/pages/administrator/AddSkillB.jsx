@@ -36,16 +36,16 @@ const AddSkillB = () => {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return (
-    <Container className="py-3">
+    <Container className="py-3" id="add-skill-page">
       <Row className="justify-content-center">
         <Col xs={5}>
           <Col className="text-center"><h2>Add a skill</h2></Col>
           <AutoForm ref={ref => { fRef = ref; }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
-                <TextField name="name" />
-                <TextField name="description" />
-                <SubmitField value="Submit" />
+                <TextField name="name" id="name" />
+                <TextField name="description" id="description" />
+                <SubmitField value="Submit" id="add-skill-submit" />
                 <ErrorsField />
               </Card.Body>
             </Card>
