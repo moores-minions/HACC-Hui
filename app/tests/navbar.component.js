@@ -22,7 +22,7 @@ class NavBar {
   }
 
   async gotoConfigureHACC(testController) {
-    await testController.click('#configurePage');
+    await testController.click('#configHACC');
   }
 
   async gotoAddSkillPage(testController) {
