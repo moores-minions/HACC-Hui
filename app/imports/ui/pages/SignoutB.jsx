@@ -9,7 +9,7 @@ import { Col } from 'react-bootstrap';
 const SignoutB = () => {
   Meteor.logout();
   return (
-      <Col className ="text-center py-3"><h3><b>You are signed out.</b></h3></Col>
+      <Col id="signout-page" className ="text-center py-3"><h3><b>You are signed out.</b></h3></Col>
   );
 };
 

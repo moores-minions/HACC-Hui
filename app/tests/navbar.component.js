@@ -21,6 +21,14 @@ class NavBar {
     await testController.click('#help-page');
   }
 
+  async gotoConfigureHACC(testController) {
+    await testController.click('#configurePage');
+  }
+
+  async gotoAddSkillPage(testController) {
+    await testController.click('#add-skills-nav');
+  }
+
   async gotoDatabasePage(testController) {
     await testController.click('#databaseMenuItem');
   }
