@@ -58,7 +58,7 @@ class ManageHaccWidget extends React.Component {
   render() {
     // console.log(this.state);
     return (
-        <div style={{ paddingBottom: '50px' }}>
+        <div id="configureHACCPage" style={{ paddingBottom: '50px' }}>
           <Grid container centered>
             <Grid.Column>
               <div style={{
@@ -117,7 +117,7 @@ class ManageHaccWidget extends React.Component {
                   </Table.Body>
                 </Table>
                 <div align='center'>
-                  <Button style={{
+                  <Button id="addSkillButton" style={{
                     color: 'white', backgroundColor: '#DB2828',
                     margin: '2rem 0rem',
                   }}><Link to={ROUTES.ADD_SKILL} style={{ color: 'white' }}>Add Skill</Link></Button>

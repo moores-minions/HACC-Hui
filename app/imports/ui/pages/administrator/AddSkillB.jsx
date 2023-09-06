@@ -45,7 +45,7 @@ const AddSkillB = () => {
               <Card.Body>
                 <TextField name="name" id="name" />
                 <TextField name="description" id="description" />
-                <SubmitField value="Submit" id="add-skill-sub" />
+                <SubmitField value="Submit" id="add-skill-submit" />
                 <ErrorsField />
               </Card.Body>
             </Card>

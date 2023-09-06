@@ -9,13 +9,14 @@ class AddskillPage {
   /** Asserts that this page is currently displayed. */
   async isDisplayed(testController) {
     // This is first test to be run. Wait 10 seconds to avoid timeouts with GitHub Actions.
-    await testController.wait(10001).expect(this.pageSelector.exists).ok();
+    await testController.expect(this.pageSelector.exists).ok();
   }
 
-  async add_skill(testController, name, description) {
+  async addSkill(testController, name, description) {
+    await this.isDisplayed(testController);
     await testController.typeText('#name', name);
     await testController.typeText('#description', description);
-    await testController.click('#add-skill-sub');
+    await testController.click('#add-skill-submit');
   }
 }
 
