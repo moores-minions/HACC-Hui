@@ -1,6 +1,7 @@
 import { landingPage } from './landing.page';
 import { signinPage } from './signin.page';
 import { navBar } from './navbar.component';
+import { helpPage } from './help.page';
 
 /* global fixture:false, test:false */
 
@@ -20,4 +21,11 @@ test('Test that a user can sign in', async (testController) => {
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.logout(testController);
   // await signoutPage.isDisplayed(testController);
+});
+
+test('Test that a user can access the helppage', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoHelpPage(testController);
+  await helpPage.isDisplayed(testController);
 });

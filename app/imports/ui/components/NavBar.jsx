@@ -124,7 +124,8 @@ class NavBar extends React.Component {
                 //            key={ROUTES.SHOW_MINOR}>Show Minor</Menu.Item>,
               ]
           ) : ''}
-          <Menu.Item position="right"
+          <Menu.Item id="help-page"
+                     position="right"
                      as={NavLink}
                      activeClassName="active"
                      exact

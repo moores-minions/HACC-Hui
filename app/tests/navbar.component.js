@@ -17,8 +17,8 @@ class NavBar {
     await testController.click('#login-dropdown-sign-in');
   }
 
-  async gotoProfilesPage(testController) {
-    await testController.click('#profilesMenuItem');
+  async gotoHelpPage(testController) {
+    await testController.click('#help-page');
   }
 
   async gotoDatabasePage(testController) {
