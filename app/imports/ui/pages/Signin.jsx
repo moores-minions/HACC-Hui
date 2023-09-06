@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Alert, Modal } from 'react-bootstrap';
 import { Roles } from 'meteor/alanning:roles';
 import { ROLE } from '../../api/role/Role';
 import { Participants } from '../../api/user/ParticipantCollection';
@@ -69,34 +69,46 @@ class Signin extends React.Component {
     }
 
     return (
-      <Container>
-        <Row className="justify-content-md-center align-items-center vh-100">
+      <Container id="signin-page" fluid
+                 style={ { paddingLeft: 250, paddingRight: 250, paddingTop: 30, paddingBottom: 75 } }>
+        <Row className="justify-content-md-center align-items-center">
           <Col md={6}>
-            <h2 className="text-center">Login to your account</h2>
+            <h2 className="text-center" style={ { paddingBottom: 10 } }>
+              Login to your account
+            </h2>
             <Form onSubmit={this.submit}>
-              <Form.Group>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  id="signin-form-email"
-                  type="email"
-                  placeholder="E-mail address"
-                  name="email"
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  id="signin-form-password"
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
-              <Button id="signin-form-submit" variant="primary" type="submit">
-                Submit
-              </Button>
+              <div
+                className="modal show"
+                style={{ display: 'block', position: 'initial' }}
+              >
+                <Modal.Dialog size={'lg'}>
+                  <Modal.Body>
+                    <Form.Group>
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        type="email"
+                        placeholder="E-mail address"
+                        name="email"
+                        id="signin-form-email"
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        id="signin-form-password"
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                    <Button id="signin-form-submit" variant="primary" type="submit">
+                      Submit
+                    </Button>
+                  </Modal.Body>
+                </Modal.Dialog>
+              </div>
             </Form>
             {this.state.error && (
               <Alert variant="danger" className="mt-3">
