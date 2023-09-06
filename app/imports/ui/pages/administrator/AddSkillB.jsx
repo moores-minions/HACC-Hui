@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
-import { Meteor } from 'meteor/meteor';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
@@ -21,8 +20,9 @@ const AddSkillB = () => {
   // On submit, insert the data.
   const submit = (data, formRef) => {
     const { name, description } = data;
-    Skills.collection.insert(
-      { name, description },
+    const definitionData = { name, description };
+    const collectionName = Skills.getCollectionName();
+    defineMethod.call({ collectionName: collectionName, definitionData: definitionData },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -30,8 +30,7 @@ const AddSkillB = () => {
           swal('Success', 'Item added successfully', 'success');
           formRef.reset();
         }
-      },
-    );
+      });
   };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
