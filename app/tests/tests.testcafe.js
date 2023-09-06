@@ -1,6 +1,8 @@
 import { landingPage } from './landing.page';
 import { signinPage } from './signin.page';
 import { navBar } from './navbar.component';
+import { helpPage } from './help.page';
+import { notFoundPage } from './notFound.page';
 import { signoutPage } from './signout.page';
 
 /* global fixture:false, test:false */
@@ -22,3 +24,14 @@ test('Test that a user can sign in and signout work', async (testController) => 
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
 });
+
+test('Test that a user can access the helppage', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoHelpPage(testController);
+  await helpPage.isDisplayed(testController);
+});
+
+test('Test that NotFound page shows up and all pages work', async (testController) => {
+  await notFoundPage.isDisplayed(testController);
+}).page('http://localhost:3400/#/NotFound');
