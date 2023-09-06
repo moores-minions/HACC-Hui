@@ -69,7 +69,7 @@ class Signin extends React.Component {
     }
 
     return (
-      <Container>
+      <Container id="signin-page">
         <Row className="justify-content-md-center align-items-center vh-100">
           <Col md={6}>
             <h2 className="text-center">Login to your account</h2>
