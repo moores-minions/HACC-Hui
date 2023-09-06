@@ -1,7 +1,8 @@
 import React from 'react';
-import { Grid, Segment, Header } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-semantic';
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
+import { Meteor } from 'meteor/meteor';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
@@ -13,56 +14,47 @@ const schema = new SimpleSchema({
   description: String,
 });
 
-/**
- * Renders the Page for adding stuff. **deprecated**
- * @memberOf ui/pages
- */
-class AddSkill extends React.Component {
+const formSchema = new SimpleSchema2Bridge(schema);
 
-  /** On submit, insert the data.
-   * @param data {Object} the results from the form.
-   * @param formRef {FormRef} reference to the form.
-   */
-  submit(data, formRef) {
+const AddSkillB = () => {
+
+  // On submit, insert the data.
+  const submit = (data, formRef) => {
     const { name, description } = data;
-    const definitionData = { name, description };
-    const collectionName = Skills.getCollectionName();
-    // console.log(collectionName);
-    defineMethod.call({ collectionName: collectionName, definitionData: definitionData },
-        (error) => {
-          if (error) {
-            swal('Error', error.message, 'error');
-            // console.error(error.message);
-          } else {
-            swal('Success', 'Item added successfully', 'success');
-            formRef.reset();
-            // console.log('Success');
-          }
-        });
-  }
-
-  /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-  render() {
-    let fRef = null;
-    const formSchema = new SimpleSchema2Bridge(schema);
-    return (
-        <Grid container centered>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">Add a skill</Header>
-            <AutoForm ref={ref => {
-              fRef = ref;
-            }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
-              <Segment>
-                <TextField name='name' />
-                <TextField name='description' />
-                <SubmitField value='Submit' />
-                <ErrorsField />
-              </Segment>
-            </AutoForm>
-          </Grid.Column>
-        </Grid>
+    Skills.collection.insert(
+      { name, description },
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Item added successfully', 'success');
+          formRef.reset();
+        }
+      },
     );
-  }
-}
+  };
 
-export default AddSkill;
+  // Render the form. Use Uniforms: https://github.com/vazco/uniforms
+  let fRef = null;
+  return (
+    <Container className="py-3">
+      <Row className="justify-content-center">
+        <Col xs={5}>
+          <Col className="text-center"><h2>Add a skill</h2></Col>
+          <AutoForm ref={ref => { fRef = ref; }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
+            <Card>
+              <Card.Body>
+                <TextField name="name" />
+                <TextField name="description" />
+                <SubmitField value="Submit" />
+                <ErrorsField />
+              </Card.Body>
+            </Card>
+          </AutoForm>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+
+export default AddSkillB;
