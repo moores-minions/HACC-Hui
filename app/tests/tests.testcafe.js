@@ -1,6 +1,7 @@
 import { landingPage } from './landing.page';
 import { signinPage } from './signin.page';
 import { navBar } from './navbar.component';
+import { signoutPage } from './signout.page';
 
 /* global fixture:false, test:false */
 
@@ -15,9 +16,9 @@ test('Test that landing page shows up and all pages work', async (testController
   await landingPage.isDisplayed(testController);
 });
 
-test('Test that a user can sign in', async (testController) => {
+test('Test that a user can sign in and signout work', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.logout(testController);
-  // await signoutPage.isDisplayed(testController);
+  await signoutPage.isDisplayed(testController);
 });
