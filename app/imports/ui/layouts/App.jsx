@@ -19,7 +19,6 @@ import { ROUTES } from '../../startup/client/route-constants';
 import DeleteForm from '../pages/participant/DeleteForm';
 import AddChallenge from '../pages/administrator/AddChallenge';
 import AddSkillB from '../pages/administrator/AddSkillB';
-import AddTool from '../pages/administrator/AddTool';
 import AddSkill from '../pages/administrator/AddSkill';
 // import AddTool from '../pages/administrator/AddTool';
 import AddToolB from '../pages/administrator/AddToolB';
@@ -108,7 +107,6 @@ class App extends React.Component {
           <AdminProtectedRoute path={ROUTES.UPDATE_MP} component={UpdateMinorParticipantsCompliant} />
           <AdminProtectedRoute path={ROUTES.SHOW_MINOR} component={ShowMinorPage} />
           <AdminProtectedRoute path={ROUTES.ADD_SKILL} component={AddSkillB} />
-          <AdminProtectedRoute path={ROUTES.ADD_TOOL} component={AddTool} />
           <AdminProtectedRoute path={ROUTES.ADD_SKILL} component={AddSkill} />
           <AdminProtectedRoute path={ROUTES.ADD_TOOL} component={AddToolB} />
           <AdminProtectedRoute path={ROUTES.EDIT_CHALLENGE} component={EditChallengePage}/>
