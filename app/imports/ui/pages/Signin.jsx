@@ -86,7 +86,7 @@ class Signin extends React.Component {
                     <Form.Group>
                       <Form.Label>Email</Form.Label>
                       <Form.Control
-                        id="signin-page-email"
+                        id="signin-form-email"
                         type="email"
                         placeholder="E-mail address"
                         name="email"
@@ -96,14 +96,14 @@ class Signin extends React.Component {
                     <Form.Group>
                       <Form.Label>Password</Form.Label>
                       <Form.Control
-                        id="signin-page-password"
+                        id="signin-form-password"
                         type="password"
                         placeholder="Password"
                         name="password"
                         onChange={this.handleChange}
                       />
                     </Form.Group>
-                    <Button id="signin-page-submit" variant="primary" type="submit">
+                    <Button id="signin-form-submit" variant="primary" type="submit">
                       Submit
                     </Button>
                   </Modal.Body>
