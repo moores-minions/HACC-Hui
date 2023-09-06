@@ -69,8 +69,8 @@ class Signin extends React.Component {
     }
 
     return (
-      <Container id="signin-page" fluid
-                 style={ { paddingLeft: 250, paddingRight: 250, paddingTop: 30, paddingBottom: 75 } }>
+      <Container id="signin-page"
+                 fluid style={ { paddingLeft: 250, paddingRight: 250, paddingTop: 30, paddingBottom: 75 } }>
         <Row className="justify-content-md-center align-items-center">
           <Col md={6}>
             <h2 className="text-center" style={ { paddingBottom: 10 } }>
@@ -86,24 +86,24 @@ class Signin extends React.Component {
                     <Form.Group>
                       <Form.Label>Email</Form.Label>
                       <Form.Control
+                        id="signin-page-email"
                         type="email"
                         placeholder="E-mail address"
                         name="email"
-                        id="signin-form-email"
                         onChange={this.handleChange}
                       />
                     </Form.Group>
                     <Form.Group>
                       <Form.Label>Password</Form.Label>
                       <Form.Control
+                        id="signin-page-password"
                         type="password"
                         placeholder="Password"
                         name="password"
-                        id="signin-form-password"
                         onChange={this.handleChange}
                       />
                     </Form.Group>
-                    <Button id="signin-form-submit" variant="primary" type="submit">
+                    <Button id="signin-page-submit" variant="primary" type="submit">
                       Submit
                     </Button>
                   </Modal.Body>

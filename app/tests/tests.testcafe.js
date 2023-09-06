@@ -15,7 +15,7 @@ test('Test that landing page shows up and all pages work', async (testController
   await landingPage.isDisplayed(testController);
 });
 
-test('Test that an admin can sign in', async (testController) => {
+test('Test that a user can sign in', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.logout(testController);
