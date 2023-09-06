@@ -1,4 +1,5 @@
 import { landingPage } from './landing.page';
+import { notFoundPage } from './notFound.page';
 
 /* global fixture:false, test:false */
 
@@ -12,3 +13,7 @@ fixture('HACC-HUI Test')
 test('Test that landing page shows up and all pages work', async (testController) => {
   await landingPage.isDisplayed(testController);
 });
+
+test('Test that NotFound page shows up and all pages work', async (testController) => {
+  await notFoundPage.isDisplayed(testController);
+}).page('http://localhost:3400/#/NotFound');
