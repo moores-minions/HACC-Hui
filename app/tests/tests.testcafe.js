@@ -7,7 +7,7 @@ import { landingPage } from './landing.page';
 // const newCreds = { username: 'abc@foo.com', licensePlate: 'ABC123', password: 'changeme', hasPass: 'True' };
 
 fixture('HACC-HUI Test')
-  .page('http://localhost:3400');
+  .page('http://localhost:3400/');
 
 test('Test that landing page shows up and all pages work', async (testController) => {
   await landingPage.isDisplayed(testController);
