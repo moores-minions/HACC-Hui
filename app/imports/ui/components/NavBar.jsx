@@ -132,9 +132,10 @@ class NavBar extends React.Component {
                      key={ROUTES.HELP_PAGE}>Help</Menu.Item>
           <Menu.Item>
             {this.props.currentUser === '' ? (
-                <Dropdown text="Login" pointing="top right" icon={'user'}>
+                <Dropdown id="login-dropdown" text="Login" pointing="top right" icon={'user'}>
                   <Dropdown.Menu>
                     <Dropdown.Item
+                        id="login-dropdown-sign-in"
                         icon="user"
                         text="Sign In"
                         as={NavLink}
@@ -145,6 +146,7 @@ class NavBar extends React.Component {
                 <Dropdown text={this.props.currentUser} pointing="top right" icon={'user'}>
                   <Dropdown.Menu>
                     <Dropdown.Item
+                        id="login-dropdown-sign-out"
                         icon="sign out"
                         text="Sign Out"
                         as={NavLink}
