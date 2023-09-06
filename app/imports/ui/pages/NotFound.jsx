@@ -7,7 +7,7 @@ import { Container } from 'react-bootstrap';
  */
 const NotFound = () => {
   return (
-    <Container id='notfound-page' fluid>
+    <Container id='notfound-page' fluid className='NotFoundPage'>
       <h2 className="text-center">Page not found</h2>
     </Container>
   );
