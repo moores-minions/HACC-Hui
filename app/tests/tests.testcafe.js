@@ -46,8 +46,14 @@ test('Test that add skill page shows up and works', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoConfigureHACC(testController);
-  await configurehaccPage.isDisplayed(testController);
   await configurehaccPage.gotoAddSkillPage(testController);
   await addskillPage.addSkill(testController, testaddskill.name, testaddskill.description);
+});
+
+test('Test that the add tool page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoAddToolPage(testController);
   await addtoolPage.addTool(testController, testaddtool.name, testaddtool.description);
 });

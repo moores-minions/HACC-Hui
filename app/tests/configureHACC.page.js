@@ -13,7 +13,13 @@ class ConfigureHACCPage {
   }
 
   async gotoAddSkillPage(testController) {
+    await testController.scroll(Selector('#addSkillButton'), 'bottomRight');
     await testController.click('#addSkillButton');
+  }
+
+  async gotoAddToolPage(testController) {
+    await testController.scroll(Selector('#addToolButton'), 'bottomRight');
+    await testController.click('#addToolButton');
   }
 }
 
