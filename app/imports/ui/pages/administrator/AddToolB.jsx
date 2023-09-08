@@ -8,7 +8,7 @@ import { defineMethod } from '../../../api/base/BaseCollection.methods';
 import { Tools } from '../../../api/tool/ToolCollection';
 
 /**
- * Renders the Page for adding stuff. **deprecated**
+ * Renders the Page for adding a tool. **deprecated**
  * @memberOf ui/pages
  */
 const AddToolB = () => {
