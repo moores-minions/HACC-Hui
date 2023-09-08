@@ -43,7 +43,7 @@ const AddToolB = () => {
   let fRef = null;
   const formSchema = new SimpleSchema2Bridge(schema);
   return (
-    <Container fluid>
+    <Container fluid id='add-tool-page'>
       <Col>
         <h2 style={{ textAlign: 'center' }}>Add a Tool</h2>
         <AutoForm ref={ref => {
@@ -52,9 +52,9 @@ const AddToolB = () => {
           <Container>
             <Card>
               <Card.Body>
-                <TextField name='name'/>
-                <TextField name='description'/>
-                <SubmitField value='Submit'/>
+                <TextField id='name' name='name'/>
+                <TextField id='description' name='description'/>
+                <SubmitField id='add-tool-submit' value='Submit'/>
                 <ErrorsField/>
               </Card.Body>
             </Card>

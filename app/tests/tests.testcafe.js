@@ -6,6 +6,7 @@ import { helpPage } from './help.page';
 import { notFoundPage } from './notFound.page';
 import { addskillPage } from './addskill.page';
 import { configurehaccPage } from './configureHACC.page';
+import { addtoolPage } from './addtool.page';
 
 /* global fixture:false, test:false */
 
@@ -14,6 +15,7 @@ const credentials = { username: 'admin@hacchui.ics.foo.com', password: 'changeme
 // const newCreds = { username: 'abc@foo.com', licensePlate: 'ABC123', password: 'changeme', hasPass: 'True' };
 
 const testaddskill = { name: 'test', description: 'testing' };
+const testaddtool = { name: 'test', description: 'testing' };
 
 fixture('HACC-HUI Test')
   .page('http://localhost:3400/');
@@ -47,4 +49,5 @@ test('Test that add skill page shows up and works', async (testController) => {
   await configurehaccPage.isDisplayed(testController);
   await configurehaccPage.gotoAddSkillPage(testController);
   await addskillPage.addSkill(testController, testaddskill.name, testaddskill.description);
+  await addtoolPage.addTool(testController, testaddtool.name, testaddtool.description);
 });
