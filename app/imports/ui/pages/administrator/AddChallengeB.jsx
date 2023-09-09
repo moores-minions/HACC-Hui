@@ -5,17 +5,19 @@ import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
-import { Tools } from '../../../api/tool/ToolCollection';
+import { Challenges } from '../../../api/challenge/ChallengeCollection';
 
 /**
- * Renders the Page for adding a tool. **deprecated**
+ * Renders the Page for adding a challenge. **deprecated**
  * @memberOf ui/pages
  */
-const AddToolB = () => {
+const AddChallengeB = () => {
   // Create a schema to specify the structure of the data to appear in the form.
   const schema = new SimpleSchema({
-    name: String,
+    title: String,
     description: String,
+    submissionDetail: String,
+    pitch: String,
   });
 
   /** On submit, insert the data.
@@ -23,14 +25,13 @@ const AddToolB = () => {
    * @param formRef {FormRef} reference to the form.
    */
   const submit = (data, formRef) => {
-    const { name, description } = data;
-    const definitionData = { name, description };
-    const collectionName = Tools.getCollectionName();
-    defineMethod.call({ collectionName, definitionData },
+    const { title, description, submissionDetail, pitch } = data;
+    const definitionData = { title, description, submissionDetail, pitch };
+    const collectionName = Challenges.getCollectionName();
+    defineMethod.call({ collectionName: collectionName, definitionData: definitionData },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
-          console.error(error.message);
         } else {
           swal('Success', 'Item added successfully', 'success');
           formRef.reset();
@@ -40,18 +41,21 @@ const AddToolB = () => {
 
   let fRef = null;
   const formSchema = new SimpleSchema2Bridge(schema);
+
   return (
-    <Container fluid id='add-tool-page'>
+    <Container fluid id='add-challenge-page'>
       <Col>
-        <h2 style={{ textAlign: 'center' }}>Add a Tool</h2>
+        <h2 style={{ textAlign: 'center' }}>Add a Challenge</h2>
         <AutoForm ref={ref => {
           fRef = ref;
         }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
           <Container>
             <Card>
               <Card.Body>
-                <TextField id='name' name='name'/>
+                <TextField id='title' name='title'/>
                 <TextField id='description' name='description'/>
+                <TextField id='submissionDetail' name='submissionDetail'/>
+                <TextField id='pitch' name='pitch'/>
                 <SubmitField id='add-tool-submit' value='Submit'/>
                 <ErrorsField/>
               </Card.Body>
@@ -63,4 +67,4 @@ const AddToolB = () => {
   );
 };
 
-export default AddToolB;
+export default AddChallengeB;
