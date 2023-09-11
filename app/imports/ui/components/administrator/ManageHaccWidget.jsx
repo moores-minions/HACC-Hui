@@ -97,7 +97,7 @@ class ManageHaccWidget extends React.Component {
                   </Table.Body>
                 </Table>
                 <div align='center'>
-                  <Button style={{
+                  <Button id='addChallengeButton' style={{
                     color: 'white', backgroundColor: '#DB2828',
                     margin: '2rem 0rem',
                   }}><Link to={ROUTES.ADD_CHALLENGE} style={{ color: 'white' }}>Add Challenge</Link></Button>

@@ -7,6 +7,7 @@ import { notFoundPage } from './notFound.page';
 import { addskillPage } from './addskill.page';
 import { configurehaccPage } from './configureHACC.page';
 import { addtoolPage } from './addtool.page';
+import { addchallengePage } from './addchallenge.page';
 
 /* global fixture:false, test:false */
 
@@ -16,6 +17,7 @@ const credentials = { username: 'admin@hacchui.ics.foo.com', password: 'changeme
 
 const testaddskill = { name: 'test', description: 'testing' };
 const testaddtool = { name: 'test', description: 'testing' };
+const testaddchallenge = { title: 'test', description: 'testing', subDetail: 'ok', pitch: 'bruh' };
 
 fixture('HACC-HUI Test')
   .page('http://localhost:3400/');
@@ -56,4 +58,13 @@ test('Test that the add tool page shows up and works', async (testController) =>
   await navBar.gotoConfigureHACC(testController);
   await configurehaccPage.gotoAddToolPage(testController);
   await addtoolPage.addTool(testController, testaddtool.name, testaddtool.description);
+});
+
+test('Test that the challenge tool page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoAddChallengePage(testController);
+  await addchallengePage.addChallenge(testController, testaddchallenge.title,
+  testaddchallenge.description, testaddchallenge.subDetail, testaddchallenge.pitch);
 });

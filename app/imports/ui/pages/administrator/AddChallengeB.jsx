@@ -56,7 +56,7 @@ const AddChallengeB = () => {
                 <TextField id='description' name='description'/>
                 <TextField id='submissionDetail' name='submissionDetail'/>
                 <TextField id='pitch' name='pitch'/>
-                <SubmitField id='add-tool-submit' value='Submit'/>
+                <SubmitField id='add-challenge-submit' value='Submit'/>
                 <ErrorsField/>
               </Card.Body>
             </Card>

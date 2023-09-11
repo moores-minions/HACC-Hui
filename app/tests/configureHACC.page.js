@@ -21,6 +21,11 @@ class ConfigureHACCPage {
     await testController.scroll(Selector('#addToolButton'), 'bottomRight');
     await testController.click('#addToolButton');
   }
+
+  async gotoAddChallengePage(testController) {
+    await testController.scroll(Selector('#addChallengeButton'), 'bottomRight');
+    await testController.click('#addChallengeButton');
+  }
 }
 
 export const configurehaccPage = new ConfigureHACCPage();
