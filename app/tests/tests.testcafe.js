@@ -20,7 +20,7 @@ const testaddtool = { name: 'test', description: 'testing' };
 const testaddchallenge = { title: 'test', description: 'testing', subDetail: 'ok', pitch: 'bruh' };
 
 fixture('HACC-HUI Test')
-  .page('http://localhost:3400/');
+  .page('http://127.0.0.1:3400/');
 
 test('Test that landing page shows up and all pages work', async (testController) => {
   await landingPage.isDisplayed(testController);
