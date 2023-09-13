@@ -8,12 +8,13 @@ import { addskillPage } from './addskill.page';
 import { configurehaccPage } from './configureHACC.page';
 import { addtoolPage } from './addtool.page';
 import { addchallengePage } from './addchallenge.page';
+import { agePage } from './age.page';
 
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'admin@hacchui.ics.foo.com', password: 'changeme' };
-// const newCreds = { username: 'abc@foo.com', licensePlate: 'ABC123', password: 'changeme', hasPass: 'True' };
+const userCred = { username: 'jenny@foo.com', password: 'changeme' };
 
 const testaddskill = { name: 'test', description: 'testing' };
 const testaddtool = { name: 'test', description: 'testing' };
@@ -68,3 +69,8 @@ test('Test that the challenge tool page shows up and works', async (testControll
   await addchallengePage.addChallenge(testController, testaddchallenge.title,
   testaddchallenge.description, testaddchallenge.subDetail, testaddchallenge.pitch);
 });
+
+test('Test that the age page shows up and works', async (testController) => {
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await agePage.isDisplayed(testController);
+}).page('http://localhost:3400/#/age-consent');
