@@ -1,8 +1,26 @@
-.navBar {
-  margin-bottom: 10px;
-  background-color: #124884 !important;
+.navbar-brand {
+  font-size: 1.5rem !important;
+  font-weight: bold;
+  padding-left: 1.5em;
 }
 
+.navbar-dark {
+  background-color: #343a40;
+}
+
+.nav-link {
+  color: #fff !important;
+  font-size: 1.1rem;
+}
+
+.pr {
+  padding-right: 2rem;
+}
+
+.dropdown {
+  color: #333;
+  font-size: 1rem;
+}
 .mobileBar {
   display: none !important;
   background-color: rgb(18, 72, 132) !important;

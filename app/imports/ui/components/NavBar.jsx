@@ -29,8 +29,8 @@ class NavBar extends React.Component {
     const suggestionCount = Suggestions.count();
 
     return (
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Navbar.Brand as={NavLink} to={ROUTES.LANDING}>HACC-Hui</Navbar.Brand>
+      <Navbar className="navbar-dark" expand="lg">
+        <Navbar.Brand className="navbar-brand" as={NavLink} to={ROUTES.LANDING}>HACC-Hui</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
           <Nav className="mr-auto">
@@ -48,7 +48,7 @@ class NavBar extends React.Component {
 
             {isAdmin ? (
               <>
-                <Nav.Link as={NavLink} to={ROUTES.CONFIGURE_HACC}>Configure HACC</Nav.Link>
+                <Nav.Link id="configHACC" as={NavLink} to={ROUTES.CONFIGURE_HACC}>Configure HACC</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.UPDATE_MP}>Update Minor Participants Status</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.LIST_SUGGESTIONS}>Suggestions List ({suggestionCount})</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.LIST_PARTICIPANTS_ADMIN}>List Participants ({numParticipants})
@@ -60,7 +60,7 @@ class NavBar extends React.Component {
             ) : ''}
           </Nav>
 
-          <Nav className="pr-2">
+          <Nav className="pr">
             <Nav.Link id="help-page" as={NavLink} to={ROUTES.HELP_PAGE}>Help</Nav.Link>
             {this.props.currentUser === '' ? (
               <NavDropdown id="login-dropdown" title="Login">
