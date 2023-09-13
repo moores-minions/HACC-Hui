@@ -55,13 +55,64 @@
 
 }
 
-.LandingLink {
-  text-decoration: none;
-  color: #4183c4;
+.landingPage {
+  font-family: "Lato";
 }
 
-.LandingPage {
-  font-family: "Lato";
+.landingHeader {
+  color: #0B2C52;
+  font-size: 30px;
+  align-self: flex-start;
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.landingCol1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.landingCol1 p {
+  font-size: 20px;
+  padding-left: 20px;
+  color: #0B2C52;
+}
+
+.innerBold {
+  font-size: 20px;
+  padding-left: 20px;
+  color: #0B2C52;
+}
+
+.landingCol2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.landingCol2 img {
+  width: 150px;
+  display: block;
+  margin: auto;
+}
+
+.landingCol2 b {
+  font-size: 30px;
+  font-style: italic;
+  margin: 15px;
+}
+
+.landingCol2 p {
+  font-size: 20px;
+  font-style: italic;
+}
+
+.landingCol2 a {
+  text-decoration: none;
+  color: #4183c4;
 }
 
 label {
@@ -73,16 +124,16 @@ label {
   color:red;
 }
 
-.age-page {
+.agePage {
   background-color: #24252B;
   color:#ffffff;
 }
 
-.age-page a {
+.agePage a {
   background-color: #393B44;
   border: none;
 }
 
-.age-page a:hover {
+.agePage a:hover {
   background-color: #2f3036;
 }

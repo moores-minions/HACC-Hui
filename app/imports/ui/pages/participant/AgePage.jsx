@@ -8,7 +8,7 @@ import { ROUTES } from '../../../startup/client/route-constants';
  * @memberOf ui/pages
  */
 const AgePage = () => (
-  <Container fluid id='age-page' className='age-page'>
+  <Container fluid id='age-page' className='agePage'>
     <Row align='center'>
       <h2 style={{ padding: '5rem 10rem 5rem 10rem' }}>
         Before we move onto making your profile, we need to verify your age.
