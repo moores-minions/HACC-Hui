@@ -72,3 +72,17 @@ label {
   content:'*';
   color:red;
 }
+
+.age-page {
+  background-color: #24252B;
+  color:#ffffff;
+}
+
+.age-page a {
+  background-color: #393B44;
+  border: none;
+}
+
+.age-page a:hover {
+  background-color: #2f3036;
+}
