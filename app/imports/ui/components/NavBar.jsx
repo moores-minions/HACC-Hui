@@ -55,7 +55,7 @@ class NavBar extends React.Component {
                 </Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.VIEW_TEAMS}>View Teams ({teamCount})</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.ALL_TEAM_INVITATIONS}>View All Team Invitations</Nav.Link>
-                <Nav.Link as={NavLink} to={ROUTES.DUMP_DATABASE}>Dump Database</Nav.Link>
+                <Nav.Link id="dump-page" as={NavLink} to={ROUTES.DUMP_DATABASE}>Dump Database</Nav.Link>
               </>
             ) : ''}
           </Nav>
