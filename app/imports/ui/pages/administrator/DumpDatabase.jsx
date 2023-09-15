@@ -7,13 +7,8 @@ import swal from 'sweetalert';
 
 /**
  *
- * Why is it called dump like??
- *
- * Use container instead of Segment
- * Replace Semantic Button w/ Bootstrap Button
- * Center Buttons
- * Header? Description?
- * Change Dump to Download?
+ * Downloads a .zip file of the entire database
+ * and list of teams
  *
  */
 
