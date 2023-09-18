@@ -21,6 +21,10 @@ class NavBar {
     await testController.click('#help-page');
   }
 
+  async gotoAllTeamInvitationsPage(testController) {
+    await testController.click('#al-in');
+  }
+
   async gotoConfigureHACC(testController) {
     await testController.click('#configHACC');
   }

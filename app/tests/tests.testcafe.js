@@ -82,6 +82,6 @@ test('Test that an admin can access and download files from the Dump Database pa
 test('Test that an admin can access the View All Team Invitations page ', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
-  await navBar.gotoHelpPage(testController);
+  await navBar.gotoAllTeamInvitationsPage(testController);
   await allteamsinvitationPage.isDisplayed(testController);
 });
