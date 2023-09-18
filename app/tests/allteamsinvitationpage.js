@@ -1,8 +1,8 @@
 import { Selector } from 'testcafe';
 
-class HelpPage {
+class AllTeamsInvitationPage {
   constructor() {
-    this.pageId = '#helpPage';
+    this.pageId = '#allteamsinvitationPage';
     this.pageSelector = Selector(this.pageId);
   }
 
@@ -13,4 +13,4 @@ class HelpPage {
   }
 }
 
-export const helpPage = new HelpPage();
+export const allteamsinvitationPage = new AllTeamsInvitationPage();

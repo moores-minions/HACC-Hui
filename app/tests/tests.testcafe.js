@@ -9,6 +9,7 @@ import { configurehaccPage } from './configureHACC.page';
 import { addtoolPage } from './addtool.page';
 import { addchallengePage } from './addchallenge.page';
 import { dumpdatabasePage } from './dumpdatabase.page';
+import { allteamsinvitationPage } from './allteamsinvitationpage'
 
 /* global fixture:false, test:false */
 
@@ -76,4 +77,11 @@ test('Test that an admin can access and download files from the Dump Database pa
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoDumpDatabasePage(testController);
   await dumpdatabasePage.dumpDatabase(testController, testDumpDatabase.database, testDumpDatabase.teams);
+});
+
+test('Test that an admin can access the View All Team Invitations page ', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoHelpPage(testController);
+  await allteamsinvitationPage.isDisplayed(testController);
 });
