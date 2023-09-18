@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Button, Table } from 'semantic-ui-react';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
@@ -33,18 +33,14 @@ class ChallengesAdminWidget extends React.Component {
 
   render() {
     return (
-      <Container className="py-3">
-        <Row className="justify-content-center">
-          <Col md={7}>
-            <Table striped bordered hover>
-              <td>{this.props.challenges.title}</td>
-              <td>{this.props.challenges.description}</td>
-              <td>{this.props.challenges.submissionDetail}</td>
-              <td>{this.props.challenges.pitch}</td>
-            </Table>
-          </Col>
-        </Row>
-      </Container>
+      <tr>
+        <td>{this.props.challenges.title}</td>
+        <td>{this.props.challenges.description}</td>
+        <td>{this.props.challenges.submissionDetail}</td>
+        <td>{this.props.challenges.pitch}</td>
+        <td><Button variant="light"><Link to={`/edit-challenge/${this.props.challenges._id}`}>Edit</Link></Button></td>
+        <td><Button onClick={() => this.removeItem(this.props.challenges._id)}>Delete</Button></td>
+      </tr>
         // <Table.Row>
         //   <Table.Cell width={2}>{this.props.challenges.title}</Table.Cell>
         //   <Table.Cell width={5}>{this.props.challenges.description}</Table.Cell>
