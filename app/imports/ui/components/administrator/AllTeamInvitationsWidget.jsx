@@ -38,7 +38,7 @@ class AllTeamInvitationsWidget extends React.Component {
 
     const universalTeams = this.props.teams;
 
-    function getTeamInvitations(invs) {
+    const getTeamInvitations = (invs) => {
       const data = [];
       for (let i = 0; i < invs.length; i++) {
         for (let j = 0; j < universalTeams.length; j++) {
@@ -48,11 +48,11 @@ class AllTeamInvitationsWidget extends React.Component {
         }
       }
       return _.sortedUniq(data);
-    }
+    };
 
     const universalSkills = this.props.skills;
 
-    function getTeamSkills(teamID, teamSkills) {
+    const getTeamSkills = (teamID, teamSkills) => {
       const data = [];
       const skills = _.filter(teamSkills, { teamID: teamID });
       for (let i = 0; i < skills.length; i++) {
@@ -63,11 +63,11 @@ class AllTeamInvitationsWidget extends React.Component {
         }
       }
       return data;
-    }
+    };
 
     const universalTools = this.props.tools;
 
-    function getTeamTools(teamID, teamTools) {
+    const getTeamTools = (teamID, teamTools) => {
       const data = [];
       const tools = _.filter(teamTools, { teamID: teamID });
       for (let i = 0; i < tools.length; i++) {
@@ -78,11 +78,11 @@ class AllTeamInvitationsWidget extends React.Component {
         }
       }
       return data;
-    }
+    };
 
     const universalChallenges = this.props.challenges;
 
-    function getTeamChallenges(teamID, teamChallenges) {
+    const getTeamChallenges = (teamID, teamChallenges) => {
       const data = [];
       const challenges = _.filter(teamChallenges, { teamID: teamID });
       for (let i = 0; i < challenges.length; i++) {
@@ -93,11 +93,11 @@ class AllTeamInvitationsWidget extends React.Component {
         }
       }
       return data;
-    }
+    };
 
     const allDevelopers = this.props.participants;
 
-    function getTeamDevelopers(teamID, teamParticipants) {
+    const getTeamDevelopers = (teamID, teamParticipants) => {
       const data = [];
       const participants = _.filter(teamParticipants, { teamID: teamID });
       for (let i = 0; i < participants.length; i++) {
@@ -111,7 +111,7 @@ class AllTeamInvitationsWidget extends React.Component {
         }
       }
       return data;
-    }
+    };
 
     return (
         <Grid container doubling relaxed stackable>
