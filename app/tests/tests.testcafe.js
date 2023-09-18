@@ -71,6 +71,7 @@ test('Test that the challenge tool page shows up and works', async (testControll
 });
 
 test('Test that the age page shows up and works', async (testController) => {
+  await testController.navigateTo('http://localhost:3400/#/age-consent');
   await signinPage.signin(testController, userCred.username, userCred.password);
   await agePage.isDisplayed(testController);
-}).page('http://localhost:3400/#/age-consent');
+});
