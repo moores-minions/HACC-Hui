@@ -9,7 +9,7 @@ import { configurehaccPage } from './configureHACC.page';
 import { addtoolPage } from './addtool.page';
 import { addchallengePage } from './addchallenge.page';
 import { dumpdatabasePage } from './dumpdatabase.page';
-import { allteamsinvitationPage } from './allteamsinvitationpage'
+import { allteamsinvitationPage } from './allteamsinvitationpage';
 
 /* global fixture:false, test:false */
 
