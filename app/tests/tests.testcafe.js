@@ -10,12 +10,13 @@ import { addtoolPage } from './addtool.page';
 import { addchallengePage } from './addchallenge.page';
 import { dumpdatabasePage } from './dumpdatabase.page';
 import { allteamsinvitationPage } from './allteamsinvitationpage';
+import { agePage } from './age.page';
 
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'admin@hacchui.ics.foo.com', password: 'changeme' };
-// const newCreds = { username: 'abc@foo.com', licensePlate: 'ABC123', password: 'changeme', hasPass: 'True' };
+const userCred = { username: 'jenny@foo.com', password: 'changeme' };
 
 const testaddskill = { name: 'test', description: 'testing' };
 const testaddtool = { name: 'test', description: 'testing' };
@@ -84,4 +85,10 @@ test('Test that an admin can access the View All Team Invitations page ', async 
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoAllTeamInvitationsPage(testController);
   await allteamsinvitationPage.isDisplayed(testController);
+});
+
+test('Test that the age page shows up and works', async (testController) => {
+  await testController.navigateTo('http://localhost:3400/#/age-consent');
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await agePage.isDisplayed(testController);
 });
