@@ -8,8 +8,8 @@ import { removeItMethod } from '../../../api/base/BaseCollection.methods';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 
 /** Renders a single row in the table. See pages/Listmenuitemss.jsx. */
-class ChallengesAdminWidget extends React.Component {
-  removeItem(docID) {
+const ChallengesAdminWidget = ({ challenges }) => {
+  const removeItem = (docID) => {
     swal({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this challenge!',
@@ -29,17 +29,16 @@ class ChallengesAdminWidget extends React.Component {
             swal('You canceled the deletion!');
           }
         });
-  }
+  };
 
-  render() {
     return (
       <tr>
-        <td>{this.props.challenges.title}</td>
-        <td>{this.props.challenges.description}</td>
-        <td>{this.props.challenges.submissionDetail}</td>
-        <td>{this.props.challenges.pitch}</td>
-        <td><Button variant="light"><Link to={`/edit-challenge/${this.props.challenges._id}`}>Edit</Link></Button></td>
-        <td><Button variant="danger" onClick={() => this.removeItem(this.props.challenges._id)}>Delete</Button></td>
+        <td>{challenges.title}</td>
+        <td>{challenges.description}</td>
+        <td>{challenges.submissionDetail}</td>
+        <td>{challenges.pitch}</td>
+        <td><Button variant="light"><Link to={`/edit-challenge/${challenges._id}`}>Edit</Link></Button></td>
+        <td><Button variant="danger" onClick={() => removeItem(challenges._id)}>Delete</Button></td>
       </tr>
         // <Table.Row>
         //   <Table.Cell width={2}>{this.props.challenges.title}</Table.Cell>
@@ -54,8 +53,7 @@ class ChallengesAdminWidget extends React.Component {
         //   <Table.Cell width={2}><Button negative onClick={() => this.removeItem(this.props.challenges._id)}>Delete</Button></Table.Cell>
         // </Table.Row>
     );
-  }
-}
+};
 
 /** Require a document to be passed to this component. */
 ChallengesAdminWidget.propTypes = {
