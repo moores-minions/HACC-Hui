@@ -6,7 +6,7 @@ import { footer } from '../styles';
  * @memberOf ui/components
  */
 const Footer = () => (
-    <footer className="text-center text-lg-start fixed-bottom" style={footer}>
+    <footer className="text-center fixed-bottom" style={footer}>
       <div className="ui center aligned container">
         Department of Information and Computer Sciences<br />
         University of Hawaii<br />
