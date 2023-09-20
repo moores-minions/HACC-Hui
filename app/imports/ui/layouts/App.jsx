@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import NavBar from '../components/NavBar';
@@ -124,25 +123,23 @@ class App extends React.Component {
     );
 
     return (
-        <Router>
-          <div>
-            {isDesktop ? (
-                <div>
-                  <NavBar/>
-                  {routes()}
-                  <Footer/>
-                </div>
-            ) : (
-                <div style={{ display: 'flex', padding: `${10}px` }}>
-                  <meta name="viewport" content="width=device-width, maximum-scale=1.5"/>
-                  <SideBar visible={this.state.visible}>
-                    {routes()}
-                    <Footer/>
-                  </SideBar>
-                </div>
-            )}
-          </div>
-        </Router>
+      <Router>
+          {isDesktop ? (
+            <>
+              <NavBar/>
+              {routes()}
+              <Footer/>
+            </>
+          ) : (
+            <div style={{ display: 'flex', padding: `${10}px` }}>
+              <meta name="viewport" content="width=device-width, maximum-scale=1.5"/>
+              <SideBar visible={this.state.visible}>
+                {routes()}
+                <Footer/>
+              </SideBar>
+            </div>
+          )}
+      </Router>
     );
   }
 }
