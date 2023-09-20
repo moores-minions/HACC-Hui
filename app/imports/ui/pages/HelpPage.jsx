@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './ui.css'; // Import the CSS file
+import '../ui.css'; // Import the CSS file
 
 const HelpPage = () => (
       <Container id="help-page" fluid className="help-page-container">
