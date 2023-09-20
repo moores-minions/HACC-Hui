@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe';
 
-class AddskillPage {
+class AddSkillPage {
   constructor() {
     this.pageId = '#add-skill-page';
     this.pageSelector = Selector(this.pageId);
@@ -20,4 +20,4 @@ class AddskillPage {
   }
 }
 
-export const addskillPage = new AddskillPage();
+export const addSkillPage = new AddSkillPage();

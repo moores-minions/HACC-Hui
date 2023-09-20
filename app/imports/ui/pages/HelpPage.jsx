@@ -6,7 +6,7 @@ class HelpPage extends React.Component {
   render() {
     return (
       // eslint-disable-next-line max-len
-      <Container id="helpPage" fluid style={{ margin: '30px', padding: '30px', backgroundColor: '#E5F0FE', borderRadius: '15px' }}>
+      <Container id="help-page" fluid style={{ margin: '30px', padding: '30px', backgroundColor: '#E5F0FE', borderRadius: '15px' }}>
         <div className="text-center">
           <p style={{ fontSize: '40px', paddingTop: '20px' }}>Questions By Category</p>
           <hr />

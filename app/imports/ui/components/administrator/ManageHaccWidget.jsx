@@ -97,7 +97,7 @@ class ManageHaccWidget extends React.Component {
                   </Table.Body>
                 </Table>
                 <div align='center'>
-                  <Button id='addChallengeButton' style={{
+                  <Button id='add-challenge-button' style={{
                     color: 'white', backgroundColor: '#DB2828',
                     margin: '2rem 0rem',
                   }}><Link to={ROUTES.ADD_CHALLENGE} style={{ color: 'white' }}>Add Challenge</Link></Button>
@@ -117,7 +117,7 @@ class ManageHaccWidget extends React.Component {
                   </Table.Body>
                 </Table>
                 <div align='center'>
-                  <Button id="addSkillButton" style={{
+                  <Button id="add-skill-button" style={{
                     color: 'white', backgroundColor: '#DB2828',
                     margin: '2rem 0rem',
                   }}><Link to={ROUTES.ADD_SKILL} style={{ color: 'white' }}>Add Skill</Link></Button>
@@ -136,7 +136,7 @@ class ManageHaccWidget extends React.Component {
                   </Table.Body>
                 </Table>
                 <div align='center'>
-                  <Button id='addToolButton' style={{
+                  <Button id='add-tool-button' style={{
                     color: 'white', backgroundColor: '#DB2828',
                     margin: '2rem 0rem',
                   }}><Link to={ROUTES.ADD_TOOL} style={{ color: 'white' }}>Add Tool</Link></Button>

@@ -2,7 +2,7 @@ import { Selector } from 'testcafe';
 
 class AllTeamsInvitationPage {
   constructor() {
-    this.pageId = '#allteamsinvitationPage';
+    this.pageId = '#all-teams-invitation-page';
     this.pageSelector = Selector(this.pageId);
   }
 
@@ -13,4 +13,4 @@ class AllTeamsInvitationPage {
   }
 }
 
-export const allteamsinvitationPage = new AllTeamsInvitationPage();
+export const allTeamsInvitationPage = new AllTeamsInvitationPage();
