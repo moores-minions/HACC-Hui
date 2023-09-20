@@ -4,12 +4,12 @@ import { signoutPage } from './signout.page';
 import { navBar } from './navbar.component';
 import { helpPage } from './help.page';
 import { notFoundPage } from './notFound.page';
-import { addskillPage } from './addskill.page';
+import { addSkillPage } from './addskill.page';
 import { configurehaccPage } from './configureHACC.page';
-import { addtoolPage } from './addtool.page';
-import { addchallengePage } from './addchallenge.page';
+import { addToolPage } from './addtool.page';
+import { addChallengePage } from './addchallenge.page';
 import { dumpdatabasePage } from './dumpdatabase.page';
-import { allteamsinvitationPage } from './allteamsinvitationpage';
+import { allTeamsInvitationPage } from './allteamsinvitationpage';
 import { agePage } from './age.page';
 
 /* global fixture:false, test:false */
@@ -18,9 +18,9 @@ import { agePage } from './age.page';
 const credentials = { username: 'admin@hacchui.ics.foo.com', password: 'changeme' };
 const userCred = { username: 'jenny@foo.com', password: 'changeme' };
 
-const testaddskill = { name: 'test', description: 'testing' };
-const testaddtool = { name: 'test', description: 'testing' };
-const testaddchallenge = { title: 'test', description: 'testing', subDetail: 'ok', pitch: 'bruh' };
+const testAddSkill = { name: 'test', description: 'testing' };
+const testAddTool = { name: 'test', description: 'testing' };
+const testAddChallenge = { title: 'test', description: 'testing', subDetail: 'ok', pitch: 'bruh' };
 const testDumpDatabase = { database: './Downloads/hacchui-db.zip', teams: './Downloads/hacchui-teams.zip' };
 
 fixture('HACC-HUI Test')
@@ -53,7 +53,7 @@ test('Test that add skill page shows up and works', async (testController) => {
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoConfigureHACC(testController);
   await configurehaccPage.gotoAddSkillPage(testController);
-  await addskillPage.addSkill(testController, testaddskill.name, testaddskill.description);
+  await addSkillPage.addSkill(testController, testAddSkill.name, testAddSkill.description);
 });
 
 test('Test that the add tool page shows up and works', async (testController) => {
@@ -61,7 +61,7 @@ test('Test that the add tool page shows up and works', async (testController) =>
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoConfigureHACC(testController);
   await configurehaccPage.gotoAddToolPage(testController);
-  await addtoolPage.addTool(testController, testaddtool.name, testaddtool.description);
+  await addToolPage.addTool(testController, testAddTool.name, testAddTool.description);
 });
 
 test('Test that the challenge tool page shows up and works', async (testController) => {
@@ -69,8 +69,8 @@ test('Test that the challenge tool page shows up and works', async (testControll
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoConfigureHACC(testController);
   await configurehaccPage.gotoAddChallengePage(testController);
-  await addchallengePage.addChallenge(testController, testaddchallenge.title,
-    testaddchallenge.description, testaddchallenge.subDetail, testaddchallenge.pitch);
+  await addChallengePage.addChallenge(testController, testAddChallenge.title,
+    testAddChallenge.description, testAddChallenge.subDetail, testAddChallenge.pitch);
 });
 
 test('Test that an admin can access and download files from the Dump Database page', async (testController) => {
@@ -84,7 +84,7 @@ test('Test that an admin can access the View All Team Invitations page ', async 
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoAllTeamInvitationsPage(testController);
-  await allteamsinvitationPage.isDisplayed(testController);
+  await allTeamsInvitationPage.isDisplayed(testController);
 });
 
 test('Test that the age page shows up and works', async (testController) => {

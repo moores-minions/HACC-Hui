@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe';
 
-class AddchallengePage {
+class AddChallengePage {
   constructor() {
     this.pageId = '#add-challenge-page';
     this.pageSelector = Selector(this.pageId);
@@ -21,4 +21,4 @@ class AddchallengePage {
   }
 }
 
-export const addchallengePage = new AddchallengePage();
+export const addChallengePage = new AddChallengePage();

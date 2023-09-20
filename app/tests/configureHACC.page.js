@@ -13,18 +13,18 @@ class ConfigureHACCPage {
   }
 
   async gotoAddSkillPage(testController) {
-    await testController.scroll(Selector('#addSkillButton'), 'bottomRight');
-    await testController.click('#addSkillButton');
+    await testController.scroll(Selector('#add-skill-button'), 'bottomRight');
+    await testController.click('#add-skill-button');
   }
 
   async gotoAddToolPage(testController) {
-    await testController.scroll(Selector('#addToolButton'), 'bottomRight');
-    await testController.click('#addToolButton');
+    await testController.scroll(Selector('#add-tool-button'), 'bottomRight');
+    await testController.click('#add-tool-button');
   }
 
   async gotoAddChallengePage(testController) {
-    await testController.scroll(Selector('#addChallengeButton'), 'bottomRight');
-    await testController.click('#addChallengeButton');
+    await testController.scroll(Selector('#add-challenge-button'), 'bottomRight');
+    await testController.click('#add-challenge-button');
   }
 }
 
