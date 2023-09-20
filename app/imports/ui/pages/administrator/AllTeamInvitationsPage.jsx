@@ -6,7 +6,7 @@ import AllTeamInvitationsWidget from '../../components/administrator/AllTeamInvi
 class AllTeamInvitationsPage extends React.Component {
   render() {
     return (
-      <Container id="allteamsinvitationPage">
+      <Container id="all-teams-invitation-page">
         <AllTeamInvitationsWidget />
       </Container>
     );
