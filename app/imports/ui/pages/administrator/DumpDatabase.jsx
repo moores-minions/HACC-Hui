@@ -1,8 +1,16 @@
 import React from 'react';
-import { Button, Segment } from 'semantic-ui-react';
+// import { Segment } from 'semantic-ui-react';
+import { Button, Container, Modal, Row, Col } from 'react-bootstrap';
 import { ZipZap } from 'meteor/udondan:zipzap';
 import moment from 'moment';
 import swal from 'sweetalert';
+
+/**
+ *
+ * Downloads a .zip file of the entire database
+ * and list of teams
+ *
+ */
 
 import { dumpDatabaseMethod, dumpTeamCSVMethod } from '../../../api/base/BaseCollection.methods';
 
@@ -40,10 +48,32 @@ class DumpDatabase extends React.Component {
 
   render() {
     return (
-    <Segment>
-      <Button positive={true} onClick={this.handleClick}>Dump the Database</Button>
-      <Button positive={true} onClick={this.handleDumpTeamCSV}>Dump the Teams</Button>
-    </Segment>
+      <Container id="dump-page"
+                 fluid style={ { paddingLeft: 250, paddingRight: 250, paddingTop: 30, paddingBottom: 30 } }>
+        <h2 className="text-center" style={ { paddingBottom: 10 } }>
+          Download Things
+        </h2>
+        <p className="text-center">
+          Download a .json file of the HACC-HUI databse or download a .txt file of all the registered teams
+        </p>
+        <div
+          className="modal show"
+          style={{ display: 'block', position: 'initial' }}
+        >
+        <Modal.Dialog size={'lg'}>
+          <Modal.Body>
+            <Row className="justify-content-md-center">
+              <Col md={4}>
+      <Button id="database-button" positive={true} onClick={this.handleClick}>Download HACC-HUI Database</Button>
+              </Col>
+              <Col md={{ span: 3, offset: 3 }}>
+      <Button id="teams-button" positive={true} onClick={this.handleDumpTeamCSV}>Download List of Teams</Button>
+              </Col>
+            </Row>
+          </Modal.Body>
+        </Modal.Dialog>
+        </div>
+    </Container>
     );
   }
 }

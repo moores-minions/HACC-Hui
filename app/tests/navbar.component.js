@@ -21,6 +21,10 @@ class NavBar {
     await testController.click('#help-page');
   }
 
+  async gotoAllTeamInvitationsPage(testController) {
+    await testController.click('#al-in');
+  }
+
   async gotoConfigureHACC(testController) {
     await testController.click('#configHACC');
   }
@@ -47,6 +51,10 @@ class NavBar {
 
   async gotoAddClubPage(testController) {
     await testController.click('#addClubMenuItem');
+  }
+
+  async gotoDumpDatabasePage(testController) {
+    await testController.click('#dump-page');
   }
 
   /** Check that the specified user is currently logged in. */
