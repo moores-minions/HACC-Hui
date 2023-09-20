@@ -1,12 +1,13 @@
 import React from 'react';
 import { footer } from '../styles';
+import '../ui.css';
 
 /**
  * The Footer appears at the bottom of every page. Rendered by the App Layout component.
  * @memberOf ui/components
  */
 const Footer = () => (
-    <footer className="text-center fixed-bottom" style={footer}>
+    <footer className="footer" style={footer}>
       <div className="ui center aligned container">
         Department of Information and Computer Sciences<br />
         University of Hawaii<br />
