@@ -16,8 +16,7 @@ import ParticipationForm from '../pages/participant/ParticipationForm';
 import UnderParticipationForm from '../pages/participant/UnderParticipationForm';
 import { ROUTES } from '../../startup/client/route-constants';
 import DeleteForm from '../pages/participant/DeleteForm';
-import AddChallengeB from '../pages/administrator/AddChallengeB';
-// import AddChallenge from '../pages/administrator/AddChallenge';
+import AddChallenge from '../pages/administrator/AddChallenge';
 import AddSkillB from '../pages/administrator/AddSkillB';
 import AddSkill from '../pages/administrator/AddSkill';
 // import AddTool from '../pages/administrator/AddTool';
@@ -103,7 +102,7 @@ class App extends React.Component {
           <ProtectedRoute path={ROUTES.SUGGEST_TOOL_SKILL} component={SuggestToolSkillPage} />
           <ProtectedRoute path={ROUTES.INTERESTED_PARTICIPANTS} component={InterestedParticipantPage} />
           <AdminProtectedRoute path={ROUTES.CONFIGURE_HACC} component={ConfigureHaccPage} />
-          <AdminProtectedRoute path={ROUTES.ADD_CHALLENGE} component={AddChallengeB} />
+          <AdminProtectedRoute path={ROUTES.ADD_CHALLENGE} component={AddChallenge} />
           <AdminProtectedRoute path={ROUTES.UPDATE_MP} component={UpdateMinorParticipantsCompliant} />
           <AdminProtectedRoute path={ROUTES.SHOW_MINOR} component={ShowMinorPage} />
           <AdminProtectedRoute path={ROUTES.ADD_SKILL} component={AddSkillB} />
