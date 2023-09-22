@@ -55,13 +55,9 @@
 
 }
 
-.LandingLink {
+.landing-link {
   text-decoration: none;
   color: #4183c4;
-}
-
-.LandingPage {
-  font-family: "Lato";
 }
 
 label {

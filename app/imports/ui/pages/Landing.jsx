@@ -152,7 +152,7 @@ const Landing = () => (
         >
           <Icon.EyeFill size={132}/>
           <b style={{ fontSize: 30, fontStyle: 'italic', margin: 15 }}>
-            <a className='LandingLink' href="https://hacc.hawaii.gov/hacc-rules/">HACC Rules</a>
+            <a className='landing-link' href="https://hacc.hawaii.gov/hacc-rules/">HACC Rules</a>
           </b>
         </Col>
         <Col
@@ -170,7 +170,7 @@ const Landing = () => (
           margin: 'auto',
           }} src='/images/gavel.png'/>
           <b style={{ fontSize: 30, fontStyle: 'italic', margin: 15 }}>
-            <a className='LandingLink' href="https://hacc.hawaii.gov/hacc-judging-criteria/">HACC Judging Criteria</a>
+            <a className='landing-link' href="https://hacc.hawaii.gov/hacc-judging-criteria/">HACC Judging Criteria</a>
           </b>
         </Col>
       </Row>
