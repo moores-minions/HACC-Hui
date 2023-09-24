@@ -1,13 +1,9 @@
 import React from 'react';
 import withAllSubscriptions from '../../layouts/AllSubscriptionsHOC';
-import EditToolWidget from '../../components/administrator/EditToolWidget';
+import EditSkillWidget from '../../components/administrator/EditSkillWidget';
 
-class EditToolPage extends React.Component {
-  render() {
-    return (
-        <EditToolWidget />
-    );
-  }
-}
+const EditSkillPage = () => (
+    <EditSkillWidget />
+);
 
-export default withAllSubscriptions(EditToolPage);
+export default withAllSubscriptions(EditSkillPage);
