@@ -6,7 +6,8 @@ class ConfigureHACCPage {
     this.pageId = '#configurePage';
     this.pageSelector = Selector(this.pageId);
     // this.testId = Challenges.findOne({ title: 'test' })._id;
-    this.testId = 'Zcmy269MoDFCAzooX';
+    this.challengeId = 'Zcmy269MoDFCAzooX';
+    this.skillId = 'KCnEyPjjWLnygGzT5';
   }
 
   /** Asserts that this page is currently displayed. */
@@ -31,8 +32,13 @@ class ConfigureHACCPage {
   }
 
   async gotoEditChallengePage(testController) {
-    await testController.scroll(Selector(`#edit-${this.testId}`), 'bottomRight');
-    await testController.click(`#edit-${this.testId}`);
+    await testController.scroll(Selector(`#edit-${this.challengeId}`), 'bottomRight');
+    await testController.click(`#edit-${this.challengeId}`);
+  }
+
+  async gotoEditSkillPage(testController) {
+    await testController.scroll(Selector(`#edit-${this.skillId}`), 'bottomRight');
+    await testController.click(`#edit-${this.skillId}`);
   }
 }
 

@@ -1,8 +1,8 @@
 import { Selector } from 'testcafe';
 
-class EditChallengePage {
+class EditSkillPage {
   constructor() {
-    this.pageId = '#edit-challenge-page';
+    this.pageId = '#edit-skill-page';
     this.pageSelector = Selector(this.pageId);
   }
 
@@ -11,11 +11,11 @@ class EditChallengePage {
     await testController.expect(this.pageSelector.exists).ok();
   }
 
-  async editChallenge(testController, pitch) {
+  async editSkill(testController, description) {
     await this.isDisplayed(testController);
-    await testController.typeText('#pitch', pitch);
-    await testController.click('#edit-challenge-submit');
+    await testController.typeText('#description', description);
+    await testController.click('#edit-skill-submit');
   }
 }
 
-export const editChallengePage = new EditChallengePage();
+export const editSkillPage = new EditSkillPage();
