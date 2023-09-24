@@ -4,7 +4,6 @@ import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'un
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import { useTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
-import SimpleSchema from 'simpl-schema';
 import { useParams } from 'react-router';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
@@ -13,13 +12,6 @@ const EditChallengeWidget = () => {
 
   // Document ID object of form { _id: "..." }
   const documentId = useParams();
-  const schema = new SimpleSchema({
-    title: String,
-    description: String,
-    submissionDetail: String,
-    pitch: String,
-  });
-
   const { doc } = useTracker(() => {
     const document = Challenges.findOne(documentId);
     return {
@@ -51,7 +43,7 @@ const EditChallengeWidget = () => {
       });
   };
 
-  const formSchema = new SimpleSchema2Bridge(schema);
+  const formSchema = new SimpleSchema2Bridge(Challenges.getSchema());
   return (
     <Container fluid className='edit-page' id='edit-challenge-page'>
       <Col>
