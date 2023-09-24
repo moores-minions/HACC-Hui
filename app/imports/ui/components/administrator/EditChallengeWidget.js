@@ -51,24 +51,17 @@ const EditChallengeWidget = () => {
       });
   };
 
-  /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   const formSchema = new SimpleSchema2Bridge(schema);
   return (
-    <Container fluid id='edit-challenge-page' style={{ paddingBottom: '50px' }}>
+    <Container fluid className='edit-page' id='edit-challenge-page'>
       <Col>
-        <Row style={{
-          backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
-          borderRadius: '2rem',
-        }}>
+        <Row className='text-center'>
           <h2>Edit Challenge</h2>
         </Row>
-        <AutoForm schema={formSchema} onSubmit={data => submit(data)} model={doc}
-                  style={{
-                    paddingBottom: '4rem',
-                  }}>
+        <AutoForm schema={formSchema} onSubmit={data => submit(data)} model={doc}>
           <Container className='team-create'>
             <Card>
-              <Card.Body style={{ paddingLeft: '3rem', paddingRight: '3rem' }}>
+              <Card.Body>
                 <LongTextField id='description' name='description'/>
                 <TextField id='submission-detail' name='submissionDetail' />
                 <TextField id='pitch' name='pitch' />
