@@ -11,6 +11,7 @@ import { addChallengePage } from './addchallenge.page';
 import { dumpdatabasePage } from './dumpdatabase.page';
 import { allTeamsInvitationPage } from './allteamsinvitationpage';
 import { agePage } from './age.page';
+import { editChallengePage } from './editchallenge.page';
 
 /* global fixture:false, test:false */
 
@@ -22,6 +23,7 @@ const testAddSkill = { name: 'test', description: 'testing' };
 const testAddTool = { name: 'test', description: 'testing' };
 const testAddChallenge = { title: 'test', description: 'testing', subDetail: 'ok', pitch: 'bruh' };
 const testDumpDatabase = { database: './Downloads/hacchui-db.zip', teams: './Downloads/hacchui-teams.zip' };
+const testEditChallenge = { pitch: 'hehe' };
 
 fixture('HACC-HUI Test')
   .page('http://127.0.0.1:3400/');
@@ -71,6 +73,14 @@ test('Test that the challenge tool page shows up and works', async (testControll
   await configurehaccPage.gotoAddChallengePage(testController);
   await addChallengePage.addChallenge(testController, testAddChallenge.title,
     testAddChallenge.description, testAddChallenge.subDetail, testAddChallenge.pitch);
+});
+
+test('Test that the edit challenge tool page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoEditChallengePage(testController);
+  await editChallengePage.editChallenge(testController, testEditChallenge.pitch);
 });
 
 test('Test that an admin can access and download files from the Dump Database page', async (testController) => {

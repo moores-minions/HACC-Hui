@@ -11,7 +11,7 @@ import { Challenges } from '../../../api/challenge/ChallengeCollection';
 
 const EditChallengeWidget = () => {
 
-  SimpleSchema.debug = true;
+  // Document ID object of form { _id: "..." }
   const documentId = useParams();
   const schema = new SimpleSchema({
     title: String,
@@ -35,6 +35,7 @@ const EditChallengeWidget = () => {
       description, submissionDetail, pitch,
     } = data;
 
+    // Document id
     const id = documentId._id;
     const updateData = {
       id, description, submissionDetail, pitch,
@@ -53,7 +54,7 @@ const EditChallengeWidget = () => {
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   const formSchema = new SimpleSchema2Bridge(schema);
   return (
-    <Container style={{ paddingBottom: '50px' }}>
+    <Container fluid id='edit-challenge-page' style={{ paddingBottom: '50px' }}>
       <Col>
         <Row style={{
           backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
@@ -68,13 +69,13 @@ const EditChallengeWidget = () => {
           <Container className='team-create'>
             <Card>
               <Card.Body style={{ paddingLeft: '3rem', paddingRight: '3rem' }}>
-                <LongTextField name='description'/>
-                <TextField name='submissionDetail' />
-                <TextField name='pitch' />
-                <SubmitField value='Submit'/>
+                <LongTextField id='description' name='description'/>
+                <TextField id='submission-detail' name='submissionDetail' />
+                <TextField id='pitch' name='pitch' />
+                <ErrorsField/>
+                <SubmitField id='edit-challenge-submit' value='Submit'/>
               </Card.Body>
             </Card>
-            <ErrorsField/>
           </Container>
         </AutoForm>
       </Col>
