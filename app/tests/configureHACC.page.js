@@ -8,6 +8,7 @@ class ConfigureHACCPage {
     // this.testId = Challenges.findOne({ title: 'test' })._id;
     this.challengeId = 'Zcmy269MoDFCAzooX';
     this.skillId = 'KCnEyPjjWLnygGzT5';
+    this.toolId = 'nzoPEFeqwaYSjPEX8';
   }
 
   /** Asserts that this page is currently displayed. */
@@ -39,6 +40,11 @@ class ConfigureHACCPage {
   async gotoEditSkillPage(testController) {
     await testController.scroll(Selector(`#edit-${this.skillId}`), 'bottomRight');
     await testController.click(`#edit-${this.skillId}`);
+  }
+
+  async gotoEditToolPage(testController) {
+    await testController.scroll(Selector(`#edit-${this.toolId}`), 'bottomRight');
+    await testController.click(`#edit-${this.toolId}`);
   }
 }
 
