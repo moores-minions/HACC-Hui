@@ -37,8 +37,11 @@ const ChallengesAdminWidget = ({ challenges }) => {
         <td>{challenges.description}</td>
         <td>{challenges.submissionDetail}</td>
         <td>{challenges.pitch}</td>
-        <td><Button variant="light"><Link to={`/edit-challenge/${challenges._id}`}>Edit</Link></Button></td>
-        <td><Button variant="danger" onClick={() => removeItem(challenges._id)}>Delete</Button></td>
+        <td><Button id={`edit-${challenges._id}`}variant="light">
+          <Link to={`/edit-challenge/${challenges._id}`}>Edit</Link>
+        </Button></td>
+        <td><Button id={`del-${challenges._id}`} variant="danger"
+                    onClick={() => removeItem(challenges._id)}>Delete</Button></td>
       </tr>
         // <Table.Row>
         //   <Table.Cell width={2}>{this.props.challenges.title}</Table.Cell>

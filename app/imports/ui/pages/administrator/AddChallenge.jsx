@@ -3,7 +3,7 @@ import { Card, Col, Container } from 'react-bootstrap';
 import swal from 'sweetalert';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
-import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 
@@ -53,11 +53,11 @@ const AddChallenge = () => {
             <Card>
               <Card.Body>
                 <TextField id='title' name='title'/>
-                <TextField id='description' name='description'/>
-                <TextField id='submissionDetail' name='submissionDetail'/>
+                <LongTextField id='description' name='description'/>
+                <TextField id='submission-detail' name='submissionDetail'/>
                 <TextField id='pitch' name='pitch'/>
-                <SubmitField id='add-challenge-submit' value='Submit'/>
                 <ErrorsField/>
+                <SubmitField id='add-challenge-submit' value='Submit'/>
               </Card.Body>
             </Card>
           </Container>

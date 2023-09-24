@@ -15,7 +15,7 @@ class AddChallengePage {
     await this.isDisplayed(testController);
     await testController.typeText('#title', title);
     await testController.typeText('#description', description);
-    await testController.typeText('#submissionDetail', subDetail);
+    await testController.typeText('#submission-detail', subDetail);
     await testController.typeText('#pitch', pitch);
     await testController.click('#add-challenge-submit');
   }
