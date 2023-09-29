@@ -98,3 +98,18 @@ label {
   padding-left: 3rem;
   padding-right: 3rem;
 }
+
+.your-teams .team-buttons {
+  color: blue;
+  background-color: transparent;
+  border: none;
+}
+
+/*.your-teams .team-buttons:hover {*/
+/*  background-color: transparent;*/
+/*}*/
+
+.your-teams a {
+  color: blue;
+  text-decoration: none;
+}
