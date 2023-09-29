@@ -1,24 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import {
-  Grid,
-  Header,
-  Image,
-  Item,
-  Icon,
-  Button, Modal, Segment,
-} from 'semantic-ui-react';
+import { Button, Col, Container, Image, Modal, Row } from 'react-bootstrap';
+import * as Icon from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { _ } from 'lodash';
 import SimpleSchema from 'simpl-schema';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
-import {
-  AutoForm,
-  TextField,
-  ListField,
-  ListItemField,
-} from 'uniforms-semantic';
+import { AutoForm, TextField, ListField, ListItemField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
@@ -42,20 +31,18 @@ const schema = new SimpleSchema({
 
 });
 
-class YourTeamsCard extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      open: false,
-    };
-  }
+const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
+
+   const [show, setShow] = useState(false);
+   const handleClose = () => setShow(false);
+   const handleShow = () => setShow(true);
 
   /** On submit, insert the data.
    * @param formData {Object} the results from the form.
    * @param formRef {FormRef} reference to the form.
    */
   // eslint-disable-next-line no-unused-vars
-  submit(formData, formRef) {
+   const submit = (formData, formRef) => {
     const { participants } = formData;
     const participantCollection = Participants.dumpAll().contents;
     const foundParticipants = [];
@@ -104,19 +91,19 @@ class YourTeamsCard extends React.Component {
         return;
       }
       if (typeof TeamParticipants.findOne({
-        teamID: this.props.teams._id,
+        teamID: teams._id,
         developerID: participantDoc._id,
       }) !== 'undefined') {
         swal('Error',
-            `Sorry, participant ${participantList[i]} is already in ${this.props.teams.name}!`,
+            `Sorry, participant ${participantList[i]} is already in ${teams.name}!`,
             'error');
         return;
       }
 
       // check to see if the invitation was already issued
-      for (let j = 0; j < this.props.teamInvitation.length; j++) {
-        if (this.props.teamInvitation[j].teamID === this.props.teams._id &&
-            this.props.teamInvitation[j].participantID === participantDoc._id) {
+      for (let j = 0; j < teamInvitation.length; j++) {
+        if (teamInvitation[j].teamID === teams._id &&
+            teamInvitation[j].participantID === participantDoc._id) {
           swal('Error',
               `Sorry, an invitation to ${participantList[i]} was already issued!`,
               'error');
@@ -149,7 +136,7 @@ class YourTeamsCard extends React.Component {
     // if there are no errors, we can then add everyone
     for (let i = 0; i < participantList.length; i++) {
       // const collectionName = WantsToJoin.getCollectionName();
-      const teamDoc = Teams.findDoc(this.props.teams._id);
+      const teamDoc = Teams.findDoc(teams._id);
       const team = Slugs.getNameFromID(teamDoc.slugID);
       const participant = participantList[i];
       const definitionData = {
@@ -163,115 +150,102 @@ class YourTeamsCard extends React.Component {
         } else {
           swal('Success',
               `You've successfully invited participant(s):\n\n ${participantList.join(', ')}
-              \nto ${this.props.teams.name}
+              \nto ${teams.name}
               \n The participants can now look at 'Team Invitations' to accept it.`,
               'success');
+          formRef.reset();
         }
       });
     }
-  }
+  };
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-  render() {
-    let fRef = null;
-    const formSchema = new SimpleSchema2Bridge(schema);
-    // console.log(this.props);
-    return (
-        <Item style={{ padding: '0rem 2rem 0rem 2rem' }}>
-          <Item.Content>
-            <Item.Header>
-              <Header as={'h3'} style={{ color: '#263763', paddingTop: '2rem' }}>
-                <Icon name='users' size='tiny'/>
-                {this.props.teams.name}
-              </Header>
-            </Item.Header>
-            <Item.Meta>
-              <Grid columns='equal'>
-                <Grid.Column>
-                  GitHub: {this.props.teams.gitHubRepo}<br />
-                  DevPost: {this.props.teams.devPostPage}
-                  <Image src={this.props.teams.image} rounded size='large'/>
-                </Grid.Column>
-                <Grid.Column>
-                  <Header>Members</Header>
-                  {this.props.teamParticipants.map((participant) => <p key={participant}>
-                    {participant.firstName} {participant.lastName}</p>)}
-                </Grid.Column>
-              </Grid>
-            </Item.Meta>
-          </Item.Content>
 
-          <Button id={this.props.teams._id} style={{ backgroundColor: 'transparent' }}>
-            <Link to={`/interested-participants/${this.props.teams._id}`}>See interested
-              participants</Link>
-          </Button>
-          <Modal
-              closeIcon
-              onClose={() => this.setState({ open: false })}
-              onOpen={() => this.setState({ open: true })}
-              open={this.state.open}
-              trigger={
-                <Button id={this.props.teams._id}
-                        style={{ backgroundColor: 'transparent', color: '#4183C4' }}>
-                  Invite Participants
-                </Button>
-              }
-          >
-            <Modal.Content
+  let fRef = null;
+  const formSchema = new SimpleSchema2Bridge(schema);
+  // console.log(this.props);
+  return (
+      <Container className = 'your-teams' style={{ padding: '0rem 2rem 0rem 2rem' }}>
+        <Row>
+          <h5 style={{ color: '#263763', paddingTop: '2rem' }}>
+            <Icon.PeopleFill size={32}/>
+            {' '}
+            <b>{teams.name}</b>
+          </h5>
+        </Row>
+        <Row>
+          <Col>
+            GitHub: {teams.gitHubRepo}<br/>
+            DevPost: {teams.devPostPage}
+            <Image src={teams.image} rounded size='large'/>
+          </Col>
+          <Col>
+            <h5>Members</h5>
+            {teamParticipants.map((participant) => <p key={participant}>
+              {participant.firstName} {participant.lastName}</p>)}
+          </Col>
+
+          <Col>
+            <btn className='team-buttons' id={teams._id}>
+              <Link to={`/interested-participants/${teams._id}`}>See interested
+                participants</Link>
+            </btn>
+          </Col>
+          <Col>
+            <Button className='team-buttons' id={teams._id} onClick={handleShow}>
+              Invite Participants
+            </Button>
+            <Modal
+              onHide={handleClose}
+              show={show}
+            >
+              <Modal.Body
                 style={{
                   background: 'none',
                   padding: 0,
                 }}>
-              <AutoForm ref={ref => {
-                fRef = ref;
-              }} schema={formSchema}
-                        onSubmit={data => this.submit(data, fRef)}
-              >
-                <Segment style={{
-                  borderRadius: '10px',
-                }}>
-                  <Grid columns={1} style={{ paddingTop: '20px' }}>
-                    <Grid.Column style={{ paddingLeft: '30px', paddingRight: '30px' }}>
-                      <Header as="h2" textAlign="center">
-                        Who would you like to invite to {this.props.teams.name}?
-                      </Header>
-                      <Header as={'h4'} textAlign={'center'}
-                              style={{ paddingBottom: '2rem', marginTop: '0rem' }}>
-                        Please make sure the email you input is the same as the ones they&apos;ve used to
-                        make their Slack account.
-                      </Header>
-                      <ListField name="participants" label={'Enter each participant\'s email'}>
-                        <ListItemField name="$">
-                          <TextField showInlineError
-                                     iconLeft='mail'
-                                     name="email"
-                                     label={'Email'}/>
-                        </ListItemField>
-                      </ListField>
+                <AutoForm ref={ref => {
+                  fRef = ref;
+                }} schema={formSchema}
+                          onSubmit={data => submit(data, fRef)}
+                >
+                  <Container style={{
+                    borderRadius: '10px',
+                  }}>
+                    <h3>
+                      Who would you like to invite to {teams.name}?
+                    </h3>
+                    <h4 style={{ paddingBottom: '2rem', marginTop: '0rem' }}>
+                      Please make sure the email you input is the same as the ones they&apos;ve used to
+                      make their Slack account.
+                    </h4>
+                    <ListField addIcon={<Icon.PlusLg/>} removeIcon={<Icon.DashLg/>}
+                               name="participants" label={'Enter each participant\'s email'}>
+                      <ListItemField name="$">
+                        <TextField name="email"/>
+                      </ListItemField>
+                    </ListField>
 
-                    </Grid.Column>
-                  </Grid>
-                  <div align='center'>
-                    <Button
-                        content="Invite"
-                        labelPosition='right'
-                        icon='checkmark'
-                        positive
-                        style={{ margin: '20px 0px' }}
-                    />
-                  </div>
-                </Segment>
-              </AutoForm>
-            </Modal.Content>
-          </Modal>
+                    <div align='center'>
+                      <Button variant='success' type='submit' style={{ margin: '20px 0px' }}>
+                        Submit
+                      </Button>
+                    </div>
+                  </Container>
+                </AutoForm>
+              </Modal.Body>
+            </Modal>
+          </Col>
 
-          <Button id={this.props.teams._id} style={{ backgroundColor: 'transparent' }}>
-            <Link to={`/edit-team/${this.props.teams._id}`}>Edit Team</Link>
-          </Button>
-        </Item>
-    );
-  }
-}
+          <Col>
+            <btn className='team-buttons' id={teams._id}>
+              <Link to={`/edit-team/${teams._id}`}>Edit Team</Link>
+            </btn>
+          </Col>
+        </Row>
+      </Container>
+  );
+};
 
 YourTeamsCard.propTypes = {
   teams: PropTypes.object.isRequired,
