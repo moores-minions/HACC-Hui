@@ -165,9 +165,9 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
   const formSchema = new SimpleSchema2Bridge(schema);
   // console.log(this.props);
   return (
-      <Container className = 'your-teams' style={{ padding: '0rem 2rem 0rem 2rem' }}>
+      <Container className = 'your-teams team-card'>
         <Row>
-          <h5 style={{ color: '#263763', paddingTop: '2rem' }}>
+          <h5 className='team-name'>
             <Icon.PeopleFill size={32}/>
             {' '}
             <b>{teams.name}</b>
@@ -192,9 +192,9 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
             </btn>
           </Col>
           <Col>
-            <Button className='team-buttons' id={teams._id} onClick={handleShow}>
+            <btn className='team-buttons' id={teams._id} onClick={handleShow}>
               Invite Participants
-            </Button>
+            </btn>
             <Modal
               onHide={handleClose}
               show={show}

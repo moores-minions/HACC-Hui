@@ -113,3 +113,12 @@ label {
   color: blue;
   text-decoration: none;
 }
+
+.team-card {
+  padding: 0 2rem 0 2rem;
+}
+
+.team-name {
+  color: #263763;
+  padding-top: 2rem;
+}
