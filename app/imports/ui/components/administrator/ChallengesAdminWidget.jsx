@@ -36,7 +36,7 @@ const ChallengesAdminWidget = ({ challenges }) => {
         <td>{challenges.description}</td>
         <td>{challenges.submissionDetail}</td>
         <td>{challenges.pitch}</td>
-        <td><Button id={`edit-${challenges._id}`}variant="light">
+        <td><Button id={`edit-${challenges._id}`} variant="light">
           <Link to={`/edit-challenge/${challenges._id}`}>Edit</Link>
         </Button></td>
         <td><Button id={`del-${challenges._id}`} variant="danger"

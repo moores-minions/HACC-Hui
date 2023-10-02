@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Table } from 'semantic-ui-react';
+import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -32,14 +32,15 @@ class ToolsAdminWidget extends React.Component {
 
   render() {
     return (
-        <Table.Row>
-          <Table.Cell>{this.props.tools.name}</Table.Cell>
-          <Table.Cell>{this.props.tools.description}</Table.Cell>
-          {/* eslint-disable-next-line max-len */}
-          <Table.Cell width={2}><Button id={`edit-${this.props.tools._id}`}><Link to={`/edit-tool/${this.props.tools._id}`} style={{ color: 'rgba(0, 0, 0, 0.6)' }}>Edit</Link></Button></Table.Cell>
-          {/* eslint-disable-next-line max-len */}
-          <Table.Cell width={2}><Button id={`del-${this.props.tools._id}`} negative onClick={() => this.removeItem(this.props.tools._id)}>Delete</Button></Table.Cell>
-        </Table.Row>
+      <tr>
+        <td>{this.props.tools.name}</td>
+        <td>{this.props.tools.description}</td>
+        <td><Button id={`edit-${this.props.tools._id}`} variant="light">
+          <Link to={`/edit-tool/${this.props.tools._id}`}>Edit</Link>
+        </Button></td>
+        <td><Button id={`del-${this.props.tools._id}`} variant="danger"
+                    onClick={() => this.removeItem(this.props.tools._id)}>Delete</Button></td>
+      </tr>
     );
   }
 }

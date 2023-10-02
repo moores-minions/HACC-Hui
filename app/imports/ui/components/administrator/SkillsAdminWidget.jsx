@@ -35,7 +35,7 @@ class SkillsAdminWidget extends React.Component {
       <tr>
         <td>{this.props.skills.name}</td>
         <td>{this.props.skills.description}</td>
-        <td><Button id={`edit-${this.props.skills._id}`}variant="light">
+        <td><Button id={`edit-${this.props.skills._id}`} variant="light">
           <Link to={`/edit-skill/${this.props.skills._id}`}>Edit</Link>
         </Button></td>
         <td><Button id={`del-${this.props.skills._id}`} variant="danger"
