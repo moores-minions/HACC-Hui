@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Table } from 'semantic-ui-react';
+import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -32,14 +32,15 @@ class SkillsAdminWidget extends React.Component {
 
   render() {
     return (
-        <Table.Row>
-          <Table.Cell>{this.props.skills.name}</Table.Cell>
-          <Table.Cell>{this.props.skills.description}</Table.Cell>
-          {/* eslint-disable-next-line max-len */}
-          <Table.Cell width={2}><Button id={`edit-${this.props.skills._id}`}><Link to={`/edit-skill/${this.props.skills._id}`} style={{ color: 'rgba(0, 0, 0, 0.6)' }}>Edit</Link></Button></Table.Cell>
-          {/* eslint-disable-next-line max-len */}
-          <Table.Cell width={2}><Button id={`del-${this.props.skills._id}`} negative onClick={() => this.removeItem(this.props.skills._id)}>Delete</Button></Table.Cell>
-        </Table.Row>
+      <tr>
+        <td>{this.props.skills.name}</td>
+        <td>{this.props.skills.description}</td>
+        <td><Button id={`edit-${this.props.skills._id}`}variant="light">
+          <Link to={`/edit-skill/${this.props.skills._id}`}>Edit</Link>
+        </Button></td>
+        <td><Button id={`del-${this.props.skills._id}`} variant="danger"
+                    onClick={() => this.removeItem(this.props.skills._id)}>Delete</Button></td>
+      </tr>
     );
   }
 }
