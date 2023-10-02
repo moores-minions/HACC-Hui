@@ -7,8 +7,8 @@ import { removeItMethod } from '../../../api/base/BaseCollection.methods';
 import { Skills } from '../../../api/skill/SkillCollection';
 
 /** Renders a single row in the table. See pages/Listmenuitemss.jsx. */
-class SkillsAdminWidget extends React.Component {
-  removeItem(docID) {
+const SkillsAdminWidget = ({ skills }) => {
+  const removeItem = (docID) => {
     swal({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this skill!',
@@ -28,22 +28,20 @@ class SkillsAdminWidget extends React.Component {
             swal('You canceled the deletion!');
           }
         });
-  }
+  };
 
-  render() {
     return (
       <tr>
-        <td>{this.props.skills.name}</td>
-        <td>{this.props.skills.description}</td>
-        <td><Button id={`edit-${this.props.skills._id}`} variant="light">
-          <Link to={`/edit-skill/${this.props.skills._id}`}>Edit</Link>
+        <td>{skills.name}</td>
+        <td>{skills.description}</td>
+        <td><Button id={`edit-${skills._id}`} variant="light">
+          <Link to={`/edit-skill/${skills._id}`}>Edit</Link>
         </Button></td>
-        <td><Button id={`del-${this.props.skills._id}`} variant="danger"
-                    onClick={() => this.removeItem(this.props.skills._id)}>Delete</Button></td>
+        <td><Button id={`del-${skills._id}`} variant="danger"
+                    onClick={() => removeItem(skills._id)}>Delete</Button></td>
       </tr>
     );
-  }
-}
+};
 
 /** Require a document to be passed to this component. */
 SkillsAdminWidget.propTypes = {
