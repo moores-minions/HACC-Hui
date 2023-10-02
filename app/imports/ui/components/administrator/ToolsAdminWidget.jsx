@@ -7,8 +7,8 @@ import { removeItMethod } from '../../../api/base/BaseCollection.methods';
 import { Tools } from '../../../api/tool/ToolCollection';
 
 /** Renders a single row in the table. See pages/Listmenuitemss.jsx. */
-class ToolsAdminWidget extends React.Component {
-  removeItem(docID) {
+const ToolsAdminWidget = ({ tools }) => {
+  const removeItem = (docID) => {
     swal({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this tool!',
@@ -28,22 +28,20 @@ class ToolsAdminWidget extends React.Component {
             swal('You canceled the deletion!');
           }
         });
-  }
+  };
 
-  render() {
     return (
       <tr>
-        <td>{this.props.tools.name}</td>
-        <td>{this.props.tools.description}</td>
-        <td><Button id={`edit-${this.props.tools._id}`} variant="light">
-          <Link to={`/edit-tool/${this.props.tools._id}`}>Edit</Link>
+        <td>{tools.name}</td>
+        <td>{tools.description}</td>
+        <td><Button id={`edit-${tools._id}`} variant="light">
+          <Link to={`/edit-tool/${tools._id}`}>Edit</Link>
         </Button></td>
-        <td><Button id={`del-${this.props.tools._id}`} variant="danger"
-                    onClick={() => this.removeItem(this.props.tools._id)}>Delete</Button></td>
+        <td><Button id={`del-${tools._id}`} variant="danger"
+                    onClick={() => removeItem(tools._id)}>Delete</Button></td>
       </tr>
     );
-  }
-}
+};
 
 /** Require a document to be passed to this component. */
 ToolsAdminWidget.propTypes = {
