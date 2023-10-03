@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Segment, Header, Table, Button, Radio } from 'semantic-ui-react';
+import { Grid, Segment, Header, Button, Radio } from 'semantic-ui-react';
+import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -65,7 +66,7 @@ class ManageHaccWidget extends React.Component {
                 backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
                 borderRadius: '2rem',
               }}>
-                <Header as="h2" textAlign="center">Manage HACC</Header>
+                <h3 className="text-center">Manage HACC</h3>
                 <Header as="h5" textAlign="center">
                   <Radio toggle label="Can Create Teams"
                           checked={this.state.canCreateTeams}
@@ -79,22 +80,22 @@ class ManageHaccWidget extends React.Component {
                 borderRadius: '1rem',
                 backgroundColor: '#E5F0FE',
               }} className={'teamCreate'}>
-                <Header as="h2" textAlign="center" >Challenges</Header>
+                <h3 className="text-center">Challenges</h3>
                 <Table fixed columns={5}>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell width={2}>Title</Table.HeaderCell>
-                      <Table.HeaderCell width={5}>Description</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Submission Detail</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Pitch</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Edit</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Delete</Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
+                  <thead>
+                    <tr>
+                      <th width={2}>Title</th>
+                      <th width={5}>Description</th>
+                      <th width={2}>Submission Detail</th>
+                      <th width={2}>Pitch</th>
+                      <th width={2}>Edit</th>
+                      <th width={2}>Delete</th>
+                    </tr>
+                  </thead>
                   {/* eslint-disable-next-line max-len */}
-                  <Table.Body>{this.props.challenges.map((challenges => <ChallengesAdminWidget key={challenges._id} challenges={challenges} />
+                  <tbody>{this.props.challenges.map((challenges => <ChallengesAdminWidget key={challenges._id} challenges={challenges} />
                   ))}
-                  </Table.Body>
+                  </tbody>
                 </Table>
                 <div align='center'>
                   <Button id='add-challenge-button' style={{
@@ -102,19 +103,19 @@ class ManageHaccWidget extends React.Component {
                     margin: '2rem 0rem',
                   }}><Link to={ROUTES.ADD_CHALLENGE} style={{ color: 'white' }}>Add Challenge</Link></Button>
                 </div>
-                <Header as="h2" textAlign="center">Skills</Header>
+                <h3 className="text-center">Skills</h3>
                 <Table>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Name</Table.HeaderCell>
-                      <Table.HeaderCell>Description</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Edit</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Delete</Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th width={2}>Edit</th>
+                      <th width={2}>Delete</th>
+                    </tr>
+                  </thead>
                   {/* eslint-disable-next-line max-len */}
-                  <Table.Body>{this.props.skills.map((skills => <SkillsAdminWidget key={skills._id} skills={skills} />))}
-                  </Table.Body>
+                  <tbody>{this.props.skills.map((skills => <SkillsAdminWidget key={skills._id} skills={skills} />))}
+                  </tbody>
                 </Table>
                 <div align='center'>
                   <Button id="add-skill-button" style={{
@@ -122,18 +123,18 @@ class ManageHaccWidget extends React.Component {
                     margin: '2rem 0rem',
                   }}><Link to={ROUTES.ADD_SKILL} style={{ color: 'white' }}>Add Skill</Link></Button>
                 </div>
-                <Header as="h2" textAlign="center">Tools</Header>
+                <h3 className="text-center">Tools</h3>
                 <Table>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Name</Table.HeaderCell>
-                      <Table.HeaderCell>Description</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Edit</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Delete</Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-                  <Table.Body>{this.props.tools.map((tools => <ToolsAdminWidget key={tools._id} tools={tools} />))}
-                  </Table.Body>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th width={2}>Edit</th>
+                      <th width={2}>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>{this.props.tools.map((tools => <ToolsAdminWidget key={tools._id} tools={tools} />))}
+                  </tbody>
                 </Table>
                 <div align='center'>
                   <Button id='add-tool-button' style={{
