@@ -75,6 +75,10 @@ class NavBar {
     await testController.click('#login-dropdown');
     await testController.click('#login-dropdown-sign-up');
   }
+
+  async gotoYourTeamsPage(testController) {
+    await testController.click('#your-teams');
+  }
 }
 
 export const navBar = new NavBar();

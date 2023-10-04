@@ -39,7 +39,7 @@ class NavBar extends React.Component {
                 <Nav.Link as={NavLink} to={ROUTES.YOUR_PROFILE}>Profile</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.CREATE_TEAM} disabled={!isCompliant}>Create Team</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.BEST_FIT}>Open Teams ({numTeams})</Nav.Link>
-                <Nav.Link as={NavLink} to={ROUTES.YOUR_TEAMS}>Your Teams</Nav.Link>
+                <Nav.Link id='your-teams' as={NavLink} to={ROUTES.YOUR_TEAMS}>Your Teams</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.LIST_PARTICIPANTS}>List Participants ({numParticipants})</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.SUGGEST_TOOL_SKILL}>Suggest Tool/Skill</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.TEAM_INVITATIONS}>Invitations</Nav.Link>

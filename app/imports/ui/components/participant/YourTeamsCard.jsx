@@ -227,7 +227,7 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
                     </ListField>
 
                     <div align='center'>
-                      <Button variant='success' type='submit' style={{ margin: '20px 0px' }}>
+                      <Button id='submit' variant='success' type='submit' style={{ margin: '20px 0px' }}>
                         Submit
                       </Button>
                     </div>
