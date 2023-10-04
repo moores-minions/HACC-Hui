@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import { useTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
 import { useParams } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { ROUTES } from '../../../startup/client/route-constants';
 
 const EditChallengeWidget = () => {
+
+  const [redirect, setRedirect] = useState(false);
 
   // Document ID object of form { _id: "..." }
   const documentId = useParams();
@@ -39,9 +43,14 @@ const EditChallengeWidget = () => {
           swal('Error', error.message, 'error');
         } else {
           swal('Success', 'Item edited successfully', 'success');
+          setRedirect(true);
         }
       });
   };
+
+  if (redirect) {
+    return <Redirect to={ ROUTES.CONFIGURE_HACC } />;
+  }
 
   const formSchema = new SimpleSchema2Bridge(Challenges.getSchema());
   return (
