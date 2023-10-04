@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import { useTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
 import { useParams } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { Tools } from '../../../api/tool/ToolCollection';
+import { ROUTES } from '../../../startup/client/route-constants';
 
 const EditToolWidget = () => {
+
+  const [redirect, setRedirect] = useState(false);
 
   const documentId = useParams();
   const { doc } = useTracker(() => {
@@ -40,9 +44,17 @@ const EditToolWidget = () => {
             swal('Error', error.message, 'error');
           } else {
             swal('Success', 'Item edited successfully', 'success');
+
+            setRedirect(true);
           }
         });
   };
+
+  // const { from } = { pathname: ROUTES.CONFIGURE_HACC } };
+  // if correct authentication, redirect to from: page instead of signup screen
+  if (redirect) {
+    return <Redirect to={ ROUTES.CONFIGURE_HACC } />;
+  }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
 
