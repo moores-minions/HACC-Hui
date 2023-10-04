@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Segment, Header, Button, Radio } from 'semantic-ui-react';
-import Table from 'react-bootstrap/Table';
+import { Grid, Segment, Header, Radio } from 'semantic-ui-react';
+import { Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -98,6 +98,8 @@ class ManageHaccWidget extends React.Component {
                   </tbody>
                 </Table>
                 <div align='center'>
+                  <Button id="add-challenge-button" variant="danger">
+                    <Link to={ROUTES.ADD_CHALLENGE}>Add Challenge</Link></Button>
                   <Button id='add-challenge-button' style={{
                     color: 'white', backgroundColor: '#DB2828',
                     margin: '2rem 0rem',
