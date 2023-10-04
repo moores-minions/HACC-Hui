@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
+import { Button, Table } from 'react-bootstrap';
 import { removeItMethod } from '../../../api/base/BaseCollection.methods';
 import { MinorParticipants } from '../../../api/user/MinorParticipantCollection';
 
