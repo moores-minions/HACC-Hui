@@ -13,6 +13,7 @@ import { allTeamsInvitationPage } from './allteamsinvitationpage';
 import { agePage } from './age.page';
 import { listparticipantscardadminPage } from './listparticipantscardadmin.page';
 import { listparticipantscardPage } from './listparticipantscard.page';
+import { yourTeamsPage } from './yourteams.page';
 
 /* global fixture:false, test:false */
 
@@ -107,4 +108,11 @@ test('Test that a regular user can access the list participants page and its fea
   await signinPage.signin(testController, userCred.username, userCred.password);
   await navBar.gotoListPartsPage(testController);
   await listparticipantscardPage.listPartsCard(testController);
+});
+
+test('Test that the Your Teams page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, 'gsummey@hotmail.com', userCred.password);
+  await navBar.gotoYourTeamsPage(testController);
+  await yourTeamsPage.invite(testController, userCred.username);
 });
