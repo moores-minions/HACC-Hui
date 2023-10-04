@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Item, List } from 'semantic-ui-react';
+import { ListGroup } from 'react-bootstrap';
 import { Skills } from '../../../api/skill/SkillCollection';
 
 class SkillItem extends React.Component {
@@ -8,13 +8,9 @@ class SkillItem extends React.Component {
     const { item } = this.props;
     const skillName = Skills.findDoc(item.skillID).name;
     return (
-        <List.Item>
-          <Item>
-            <Item.Content>
-              {skillName}
-            </Item.Content>
-          </Item>
-        </List.Item>
+        <ListGroup.Item>
+          {skillName}
+        </ListGroup.Item>
     );
   }
 }
