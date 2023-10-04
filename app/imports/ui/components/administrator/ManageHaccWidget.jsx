@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Container, Row, Col, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -26,21 +26,18 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
     CanChangeChallenges.findOne()?.canChangeChallenges || false,
   );
 
-  const [sortedtools, settools] = useState([...tools]);
-  const [order, setorder] = useState('ASC');
+  const [sortedtools, setTools] = useState([]);
 
-  const sorting = (col) => {
-    if (order === 'ASC') {
-      const sorted = [...sortedtools].sort((a, b) => (a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1));
-      settools(sorted);
-      setorder('DESC');
+  const sortTools = (toolsToSort) => toolsToSort.sort((a, b) => {
+      const descriptionComparison = a.description.toLowerCase().localeCompare(b.description.toLowerCase());
+      if (descriptionComparison !== 0) return descriptionComparison;
 
-    } else if (order === 'DESC') {
-      const sorted = [...sortedtools].sort((a, b) => (a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1));
-      settools(sorted);
-      setorder('ASC');
-  }
-};
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    });
+
+  useEffect(() => {
+    setTools(sortTools(tools));
+  }, [tools]);
 
   const toggleTeam = () => {
     const doc = CanCreateTeams.findOne();
@@ -158,8 +155,8 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
                   <Table>
                     <thead>
                     <tr>
-                      <th onClick={() => sorting('name')}>Name</th>
-                      <th>Description</th>
+                      <th width={2}>Name</th>
+                      <th width={2}>Description</th>
                       <th width={2}>Edit</th>
                       <th width={2}>Delete</th>
                     </tr>
