@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Button, Container, Row, Col, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -18,44 +18,44 @@ import { CanChangeChallenges } from '../../../api/team/CanChangeChallengeCollect
  * Renders the Page for Managing HACC. **deprecated**
  * @memberOf ui/pages
  */
-class ManageHaccWidget extends React.Component {
+const ManageHaccWidget = ({ challenges, skills, tools }) => {
+  const [canCreateTeams, setCanCreateTeams] = useState(
+    CanCreateTeams.findOne()?.canCreateTeams || false,
+  );
+  const [canChangeChallenges, setCanChangeChallenges] = useState(
+    CanChangeChallenges.findOne()?.canChangeChallenges || false,
+  );
 
-  state = {
-    canCreateTeams: CanCreateTeams.findOne().canCreateTeams,
-    canChangeChallenges: CanChangeChallenges.findOne()?.canChangeChallenges,
-  }
-
-  toggleTeam = () => {
-    const { canCreateTeams } = this.state;
+  const toggleTeam = () => {
     const doc = CanCreateTeams.findOne();
-    const updateData = {};
-    updateData.id = doc._id;
-    updateData.canCreateTeams = !canCreateTeams;
+    const updateData = {
+      id: doc._id,
+      canCreateTeams: !canCreateTeams,
+    };
+
     const collectionName = CanCreateTeams.getCollectionName();
     updateMethod.call({ collectionName, updateData }, (error) => {
       if (error) {
         console.error(error);
       }
     });
-    this.setState((prevState) => ({ canCreateTeams: !prevState.canCreateTeams }));
-  }
+    setCanCreateTeams(!canCreateTeams);
+  };
 
-  toggleChallenge = () => {
-    const { canChangeChallenges } = this.state;
+  const toggleChallenge = () => {
     const doc = CanChangeChallenges.findOne();
-    const updateData = {};
-    updateData.id = doc._id;
-    updateData.canChangeChallenges = !canChangeChallenges;
+    const updateData = {
+    id: doc._id,
+    canChangeChallenges: !canChangeChallenges,
+  };
     const collectionName = CanChangeChallenges.getCollectionName();
     updateMethod.call({ collectionName, updateData }, (error) => {
       if (error) {
         console.error(error);
       }
     });
-    this.setState((prevState) => ({ canChangeChallenges: !prevState.canChangeChallenges }));
-  }
-
-  render() {
+    setCanChangeChallenges(!canChangeChallenges);
+  };
     return (
         <div id="configureHACCPage" style={{ paddingBottom: '50px' }}>
           <Container>
@@ -74,8 +74,8 @@ class ManageHaccWidget extends React.Component {
                           type="switch"
                           id="custom-switch-teams"
                           label="Can Create Teams"
-                          checked={this.state.canCreateTeams}
-                          onChange={this.toggleTeam}
+                          checked={canCreateTeams}
+                          onChange={toggleTeam}
                         />
                       </Col>
                       <Col xs="auto">
@@ -83,8 +83,8 @@ class ManageHaccWidget extends React.Component {
                           type="switch"
                           id="custom-switch-challenges"
                           label="Can Change Challenges"
-                          checked={this.state.canChangeChallenges}
-                          onChange={this.toggleChallenge}
+                          checked={canChangeChallenges}
+                          onChange={toggleChallenge}
                         />
                       </Col>
                     </Row>
@@ -108,8 +108,8 @@ class ManageHaccWidget extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.challenges.map((challenges => <ChallengesAdminWidget
-                        key={challenges._id} challenges={challenges} />
+                    {challenges.map((challenge => <ChallengesAdminWidget
+                        key={challenge._id} challenges={challenge} />
                     ))}
                     </tbody>
                   </Table>
@@ -129,7 +129,7 @@ class ManageHaccWidget extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.skills.map((skills => <SkillsAdminWidget key={skills._id} skills={skills} />))}
+                    {skills.map((skill => <SkillsAdminWidget key={skill._id} skills={skill} />))}
                     </tbody>
                   </Table>
                   <div className="text-center">
@@ -148,7 +148,7 @@ class ManageHaccWidget extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.tools.map((tools => <ToolsAdminWidget key={tools._id} tools={tools} />))}
+                    {tools.map((tool => <ToolsAdminWidget key={tool._id} tools={tool} />))}
                     </tbody>
                   </Table>
                   <div className="text-center">
@@ -161,8 +161,7 @@ class ManageHaccWidget extends React.Component {
           </Container>
         </div>
     );
-  }
-}
+};
 
 ManageHaccWidget.propTypes = {
   challenges: PropTypes.array.isRequired,
