@@ -39,8 +39,9 @@ class NavBar extends React.Component {
                 <Nav.Link as={NavLink} to={ROUTES.YOUR_PROFILE}>Profile</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.CREATE_TEAM} disabled={!isCompliant}>Create Team</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.BEST_FIT}>Open Teams ({numTeams})</Nav.Link>
-                <Nav.Link id='your-teams' as={NavLink} to={ROUTES.YOUR_TEAMS}>Your Teams</Nav.Link>
-                <Nav.Link as={NavLink} to={ROUTES.LIST_PARTICIPANTS}>List Participants ({numParticipants})</Nav.Link>
+                <Nav.Link as={NavLink} to={ROUTES.YOUR_TEAMS}>Your Teams</Nav.Link>
+                <Nav.Link id="list-parts" as={NavLink} to={ROUTES.LIST_PARTICIPANTS}>List Participants
+                  ({numParticipants})</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.SUGGEST_TOOL_SKILL}>Suggest Tool/Skill</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.TEAM_INVITATIONS}>Invitations</Nav.Link>
               </>
@@ -51,8 +52,8 @@ class NavBar extends React.Component {
                 <Nav.Link id="configHACC" as={NavLink} to={ROUTES.CONFIGURE_HACC}>Configure HACC</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.UPDATE_MP}>Update Minor Participants Status</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.LIST_SUGGESTIONS}>Suggestions List ({suggestionCount})</Nav.Link>
-                <Nav.Link as={NavLink} to={ROUTES.LIST_PARTICIPANTS_ADMIN}>List Participants ({numParticipants})
-                </Nav.Link>
+                <Nav.Link id="list-parts" as={NavLink} to={ROUTES.LIST_PARTICIPANTS_ADMIN}>List Participants
+                  ({numParticipants})</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.VIEW_TEAMS}>View Teams ({teamCount})</Nav.Link>
                 <Nav.Link id ="al-in" as={NavLink} to={ROUTES.ALL_TEAM_INVITATIONS}>View All Team Invitations</Nav.Link>
                 <Nav.Link id="dump-page" as={NavLink} to={ROUTES.DUMP_DATABASE}>Dump Database</Nav.Link>

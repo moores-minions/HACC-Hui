@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  Grid,
-  Header,
-  Item,
-  Modal,
-  Icon,
-  List, Divider,
-} from 'semantic-ui-react';
+import { Card, Accordion, Container, Row, Col, Modal } from 'react-bootstrap';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import * as Icon from 'react-bootstrap-icons';
 import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
 
 class ListParticipantCardAdmin extends React.Component {
@@ -30,114 +24,132 @@ class ListParticipantCardAdmin extends React.Component {
     const isMinor = this.props.participants.minor;
     // console.log(isMinor);
     return (
-      <Item onMouseEnter={changeBackground} onMouseLeave={onLeave}
-            style={{ padding: '0rem 1.5rem 0.5rem 1.5rem' }}>
-        <Modal closeIcon trigger={
-          <Item.Content>
-            <Item.Header>
-              <Header as={'h3'} style={{ color: '#263763', paddingTop: '1.5rem' }}>
-                <Icon name='user' size='tiny' />
-                {this.props.participants.firstName} {this.props.participants.lastName}
-                {this.props.teams.length === 0 ? (<Item.Extra><Icon color='red' name='dont' />No team</Item.Extra>)
-                  : ''}
-                {_.uniq(this.props.teams).length > 1 ? (<Item.Extra><Icon color='red'
-                                                                          name='dont' />Multiple teams</Item.Extra>)
-                  : ''}
-                {isMinor ? (<Item.Extra><Icon name='child'/>Minor</Item.Extra>) : ''}
-              </Header>
-            </Item.Header>
-            <Item.Description>
-              {/* <Grid.Column> */}
-              {/*  <Header>About Me</Header> */}
-              {/*  {this.props.participants.aboutMe} */}
-              {/* </Grid.Column> */}
-              <Divider hidden />
-              <Grid doubling stackable columns={6}>
-                <Grid.Column>
-                  <b>Challenges</b><br />
-                  <Grid.Column floated={'left'} style={{ paddingBottom: '0.3rem' }}>
-                    {this.props.challenges.slice(0, 3).map((challenge, i) => <p
-                      style={{ color: 'rgb(89, 119, 199)' }}
-                      key={challenge + i}>
-                      {challenge}</p>)}
-                  </Grid.Column>
-                </Grid.Column>
-                <Grid.Column>
-                  <b>Skills</b><br />
+      // Start of what is shown on List Participants
+      <>
+      <Card id="part-card-page-admin" onMouseEnter={changeBackground} onMouseLeave={onLeave}>
+        <Card.Body>
+          <Card.Title>{this.props.participants.firstName} {this.props.participants.lastName}</Card.Title>
+          <Card.Text>
+              {this.props.teams.length === 0 ? (
+                <Card.Subtitle>
+                  <Icon.XCircleFill color="crimson"/> No team <Icon.XCircleFill color="crimson"/>
+                </Card.Subtitle>) : ''}
+              {_.uniq(this.props.teams).length > 1 ? (<Card.Subtitle>Multiple teams</Card.Subtitle>) : ''}
+              {isMinor ? (<Card.Subtitle>Minor</Card.Subtitle>) : ''}
+          </Card.Text>
+          <Card.Text>
+            <Container>
+              <Row>
+                <Col>
+                  <Card.Subtitle>Challenges</Card.Subtitle>
+                  {this.props.challenges.slice(0, 3).map((challenge, i) => <p
+                    style={{ color: 'rgb(89, 119, 199)' }}
+                    key={challenge + i}>
+                    {challenge}</p>)}
+                  {_.uniq(this.props.challenges).length === 0 ? (<Card.Subtitle>N/A</Card.Subtitle>) : ''}
+                </Col>
+                <Col>
+                  <Card.Subtitle>Skills</Card.Subtitle>
                   {this.props.skills.slice(0, 3).map((skill, i) => <p key={skill + i}>
                     {skill.name}</p>)}
-                </Grid.Column>
-                <Grid.Column>
-                  <b>Tools</b><br />
+                  {_.uniq(this.props.skills).length === 0 ? (<p>N/A</p>) : ''}
+                </Col>
+                <Col>
+                  <Card.Subtitle>Tools</Card.Subtitle>
                   {this.props.tools.slice(0, 3).map((tool, i) => <p key={tool + i}>
                     {tool.name}</p>)}
-                </Grid.Column>
-                <Grid.Column>
-                  <b>Slack Username</b><br />
+                  {_.uniq(this.props.tools).length === 0 ? (<p>N/A</p>) : ''}
+                </Col>
+                <Col>
+                  <Card.Subtitle>Slack Username</Card.Subtitle>
                   {this.props.participants.username}
-                </Grid.Column>
-                <Grid.Column>
-                  <b>GitHub</b><br />
+                  {this.props.participants.username.length === 0 ? (<p>Username not in database</p>) : ''}
+                </Col>
+                <Col>
+                  <Card.Subtitle>GitHub</Card.Subtitle>
                   {this.props.participants.gitHub}
-                </Grid.Column>
-              </Grid>
-            </Item.Description>
-          </Item.Content>
-        }>
-          <Modal.Header>
-            {this.props.participants.firstName} {this.props.participants.lastName}
-            <br /> {this.props.participants.demographicLevel}
-          </Modal.Header>
-          <Modal.Content image>
-            <Modal.Description>
-              <Grid container columns={2}>
-                <Grid.Column><Icon name="github" />GitHub:<br />
-                  <a href={this.props.participants.gitHub}>{this.props.participants.gitHub}</a>
-                </Grid.Column>
-                <Grid.Column><Icon name="server" />Website:<br />
-                  <a href={this.props.participants.website}>{this.props.participants.website}</a>
-                </Grid.Column>
-                <Grid.Column><Icon name="linkedin" />LinkedIn:<br />
-                  <a href={this.props.participants.linkedIn}>{this.props.participants.linkedIn}</a>
-                </Grid.Column>
-                <Grid.Column><Icon name="slack" />Slack Username:<br />
-                  <a href={this.props.participants.username}>{this.props.participants.username}</a>
-                </Grid.Column>
-              </Grid>
-              <Divider hidden />
-              <Grid.Column>
-                <Header dividing size="small">Challenges</Header>
-                <List bulleted>
-                  {this.props.challenges.map((challenge, i) => (
-                    <List.Item key={challenge + i}>{challenge}</List.Item>
-                  ))}
-                </List>
-              </Grid.Column>
-              <Divider hidden />
-              <Grid.Column>
-                <Header dividing size="small">Skills</Header>
-                <List bulleted>
-                  {this.props.skills.map((skill, i) => <List.Item key={skill + i}>{skill.name}</List.Item>)}
-                </List>
-              </Grid.Column>
-              <Divider hidden />
-              <Grid.Column>
-                <Header dividing size="small">Tools</Header>
-                <List bulleted>
-                  {this.props.tools.map((tool, i) => <List.Item key={tool + i}>{tool.name}</List.Item>)}
-                </List>
-              </Grid.Column>
-              <Divider hidden />
-              <Grid.Column>
-                <Header dividing size="small">Teams</Header>
-                <List bulleted>
-                  {_.uniq(this.props.teams).map((team, i) => <List.Item key={team + i}>{team}</List.Item>)}
-                </List>
-              </Grid.Column>
-            </Modal.Description>
-          </Modal.Content>
-        </Modal>
-      </Item>
+                  {_.uniq(this.props.participants.gitHub).length === 0 ? (<p>GitHub not in database</p>) : ''}
+                </Col>
+              </Row>
+            </Container>
+            <Accordion id="more-info-tab">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>More info...</Accordion.Header>
+                <Accordion.Body>
+                    <Modal.Dialog size="lg">
+                      <Modal.Header>
+                        <Modal.Title>
+                          <Row>{this.props.participants.firstName} {this.props.participants.lastName}</Row>
+                          <Row>{this.props.participants.demographicLevel}</Row>
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Row>
+                          <Col>
+                            <Icon.Github/> GitHub:
+                            <a href={this.props.participants.gitHub}>{this.props.participants.gitHub}</a>
+                            {_.uniq(this.props.participants.gitHub).length === 0 ? (<p>GitHub not in database</p>) : ''}
+                          </Col>
+                          <Col>
+                            <Icon.Linkedin/> LinkedIn:
+                            <a href={this.props.participants.linkedIn}>{this.props.participants.linkedIn}</a>
+                            {_.uniq(this.props.participants.linkedIn).length === 0 ?
+                              (<p>LinkedIn not in database</p>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <Icon.Server/> Website:
+                            <a href={this.props.participants.website}>{this.props.participants.website}</a>
+                            {_.uniq(this.props.participants.website).length === 0 ? (<p>Website not listed</p>) : ''}
+                          </Col>
+                          <Col>
+                            <Icon.Slack/> Slack Username:
+                            <a href={this.props.participants.username}> {this.props.participants.username}</a>
+                            {_.uniq(this.props.participants.username).length === 0 ?
+                              (<p>Username not in database</p>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            Challenges<hr style={ { marginTop: 1, marginBottom: 1 } }/>
+                            {this.props.challenges.map((challenge, i) => (
+                              <p key={challenge + i}>- {challenge}</p>
+                            ))}
+                            {_.uniq(this.props.challenges).length === 0 ? (<Card.Subtitle>N/A</Card.Subtitle>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            Skills<hr style={ { marginTop: 1, marginBottom: 1 } }/>
+                            {this.props.skills.map((skill, i) => <p key={skill + i}>- {skill.name}</p>)}
+                            {_.uniq(this.props.skills).length === 0 ? (<p>N/A</p>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            Tools<hr style={ { marginTop: 1, marginBottom: 1 } }/>
+                            {this.props.tools.map((tool, i) => <p key={tool + i}>- {tool.name}</p>)}
+                            {_.uniq(this.props.tools).length === 0 ? (<p>N/A</p>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            Teams<hr style={ { marginTop: 1, marginBottom: 1 } }/>
+                            {_.uniq(this.props.teams).map((team, i) => <p key={team + i}>{team}</p>)}
+                            {this.props.teams.length === 0 ? (
+                              <p> No team </p>) : ''}
+                          </Col>
+                        </Row>
+                      </Modal.Body>
+                    </Modal.Dialog>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </>
     );
   }
 }

@@ -1,31 +1,16 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import {
-  Grid,
-  Header,
-  Item,
-  Modal,
-  Icon,
-  Button,
-  Dropdown,
-  List, Divider,
-} from 'semantic-ui-react';
+import { Card, Accordion, Container, Row, Col, Modal } from 'react-bootstrap';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import swal from 'sweetalert';
-import { defineMethod } from '../../../api/base/BaseCollection.methods';
+import _ from 'lodash';
+import * as Icon from 'react-bootstrap-icons';
 import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
-import { Teams } from '../../../api/team/TeamCollection';
-import { Participants } from '../../../api/user/ParticipantCollection';
-import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 
-class ListParticipantsCard extends React.Component {
-  state = {};
+class ListParticipantCard extends React.Component {
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   render() {
-
-    const { value } = this.state;
+    // console.log(this.props.teams);
 
     function changeBackground(e) {
       e.currentTarget.style.backgroundColor = '#fafafa';
@@ -35,215 +20,133 @@ class ListParticipantsCard extends React.Component {
     function onLeave(e) {
       e.currentTarget.style.backgroundColor = 'transparent';
     }
-
-    function setOptions() {
-      const teams = Teams.find({ owner: Participants.findDoc({ userID: Meteor.userId() })._id }).fetch();
-      const newOptions = [];
-      newOptions.push({ key: 'Select a Team', text: 'Select a Team', value: 'Select a Team' });
-      for (let i = 0; i < teams.length; i++) {
-        newOptions.push({ key: teams[i].name, text: teams[i].name, value: teams[i].name });
-      }
-      return newOptions;
-    }
-
-    const options = setOptions();
-
-    function hasTeams() {
-      const teams = Teams.find({ owner: Participants.findDoc({ userID: Meteor.userId() })._id }).fetch();
-      if (teams.length === 0) {
-        return false;
-      }
-      return true;
-    }
-
-    function handleChange(dID, { val }, e) {
-      // eslint-disable-next-line no-console
-      console.log(val);
-      // console.log(e);
-      if (e.value !== 'Select a Team') {
-        const thisTeam = Teams.findDoc({ name: e.value })._id;
-        const participantID = Participants.findDoc({ _id: dID }).username;
-        const definitionData = { team: thisTeam, participant: participantID };
-        const collectionName = TeamInvitations.getCollectionName();
-        if (typeof TeamParticipants.findOne({
-          teamID: thisTeam,
-          participantID: dID,
-        }) !== 'undefined') {
-          // console.log('already in team');
-          swal('Error',
-              `Sorry, participant ${participantID} is already in this team!`,
-              'error');
-          return;
-        }
-        if (typeof TeamInvitations.findOne({
-          teamID: thisTeam,
-          participantID: dID,
-        }) !== 'undefined') {
-          // console.log('already invited');
-          swal('Error',
-              `Sorry, participant ${participantID} has already been sent an invitation!`,
-              'error');
-          return;
-        }
-        /*
-        console.log(typeof TeamInvitations.findOne({
-          teamID: thisTeam,
-          participantID: dID,
-        }) !== 'undefined');
-
-        console.log(typeof TeamInvitations.findOne({
-          teamID: thisTeam,
-          participantID: dID,
-        }));
-         */
-
-        defineMethod.call({ collectionName: collectionName, definitionData: definitionData },
-            (error) => {
-              if (error) {
-                swal('Error', error.message, 'error');
-                // console.error(error.message);
-              } else {
-                swal('Success', 'Invitation sent successfully', 'success');
-                // console.log('Success');
-              }
-            });
-      }
-    }
-
+    // console.log(this.props);
     return (
-        <Item onMouseEnter={changeBackground} onMouseLeave={onLeave}
-              style={{ padding: '0rem 1.5rem 0.5rem 1.5rem' }}>
-          <Modal closeIcon trigger={
-            <Item.Content>
-              <Item.Header>
-                <Header as={'h3'} style={{ color: '#263763', paddingTop: '1.5rem' }}>
-                  <Icon name='user' size='tiny' />
-                  {this.props.participants.firstName} {this.props.participants.lastName}
-                </Header>
-              </Item.Header>
-              <Item.Description>
-                  <Grid.Column>
-                    <Header>About Me</Header>
-                    {this.props.participants.aboutMe}
-                  </Grid.Column>
-                  <Divider hidden/>
-                  <Grid doubling stackable columns={5}>
-                    <Grid.Column>
-                      <Header>Challenges</Header>
-                      <Grid.Column floated={'left'} style={{ paddingBottom: '0.3rem' }}>
-                        {this.props.challenges.slice(0, 3).map((challenge, i) => <p
-                            style={{ color: 'rgb(89, 119, 199)' }}
-                            key={challenge + i}>
-                          {challenge}</p>)}
-                      </Grid.Column>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Header>Skills</Header>
-                      {this.props.skills.slice(0, 3).map((skill, i) => <p key={skill + i}>
-                        {skill.name}</p>)}
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Header>Tools</Header>
-                      {this.props.tools.slice(0, 3).map((tool, i) => <p key={tool + i}>
-                        {tool.name}</p>)}
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Header>Slack Username</Header>
-                      {this.props.participants.slackUsername}
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Button.Group style={{ backgroundColor: 'transparent' }}>
-                        {hasTeams() ? (
-                        <Button style={{ backgroundColor: 'transparent' }}>Send Invitation</Button>) : '' }
-                        {hasTeams() ? (
-                        <Dropdown
-                            className='button icon'
-                            onChange={handleChange.bind(this, this.props.participantID)}
-                            options={options}
-                            trigger={<></>}
-                            style={{ backgroundColor: 'transparent' }}
-                        />) : '' }
-                      </Button.Group>
-                    </Grid.Column>
-                  </Grid>
-              </Item.Description>
-            </Item.Content>
-          }>
-            <Modal.Header>
-              {this.props.participants.firstName} {this.props.participants.lastName}
-              <br /> {this.props.participants.demographicLevel}
-            </Modal.Header>
-            <Modal.Content image>
-              <Modal.Description>
-                <Grid container columns={2}>
-                  <Grid.Column><Icon name="github"/>GitHub:<br/>
-                    <a href={this.props.participants.gitHub}>{this.props.participants.gitHub}</a>
-                  </Grid.Column>
-                  <Grid.Column><Icon name="server"/>Website:<br/>
-                    <a href={this.props.participants.website}>{this.props.participants.website}</a>
-                  </Grid.Column>
-                  <Grid.Column><Icon name="linkedin"/>LinkedIn:<br/>
-                    <a href={this.props.participants.linkedIn}>{this.props.participants.linkedIn}</a>
-                  </Grid.Column>
-                  <Grid.Column><Icon name="slack"/>Slack Username:<br/>
-                    <a href={this.props.participants.slackUsername}>{this.props.participants.slackUsername}</a>
-                  </Grid.Column>
-                </Grid>
-                <Divider hidden/>
-                <Grid.Column>
-                  <Header dividing size="small">Challenges</Header>
-                  <List bulleted>
-                    {this.props.challenges.map((challenge, i) => (
-                      <List.Item key={challenge + i}>{challenge}</List.Item>
-                    ))}
-                  </List>
-                </Grid.Column>
-                <Divider hidden/>
-                <Grid.Column>
-                  <Header dividing size="small">Skills</Header>
-                  <List bulleted>
-                    {this.props.skills.map((skill, i) => <List.Item key={skill + i}>{skill.name}</List.Item>)}
-                  </List>
-                </Grid.Column>
-                <Divider hidden/>
-                <Grid.Column>
-                  <Header dividing size="small">Tools</Header>
-                  <List bulleted>
-                    {this.props.tools.map((tool, i) => <List.Item key={tool + i}>{tool.name}</List.Item>)}
-                  </List>
-                </Grid.Column>
-                <Divider hidden/>
-              </Modal.Description>
-            </Modal.Content>
-            <Modal.Actions>
-              <Button.Group style={{ backgroundColor: 'transparent' }}>
-                {hasTeams() ? (
-                    <Button style={{ backgroundColor: 'transparent' }}>Send Invitation</Button>) : ''}
-                {hasTeams() ? (
-                    <Dropdown
-                    className = 'button icon'
-                  onChange={handleChange.bind(this, this.props.participantID)}
-                  options={options}
-                  // trigger={<></>}
-                  style={{ backgroundColor: 'transparent' }}
-                  selection
-                  value={value}
-                  />) : '' }
-              </Button.Group>
-            </Modal.Actions>
-          </Modal>
-        </Item>
+      // Start of what is shown on List Participants
+      <>
+        <Card id="part-card-page" onMouseEnter={changeBackground} onMouseLeave={onLeave}>
+          <Card.Body>
+            <Card.Title>{this.props.participants.firstName} {this.props.participants.lastName}</Card.Title>
+            <Card.Text>
+              <Container>
+                <Row>
+                  <Col>
+                    <Card.Subtitle>Challenges</Card.Subtitle>
+                    {this.props.challenges.slice(0, 3).map((challenge, i) => <p
+                      style={{ color: 'rgb(89, 119, 199)' }}
+                      key={challenge + i}>
+                      {challenge}</p>)}
+                    {_.uniq(this.props.challenges).length === 0 ? (<Card.Subtitle>N/A</Card.Subtitle>) : ''}
+                  </Col>
+                  <Col>
+                    <Card.Subtitle>Skills</Card.Subtitle>
+                    {this.props.skills.slice(0, 3).map((skill, i) => <p key={skill + i}>
+                      {skill.name}</p>)}
+                    {_.uniq(this.props.skills).length === 0 ? (<p>N/A</p>) : ''}
+                  </Col>
+                  <Col>
+                    <Card.Subtitle>Tools</Card.Subtitle>
+                    {this.props.tools.slice(0, 3).map((tool, i) => <p key={tool + i}>
+                      {tool.name}</p>)}
+                    {_.uniq(this.props.tools).length === 0 ? (<p>N/A</p>) : ''}
+                  </Col>
+                  <Col>
+                    <Card.Subtitle>Slack Username</Card.Subtitle>
+                    {this.props.participants.username}
+                    {this.props.participants.username.length === 0 ? (<p>Username not in database</p>) : ''}
+                  </Col>
+                  <Col>
+                    <Card.Subtitle>GitHub</Card.Subtitle>
+                    {this.props.participants.gitHub}
+                    {_.uniq(this.props.participants.gitHub).length === 0 ? (<p>GitHub not in database</p>) : ''}
+                  </Col>
+                </Row>
+              </Container>
+              <Accordion id="more-info-tab">
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>More info...</Accordion.Header>
+                  <Accordion.Body>
+                    <Modal.Dialog size="lg">
+                      <Modal.Header>
+                        <Modal.Title>
+                          <Row>{this.props.participants.firstName} {this.props.participants.lastName}</Row>
+                          <Row>{this.props.participants.demographicLevel}</Row>
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Row>
+                          <Col>
+                            <Icon.Github/> GitHub:
+                            <a href={this.props.participants.gitHub}>{this.props.participants.gitHub}</a>
+                            {_.uniq(this.props.participants.gitHub).length === 0 ? (<p>GitHub not in database</p>) : ''}
+                          </Col>
+                          <Col>
+                            <Icon.Linkedin/> LinkedIn:
+                            <a href={this.props.participants.linkedIn}>{this.props.participants.linkedIn}</a>
+                            {_.uniq(this.props.participants.linkedIn).length === 0 ?
+                              (<p>LinkedIn not in database</p>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <Icon.Server/> Website:
+                            <a href={this.props.participants.website}>{this.props.participants.website}</a>
+                            {_.uniq(this.props.participants.website).length === 0 ? (<p>Website not listed</p>) : ''}
+                          </Col>
+                          <Col>
+                            <Icon.Slack/> Slack Username:
+                            <a href={this.props.participants.username}> {this.props.participants.username}</a>
+                            {_.uniq(this.props.participants.username).length === 0 ?
+                              (<p>Username not in database</p>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            Challenges<hr style={ { marginTop: 1, marginBottom: 1 } }/>
+                            {this.props.challenges.map((challenge, i) => (
+                              <p key={challenge + i}>- {challenge}</p>
+                            ))}
+                            {_.uniq(this.props.challenges).length === 0 ? (<Card.Subtitle>N/A</Card.Subtitle>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            Skills<hr style={ { marginTop: 1, marginBottom: 1 } }/>
+                            {this.props.skills.map((skill, i) => <p key={skill + i}>- {skill.name}</p>)}
+                            {_.uniq(this.props.skills).length === 0 ? (<p>N/A</p>) : ''}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            Tools<hr style={ { marginTop: 1, marginBottom: 1 } }/>
+                            {this.props.tools.map((tool, i) => <p key={tool + i}>- {tool.name}</p>)}
+                            {_.uniq(this.props.tools).length === 0 ? (<p>N/A</p>) : ''}
+                          </Col>
+                        </Row>
+                      </Modal.Body>
+                    </Modal.Dialog>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </>
     );
   }
 }
 
-ListParticipantsCard.propTypes = {
+ListParticipantCard.propTypes = {
   participantID: PropTypes.string.isRequired,
   skills: PropTypes.array.isRequired,
   tools: PropTypes.array.isRequired,
   challenges: PropTypes.array.isRequired,
   participants: PropTypes.object.isRequired,
 };
-export default withTracker(() => ({
-    teamInvitation: TeamInvitations.find({}).fetch(),
-  }))(ListParticipantsCard);
+export default withTracker(() => {
+  const teamInvitations = TeamInvitations.find({}).fetch();
+  // console.log(minors);
+  return {
+    teamInvitations,
+  };
+})(ListParticipantCard);
