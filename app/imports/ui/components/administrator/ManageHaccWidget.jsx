@@ -26,6 +26,9 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
     CanChangeChallenges.findOne()?.canChangeChallenges || false,
   );
 
+  const [tools, settools] = useState(Tools);
+  const [order, setorder] = useState('ASC');
+
   const toggleTeam = () => {
     const doc = CanCreateTeams.findOne();
     const updateData = {
@@ -56,6 +59,7 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
     });
     setCanChangeChallenges(!canChangeChallenges);
   };
+
     return (
         <div id="configureHACCPage" style={{ paddingBottom: '50px' }}>
           <Container>
@@ -141,7 +145,7 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
                   <Table>
                     <thead>
                     <tr>
-                      <th>Name</th>
+                      <th onClick={}>Name</th>
                       <th>Description</th>
                       <th width={2}>Edit</th>
                       <th width={2}>Delete</th>
