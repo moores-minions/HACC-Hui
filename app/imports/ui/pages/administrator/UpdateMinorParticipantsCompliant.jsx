@@ -1,58 +1,57 @@
 import React from 'react';
-import { Header, Icon, Container } from 'semantic-ui-react';
+import { Card, Container } from 'react-bootstrap';
 import _ from 'underscore';
 import { MinorParticipants } from '../../../api/user/MinorParticipantCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import UpdateMinorParticipantsWidget from '../../components/administrator/UpdateMinorParticipantsWidget';
 
-class UpdateMinorParticipantsCompliant extends React.Component {
-
-  getMinorParticipants() {
+const UpdateMinorParticipantsCompliant = () => {
+  const getMinorParticipants = () => {
     const AllMinorParticipants = MinorParticipants._collection.find({}).fetch();
     return AllMinorParticipants;
-  }
+  };
 
-  getCFParticipants() {
+  const getCFParticipants = () => {
     const CFParticipants = Participants._collection.find({ isCompliant: false }).fetch();
     return CFParticipants;
-  }
+  };
 
-  getMinorCFParticipants() {
-    const CFParticipantsID = _.pluck(this.getCFParticipants(), '_id');
-    const AllMinorParticipantsID = _.pluck(this.getMinorParticipants(), 'participantID');
+  const getMinorCFParticipants = () => {
+    const CFParticipantsID = _.pluck(getCFParticipants(), '_id');
+    const AllMinorParticipantsID = _.pluck(getMinorParticipants(), 'participantID');
     const MinorCFParticipantsID = _.intersection(CFParticipantsID, AllMinorParticipantsID);
     return MinorCFParticipantsID;
 
-  }
+  };
 
-  renderMinorCFParticipants() {
-    const MinorCFParticipantsID = this.getMinorCFParticipants();
+  const renderMinorCFParticipants = () => {
+    const MinorCFParticipantsID = getMinorCFParticipants();
     if (MinorCFParticipantsID.length === 0) {
       return (
-          <div align={'center'}>
-            <Header as='h2' icon>
-              <Icon name='birthday cake' />
-              There are no minor participants yet
-              <Header.Subheader>
-                Please check back later.
-              </Header.Subheader>
-            </Header>
-          </div>
+          <Container>
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  <i className="fas fa-birthday-cake"></i> There are no minor participants yet
+                </Card.Title>
+                <Card.Text>
+                  Please check back later.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Container>
       );
     }
 
-    return <div><UpdateMinorParticipantsWidget MinorParticipantsID={MinorCFParticipantsID} /></div>;
+    return <UpdateMinorParticipantsWidget MinorParticipantsID={MinorCFParticipantsID} />;
 
-  }
+  };
 
-  render() {
-    return (
-        <Container>
-         {this.renderMinorCFParticipants()}
-        </Container>
-    );
-  }
-
-}
+  return (
+      <Container>
+       {renderMinorCFParticipants()}
+      </Container>
+  );
+};
 
 export default UpdateMinorParticipantsCompliant;
