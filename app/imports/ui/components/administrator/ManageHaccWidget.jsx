@@ -26,8 +26,21 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
     CanChangeChallenges.findOne()?.canChangeChallenges || false,
   );
 
-  const [tools, settools] = useState(Tools);
+  const [sortedtools, settools] = useState([...tools]);
   const [order, setorder] = useState('ASC');
+
+  const sorting = (col) => {
+    if (order === 'ASC') {
+      const sorted = [...sortedtools].sort((a, b) => (a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1));
+      settools(sorted);
+      setorder('DESC');
+
+    } else if (order === 'DESC') {
+      const sorted = [...sortedtools].sort((a, b) => (a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1));
+      settools(sorted);
+      setorder('ASC');
+  }
+};
 
   const toggleTeam = () => {
     const doc = CanCreateTeams.findOne();
@@ -145,14 +158,14 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
                   <Table>
                     <thead>
                     <tr>
-                      <th onClick={}>Name</th>
+                      <th onClick={() => sorting('name')}>Name</th>
                       <th>Description</th>
                       <th width={2}>Edit</th>
                       <th width={2}>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {tools.map((tool => <ToolsAdminWidget key={tool._id} tools={tool} />))}
+                    {sortedtools.map((tool => <ToolsAdminWidget key={tool._id} tools={tool} />))}
                     </tbody>
                   </Table>
                   <div className="text-center">
