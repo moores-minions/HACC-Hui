@@ -186,13 +186,13 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
           </Col>
 
           <Col>
-            <btn className='team-buttons' id={teams._id}>
+            <btn className='team-buttons' id={`interested-${teams._id}`}>
               <Link to={`/interested-participants/${teams._id}`}>See interested
                 participants</Link>
             </btn>
           </Col>
           <Col>
-            <btn className='team-buttons' id={teams._id} onClick={handleShow}>
+            <btn className='team-buttons' id={`inv-${teams._id}`} onClick={handleShow}>
               Invite Participants
             </btn>
             <Modal
@@ -222,7 +222,7 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
                     <ListField addIcon={<Icon.PlusLg/>} removeIcon={<Icon.DashLg/>}
                                name="participants" label={'Enter each participant\'s email'}>
                       <ListItemField name="$">
-                        <TextField name="email"/>
+                        <TextField id="email" name="email"/>
                       </ListItemField>
                     </ListField>
 
@@ -238,7 +238,7 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
           </Col>
 
           <Col>
-            <btn className='team-buttons' id={teams._id}>
+            <btn className='team-buttons' id={`edit-${teams._id}`}>
               <Link to={`/edit-team/${teams._id}`}>Edit Team</Link>
             </btn>
           </Col>
