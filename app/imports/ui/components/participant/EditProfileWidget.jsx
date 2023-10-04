@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import { Form, Grid, Header, Segment } from 'semantic-ui-react';
+import { Form, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import SimpleSchema from 'simpl-schema';
@@ -12,7 +12,6 @@ import {
   ErrorsField,
   LongTextField,
   SelectField,
-  SubmitField,
   TextField,
 } from 'uniforms-semantic';
 import Swal from 'sweetalert2';
@@ -158,59 +157,56 @@ class EditProfileWidget extends React.Component {
     const schema = this.buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
     return (
-        <div style={{ paddingBottom: '50px' }}>
-          <Grid container centered>
-            <Grid.Column>
-              <div style={{
-                backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
-                borderRadius: '2rem',
-              }}>
-                <Header as="h2" textAlign="center">Edit Profile</Header>
-              </div>
-              <AutoForm schema={formSchema} model={model} onSubmit={data => {
-                // console.log(data);
-                this.submitData(data);
-              }}>
-                <Segment style={{
-                  borderRadius: '1rem',
-                  backgroundColor: '#E5F0FE',
+      <Container style={{ paddingBottom: '50px' }}>
+        <Row className="justify-content-center">
+          <Col>
+            <Card className="text-center" style={{
+              backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
+              borderRadius: '2rem',
+            }}>
+              <Card.Header as="h2">Edit Profile</Card.Header>
+              <Card.Body>
+                <AutoForm schema={formSchema} model={model} onSubmit={data => {
+                  this.submitData(data);
                 }}>
-                  <Form.Group widths="equal">
-                    <TextField name="username" disabled />
-                    <BoolField name="isCompliant" disabled />
+                  <Form.Group as={Row}>
+                    <Col>
+                      <TextField name="username" disabled className="form-control" />
+                    </Col>
+                    <Col>
+                      <BoolField name="isCompliant" disabled className="form-control" />
+                    </Col>
                   </Form.Group>
-                  <Form.Group widths="equal">
-                    <TextField name="firstName" />
-                    <TextField name="lastName" />
-                    <SelectField name="demographicLevel" />
+                  <Form.Group as={Row}>
+                    <Col><TextField name="firstName" className="form-control" /></Col>
+                    <Col><TextField name="lastName" className="form-control" /></Col>
+                    <Col><SelectField name="demographicLevel" className="form-control" /></Col>
                   </Form.Group>
-                  <Form.Group widths="equal">
-                    <TextField name="linkedIn" />
-                    <TextField name="gitHub" />
-                    <TextField name="slackUsername" />
+                  <Form.Group as={Row}>
+                    <Col><TextField name="linkedIn" className="form-control" /></Col>
+                    <Col><TextField name="gitHub" className="form-control" /></Col>
+                    <Col><TextField name="slackUsername" className="form-control" /></Col>
                   </Form.Group>
-                  <Form.Group widths="equal">
-                    <TextField name="website" />
-                    <LongTextField name="aboutMe" />
+                  <Form.Group as={Row}>
+                    <Col><TextField name="website" className="form-control" /></Col>
+                    <Col><LongTextField name="aboutMe" className="form-control" /></Col>
                   </Form.Group>
-                  <Form.Group widths="equal">
-                    <MultiSelectField name="challenges" />
-                    <MultiSelectField name="skills" />
-                    <MultiSelectField name="tools" />
+                  <Form.Group as={Row}>
+                    <Col><MultiSelectField name="challenges" /></Col>
+                    <Col><MultiSelectField name="skills" /></Col>
+                    <Col><MultiSelectField name="tools" /></Col>
                   </Form.Group>
-                  <div align='center'>
-                    <SubmitField value='Submit'
-                                 style={{
-                                   color: 'white', backgroundColor: '#DB2828',
-                                   margin: '2rem 0rem',
-                                 }}/>
-                  </div>
+                  <Button type="submit" style={{
+                    color: 'white', backgroundColor: '#DB2828',
+                    margin: '2rem 0rem',
+                  }}>Submit</Button>
                   <ErrorsField />
-                </Segment>
-              </AutoForm>
-            </Grid.Column>
-          </Grid>
-        </div>
+                </AutoForm>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
