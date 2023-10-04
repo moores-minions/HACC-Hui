@@ -11,6 +11,8 @@ import { addChallengePage } from './addchallenge.page';
 import { dumpdatabasePage } from './dumpdatabase.page';
 import { allTeamsInvitationPage } from './allteamsinvitationpage';
 import { agePage } from './age.page';
+import { listparticipantscardadminPage } from './listparticipantscardadmin.page';
+import { listparticipantscardPage } from './listparticipantscard.page';
 
 /* global fixture:false, test:false */
 
@@ -91,4 +93,18 @@ test('Test that the age page shows up and works', async (testController) => {
   await testController.navigateTo('http://localhost:3400/#/age-consent');
   await signinPage.signin(testController, userCred.username, userCred.password);
   await agePage.isDisplayed(testController);
+});
+
+test('Test that an admin can access the list participants page and its features', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListPartsPage(testController);
+  await listparticipantscardadminPage.listPartsCardAdmin(testController);
+});
+
+test('Test that a regular user can access the list participants page and its features', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoListPartsPage(testController);
+  await listparticipantscardPage.listPartsCard(testController);
 });

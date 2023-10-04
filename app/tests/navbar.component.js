@@ -57,6 +57,10 @@ class NavBar {
     await testController.click('#dump-page');
   }
 
+  async gotoListPartsPage(testController) {
+    await testController.click('#list-parts');
+  }
+
   /** Check that the specified user is currently logged in. */
   async isLoggedIn(testController, username) {
     await testController.expect(Selector('#navbar-current-user').innerText).eql(username);
