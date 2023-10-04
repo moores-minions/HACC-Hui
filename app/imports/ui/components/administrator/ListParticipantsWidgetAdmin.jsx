@@ -1,13 +1,17 @@
 import React from 'react';
 import {
-  Grid,
+  Container,
+  Row,
+  Col,
+  Button,
+  InputGroup,
+  FormControl,
+  Dropdown,
+  Form,
+  ListGroup,
+  Card,
   Header,
-  Item,
-  Icon,
-  Segment,
-  Input,
-  Dropdown, Button, Checkbox,
-} from 'semantic-ui-react';
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { _ } from 'lodash';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -51,7 +55,6 @@ class ListParticipantsWidgetAdmin extends React.Component {
       return (
         <div align={'center'}>
           <Header as='h2' icon>
-            <Icon name='users' />
             There are no participants at the moment.
             <Header.Subheader>
               Please check back later.
@@ -262,115 +265,86 @@ class ListParticipantsWidgetAdmin extends React.Component {
     // console.log(this.state.result);
     return (
       <div style={{ paddingBottom: '50px' }}>
-        <Grid container doubling relaxed stackable centered>
-          <Grid.Row centered>
-            <Grid.Column width={16}>
+        <Container fluid>
+          <Row className="justify-content-center">
+            <Col xs={16}>
               <div style={{
                 backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
                 borderRadius: '2rem',
               }}>
-                <Header as={'h2'} textAlign="center">
+                <h2 className="text-center">
                   All Participants
-                </Header>
+                </h2>
               </div>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row centered>
-            <Grid.Column>
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            <Col>
               <Button onClick={handleDownload}>Download emails</Button>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Column width={4}>
-            <Segment style={sticky}>
-              <div style={filterStyle}>
-                <Header>
-                  <Header.Content>
-                    Filter Participants
-                    <Header.Subheader>Total Participants: {this.state.result.length}</Header.Subheader>
-                  </Header.Content>
-                </Header>
-                <Checkbox onChange={handleNoTeam} label="No Team"/>
-                <Checkbox onChange={handleMultipleTeams} label="Multiple Teams"/>
-                <Checkbox onChange={handleNotCompliant} label="Not Compliant"/>
-              </div>
-              <div style={filterStyle}>
-                <Input icon='search'
-                       iconPosition='left'
-                       placeholder='Search by participants name...'
-                       onChange={handleSearchChange}
-                       fluid
-                />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={4}>
+              <Card style={sticky}>
+                <Card.Body style={filterStyle}>
+                  <Card.Title>Filter Participants</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    Total Participants: {this.state.result.length}
+                  </Card.Subtitle>
+                  <Form>
+                    <Form.Check type="checkbox" label="No Team" onChange={handleNoTeam} />
+                    <Form.Check type="checkbox" label="Multiple Teams" onChange={handleMultipleTeams} />
+                    <Form.Check type="checkbox" label="Not Compliant" onChange={handleNotCompliant} />
+                  </Form>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Text><i className='bi bi-search'></i></InputGroup.Text>
+                    <FormControl
+                      placeholder='Search by participants name...'
+                      onChange={handleSearchChange}
+                    />
+                  </InputGroup>
 
-                <div style={filterStyle}>
-                  <Header>Teams</Header>
-                  <Dropdown
-                    placeholder='Teams'
-                    fluid
-                    multiple
-                    search
-                    selection
-                    options={filters.dropdownValues(this.props.teams, 'name')}
-                    onChange={getTeam}
-                  />
-                </div>
+                  <h5>Teams</h5>
+                  <Dropdown onSelect={getTeam}>
+                    {/* Add Dropdown Items dynamically based on your team data */}
+                  </Dropdown>
 
-                <div style={filterStyle}>
-                  <Header>Challenges</Header>
-                  <Dropdown
-                    placeholder='Challenges'
-                    fluid
-                    multiple
-                    search
-                    selection
-                    options={filters.dropdownValues(this.props.challenges, 'title')}
-                    onChange={getChallenge}
-                  />
-                </div>
-              </div>
-              <div style={filterStyle}>
-                <Header>Skills</Header>
-                <Dropdown placeholder='Skills'
-                          fluid
-                          multiple
-                          search
-                          selection
-                          options={filters.dropdownValues(this.props.skills, 'name')}
-                          onChange={getSkills}
-                />
-              </div>
-              <div style={filterStyle}>
-                <Header>Tools</Header>
-                <Dropdown
-                  placeholder='Tools'
-                  fluid
-                  multiple
-                  search
-                  selection
-                  options={filters.dropdownValues(this.props.tools, 'name')}
-                  onChange={getTools}
-                />
-              </div>
-            </Segment>
-          </Grid.Column>
-          <Grid.Column width={12}>
-            <Item.Group divided>
-              {this.state.result.map((participants) => <ListParticipantCardAdmin
-                key={participants._id}
-                participantID={participants._id}
-                participants={participants}
-                skills={getParticipantSkills(participants._id, this.props.participantSkills)}
-                tools={getParticipantTools(participants._id, this.props.participantTools)}
-                challenges={getParticipantChallenges(participants._id, this.props.participantChallenges)}
-                teams={getParticipantTeams(participants._id, this.props.teamParticipants)}
-              />)}
-            </Item.Group>
-          </Grid.Column>
-        </Grid>
+                  <h5>Challenges</h5>
+                  <Dropdown onSelect={getChallenge}>
+                    {/* Add Dropdown Items dynamically based on your challenges data */}
+                  </Dropdown>
+
+                  <h5>Skills</h5>
+                  <Dropdown onSelect={getSkills}>
+                    {/* Add Dropdown Items dynamically based on your skills data */}
+                  </Dropdown>
+
+                  <h5>Tools</h5>
+                  <Dropdown onSelect={getTools}>
+                    {/* Add Dropdown Items dynamically based on your tools data */}
+                  </Dropdown>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col xs={8}>
+              <ListGroup variant="flush">
+                {this.state.result.map((participants) => <ListParticipantCardAdmin
+                    key={participants._id}
+                    participantID={participants._id}
+                    participants={participants}
+                    skills={getParticipantSkills(participants._id, this.props.participantSkills)}
+                    tools={getParticipantTools(participants._id, this.props.participantTools)}
+                    challenges={getParticipantChallenges(participants._id, this.props.participantChallenges)}
+                    teams={getParticipantTeams(participants._id, this.props.teamParticipants)}
+                  />)}
+              </ListGroup>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
 }
-
 ListParticipantsWidgetAdmin.propTypes = {
   participantChallenges: PropTypes.array.isRequired,
   participantSkills: PropTypes.array.isRequired,
