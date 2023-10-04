@@ -30,3 +30,11 @@
   bottom: 0;
   right: 0;
 }
+
+.white-link {
+  color: white;
+}
+
+.hacc-button {
+  margin: 2rem 0;
+}
