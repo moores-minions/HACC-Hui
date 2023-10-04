@@ -56,7 +56,6 @@ class ManageHaccWidget extends React.Component {
   }
 
   render() {
-    // console.log(this.state);
     return (
         <div id="configureHACCPage" style={{ paddingBottom: '50px' }}>
           <Container>
@@ -67,22 +66,29 @@ class ManageHaccWidget extends React.Component {
                   borderRadius: '2rem',
                 }}>
                   <h3 className="text-center">Manage HACC</h3>
-                  <Form.Group className="text-center justify-content-center">
-                    <Form.Check className="justify-content-center"
-                      type="switch"
-                      id="custom-switch"
-                      label="Can Create Teams"
-                      checked={this.state.canCreateTeams}
-                      onChange={this.toggleTeam}
-                    />
-                    <Form.Check
-                      type="switch"
-                      id="custom-switch"
-                      label="Can Change Challenges"
-                      checked={this.state.canChangeChallengs}
-                      onChange={this.toggleChallenge}
-                    />
-                  </Form.Group>
+
+                  <Container>
+                    <Row className="justify-content-center">
+                      <Col xs="auto">
+                        <Form.Check
+                          type="switch"
+                          id="custom-switch-teams"
+                          label="Can Create Teams"
+                          checked={this.state.canCreateTeams}
+                          onChange={this.toggleTeam}
+                        />
+                      </Col>
+                      <Col xs="auto">
+                        <Form.Check
+                          type="switch"
+                          id="custom-switch-challenges"
+                          label="Can Change Challenges"
+                          checked={this.state.canChangeChallenges}
+                          onChange={this.toggleChallenge}
+                        />
+                      </Col>
+                    </Row>
+                  </Container>
                 </div>
                 <div style={{
                   borderRadius: '1rem',
