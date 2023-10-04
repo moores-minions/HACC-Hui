@@ -14,7 +14,7 @@ import {
   SelectField,
   TextField,
 } from 'uniforms-semantic';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert';
 import { Redirect } from 'react-router-dom';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
