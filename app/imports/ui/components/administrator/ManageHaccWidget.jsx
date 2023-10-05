@@ -27,17 +27,24 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
   );
 
   const [sortedtools, setTools] = useState([]);
+  const [sortedskills, setSkills] = useState([]);
 
   const sortTools = (toolsToSort) => toolsToSort.sort((a, b) => {
       const descriptionComparison = a.description.toLowerCase().localeCompare(b.description.toLowerCase());
       if (descriptionComparison !== 0) return descriptionComparison;
-
       return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
     });
+
+  const skillCompare = (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+  const sortSkills = (skillsToSort) => skillsToSort.sort(skillCompare);
 
   useEffect(() => {
     setTools(sortTools(tools));
   }, [tools]);
+
+  useEffect(() => {
+    setSkills(sortSkills(skills));
+  }, [skills]);
 
   const toggleTeam = () => {
     const doc = CanCreateTeams.findOne();
@@ -143,7 +150,7 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {skills.map((skill => <SkillsAdminWidget key={skill._id} skills={skill} />))}
+                    {sortedskills.map((skill => <SkillsAdminWidget key={skill._id} skills={skill} />))}
                     </tbody>
                   </Table>
                   <div className="text-center">
