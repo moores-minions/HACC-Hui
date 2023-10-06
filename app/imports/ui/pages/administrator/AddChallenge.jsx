@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Col, Container } from 'react-bootstrap';
 import swal from 'sweetalert';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
@@ -70,9 +70,6 @@ const AddChallenge = () => {
                 <SubmitField id='add-challenge-submit' value='Submit'/>
               </Card.Body>
             </Card>
-            {/* <div className='text-center'> */}
-            {/*   <Link style={{ textAlign: 'center' }} to={ROUTES.CONFIGURE_HACC}>Back to Configure HACC</Link> */}
-            {/* </div> */}
           </Container>
         </AutoForm>
       </Col>
