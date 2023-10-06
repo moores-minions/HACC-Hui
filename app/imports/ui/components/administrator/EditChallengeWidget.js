@@ -54,7 +54,7 @@ const EditChallengeWidget = () => {
 
   const formSchema = new SimpleSchema2Bridge(Challenges.getSchema());
   return (
-    <Container fluid className='edit-page' id='edit-challenge-page'>
+    <Container fluid className='add-edit' id='edit-challenge-page'>
       <Col>
         <Row className='text-center'>
           <h2>Edit Challenge</h2>

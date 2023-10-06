@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Container } from 'react-bootstrap';
 import swal from 'sweetalert';
+import { Link, Redirect } from 'react-router-dom';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { ROUTES } from '../../../startup/client/route-constants';
 
 /**
  * Renders the Page for adding a challenge.
  * @memberOf ui/pages
  */
 const AddChallenge = () => {
+
+  const [redirect, setRedirect] = useState(false);
+
   // Create a schema to specify the structure of the data to appear in the form.
   const schema = new SimpleSchema({
     title: String,
@@ -35,15 +40,20 @@ const AddChallenge = () => {
         } else {
           swal('Success', 'Item added successfully', 'success');
           formRef.reset();
+          setRedirect(true);
         }
       });
   };
+
+  if (redirect) {
+    return <Redirect to={ROUTES.CONFIGURE_HACC} />;
+  }
 
   let fRef = null;
   const formSchema = new SimpleSchema2Bridge(schema);
 
   return (
-    <Container fluid id='add-challenge-page'>
+    <Container className='add-edit' fluid id='add-challenge-page'>
       <Col>
         <h2 style={{ textAlign: 'center' }}>Add a Challenge</h2>
         <AutoForm ref={ref => {
@@ -60,6 +70,9 @@ const AddChallenge = () => {
                 <SubmitField id='add-challenge-submit' value='Submit'/>
               </Card.Body>
             </Card>
+            {/* <div className='text-center'> */}
+            {/*   <Link style={{ textAlign: 'center' }} to={ROUTES.CONFIGURE_HACC}>Back to Configure HACC</Link> */}
+            {/* </div> */}
           </Container>
         </AutoForm>
       </Col>

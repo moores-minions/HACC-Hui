@@ -60,7 +60,7 @@ const EditToolWidget = () => {
 
   const formSchema = new SimpleSchema2Bridge(Tools.getSchema());
   return (
-    <Container fluid className='edit-page' id='edit-tool-page'>
+    <Container fluid className='add-edit' id='edit-tool-page'>
       <Col>
         <Row className='text-center'>
           <h2>Edit Tool</h2>
