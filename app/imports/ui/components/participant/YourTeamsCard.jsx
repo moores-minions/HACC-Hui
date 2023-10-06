@@ -165,7 +165,7 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
   const formSchema = new SimpleSchema2Bridge(schema);
   // console.log(this.props);
   return (
-      <Container className = 'your-teams team-card'>
+      <Container className = 'team-card'>
         <Row>
           <h5 className='team-name'>
             <Icon.PeopleFill size={32}/>

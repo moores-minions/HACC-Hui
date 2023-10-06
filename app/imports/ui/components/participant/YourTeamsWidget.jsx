@@ -56,9 +56,10 @@ const YourTeamsWidget = () => {
 
   if (!participant.isCompliant) {
     return (
-      <Container id='invalid' className='align-items-center'>
-        <h4>
+      <Container id='invalid' className='your-teams top-lvl' style={{ paddingBottom: 50 }}>
+        <h4 className='text-center'>
           <Icon.HandThumbsDown />
+          {' '}
           You have not agreed to the <a href="https://hacc.hawaii.gov/hacc-rules/">HACC Rules</a>
           &nbsp;or we&apos;ve haven&apos;t received the signed form yet.
           <h5>
@@ -70,9 +71,10 @@ const YourTeamsWidget = () => {
   }
   if (teams.length + memberTeams.length === 0) {
     return (
-      <Container id='no-teams' className='align-items-center'>
-        <h4>
+      <Container id='no-teams' className='your-teams top-lvl'>
+        <h4 className='text-center'>
           <Icon.PeopleFill />
+          {' '}
           You are not the owner or member of any teams
           <h5>
             Please check back later.
@@ -83,9 +85,9 @@ const YourTeamsWidget = () => {
   }
 
   return (
-    <Container id='your-teams' style={{ paddingBottom: 50 }}>
+    <Container id='your-teams' className='your-teams top-lvl'>
       <Row>
-        <h4 className='text-center your-teams'>
+        <h4 className='text-center'>
           Your Teams
         </h4>
       </Row>
@@ -101,7 +103,7 @@ const YourTeamsWidget = () => {
         </Card></Container>)
       }
       {memberTeams.length === 0 ? '' : (
-        <Container className='your-teams'><Card>
+          <Container className='your-teams'><Card>
           <Card.Body><Container><h5 className='text-center'>Member</h5>
             <Row>
               {memberTeams.map((team) => <MemberTeamCard key={team._id}
