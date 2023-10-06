@@ -57,7 +57,7 @@ const EditSkillWidget = () => {
 
   const formSchema = new SimpleSchema2Bridge(Skills.getSchema());
   return (
-    <Container fluid className='edit-page' id='edit-skill-page'>
+    <Container fluid className='add-edit' id='edit-skill-page'>
       <Col>
         <Row className='text-center'>
           <h2>Edit Skill</h2>
