@@ -1,54 +1,41 @@
-import React from 'react';
-import {
-  Grid,
-  Header,
-  Item,
-  Icon,
-  Segment,
-  Input,
-  Dropdown,
-} from 'semantic-ui-react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { Card, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
+import * as Icon from 'react-bootstrap-icons';
 import { _ } from 'lodash';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import { Suggestions } from '../../../api/suggestions/SuggestionCollection';
 import ListSuggestionsCard from './ListSuggestionsCard';
 import ListSuggestionsFilter from './ListSuggestionsFilter';
 import SuggestToolSkillWidgetAdmin from '../../components/administrator/SuggestToolSkillWidgetAdmin';
 
-class ListSuggestionsWidget extends React.Component {
+const ListSuggestionsWidget = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: '',
-      type: [],
-      result: _.orderBy(this.props.suggestions, ['name'], ['asc']),
-    };
-  }
+  const suggestions = useTracker(() => Suggestions.find({}).fetch());
 
-  componentWillReceiveProps(nextProps) {
-    // eslint-disable-next-line max-len
-    if ((_.orderBy(nextProps.suggestions, ['name'], ['asc'])) !== (_.orderBy(this.props.suggestions, ['name'], ['asc']))) {
-      this.setState({
-        result: _.orderBy(nextProps.suggestions, ['name'], ['asc']),
-      });
+  const [search, setSearch] = useState('');
+  const [type, setType] = useState([]);
+  const [result, setResult] = useState(_.orderBy(suggestions, ['name'], ['asc']));
+
+  // eslint-disable-next-line no-unused-vars
+  function componentWillReceiveProps(nextProps) {
+    if ((_.orderBy(nextProps.suggestions, ['name'], ['asc'])) !== (_.orderBy(suggestions,
+      ['name'], ['asc']))) {
+      setResult(_.orderBy(nextProps.suggestions, ['name'], ['asc']));
     }
   }
 
-  render() {
-
-    if (this.props.suggestions.length === 0) {
+    if (suggestions.length === 0) {
       return (
-          <div align={'center'}>
-            <Header as='h2' icon>
-              <Icon name='users' />
+          <Container fluid>
+            <h4 className='text-center'>
+              <Icon.PeopleFill />
+              {' '}
               There are no suggestions at the moment.
-              <Header.Subheader>
+              <h5>
                 Please check back later.
-              </Header.Subheader>
-            </Header>
-          </div>
+              </h5>
+            </h4>
+          </Container>
       );
     }
 
@@ -70,115 +57,71 @@ class ListSuggestionsWidget extends React.Component {
     const filters = new ListSuggestionsFilter();
 
     const setFilters = () => {
-      const searchResults = filters.filterBySearch(this.props.suggestions, this.state.search);
-      const typeResults = filters.typeResults(searchResults, this.state.type);
+      const searchResults = filters.filterBySearch(suggestions, search);
+      const typeResults = filters.typeResults(searchResults, type);
       const sorted = filters.sortBy(typeResults, 'names');
-      this.setState({
-        result: sorted,
-      }, () => {
-      });
+      setResult(sorted);
     };
+
+    useEffect(setFilters, [search, type]);
 
     const handleSearchChange = (event) => {
-      this.setState({
-        search: event.target.value,
-      }, () => {
-        setFilters();
-      });
+      setSearch(event.target.value);
     };
 
-    const getType = (event, { value }) => {
-      this.setState({
-        type: value,
-      }, () => {
-        setFilters();
-      });
+    const getType = (event) => {
+      setType(event.target.value);
     };
-
-    const typeOptions = [
-      {
-        key: 'All',
-        text: 'All',
-        value: 'All',
-      },
-      {
-        key: 'Tool',
-        text: 'Tool',
-        value: 'Tool',
-      },
-      {
-        key: 'Skill',
-        text: 'Skill',
-        value: 'Skill',
-      },
-    ];
-
-    // console.log(this.props.suggestions);
 
     return (
-        <Grid container doubling relaxed stackable
-              style={{ paddingBottom: '4rem' }}
-        >
-          <Grid.Row centered>
-            <Header as={'h2'} style={{ paddingTop: '2rem' }}>
-              Suggestions
-            </Header>
-          </Grid.Row>
-          <Grid.Column width={4}>
-            <Segment style={sticky}>
-              <div style={{ paddingTop: '2rem' }}>
-                <Header>
-                  <Header.Content>
-                    Total Suggestions: {this.state.result.length}
-                  </Header.Content>
-                </Header>
-              </div>
-              <div style={{ paddingTop: '2rem' }}>
-                <Input icon='search'
-                       iconPosition='left'
-                       placeholder='Search...'
-                       onChange={handleSearchChange}
-                       fluid
-                />
-
+      <Container fluid style={{ paddingBottom: '4rem' }}>
+        <Row>
+          <h4 className='text-center' style={{ paddingTop: '2rem' }}>
+            Suggestions
+          </h4>
+        </Row>
+        <Row>
+          <Col xs={3}>
+            <Card style={sticky}>
+              <Card.Body>
+                <h5>
+                  Total Suggestions: {result.length}
+                </h5>
                 <div style={{ paddingTop: '2rem' }}>
-                  <Header>Suggestion Types</Header>
-                  <Dropdown
-                      placeholder='Types'
-                      fluid
-                      search
-                      selection
-                      options={typeOptions}
-                      onChange={getType}
-                  />
+                  <InputGroup>
+                    <InputGroup.Text><Icon.Search/></InputGroup.Text>
+                    <Form.Control id='search-filter' onChange={handleSearchChange}/>
+                  </InputGroup>
+                  <div style={{ paddingTop: '2rem' }}>
+                    <h5>Suggestion Types</h5>
+                    <Form.Control value='All' as='select' onChange={getType} id='type-filter'>
+                      <option id='all' value='All'>All</option>
+                      <option id='tool' value='Tool'>Tool</option>
+                      <option id='skill' value='Skill'>Skill</option>
+                    </Form.Control>
+                  </div>
                 </div>
-              </div>
-              <div style={{ paddingTop: '2rem' }}>
-                <SuggestToolSkillWidgetAdmin />
-              </div>
-            </Segment>
-          </Grid.Column>
-          <Grid.Column width={12}>
-            <Item.Group divided>
-              {this.state.result.map((suggestions) => <ListSuggestionsCard
-                  key={suggestions._id}
-                  type={suggestions.type}
-                  username={suggestions.username}
-                  name={suggestions.name}
-                  description={suggestions.description}
-                  suggestionObj={suggestions}
+                <div style={{ paddingTop: '2rem' }}>
+                  <SuggestToolSkillWidgetAdmin/>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <Card>
+              {result.map((s) => <ListSuggestionsCard
+                key={s._id}
+                type={s.type}
+                username={s.username}
+                name={s.name}
+                description={s.description}
+                suggestionObj={s}
               />)}
-            </Item.Group>
-          </Grid.Column>
-        </Grid>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     );
-  }
-}
-
-ListSuggestionsWidget.propTypes = {
-  suggestions: PropTypes.array.isRequired,
 };
 
-export default withTracker(() => ({
-  suggestions: Suggestions.find({}).fetch(),
-}))(ListSuggestionsWidget);
+export default ListSuggestionsWidget;
