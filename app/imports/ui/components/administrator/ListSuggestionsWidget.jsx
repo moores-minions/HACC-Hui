@@ -26,7 +26,7 @@ const ListSuggestionsWidget = () => {
 
     if (suggestions.length === 0) {
       return (
-          <Container fluid>
+          <Container id='no-suggestions' fluid>
             <h4 className='text-center'>
               <Icon.PeopleFill />
               {' '}
@@ -74,7 +74,7 @@ const ListSuggestionsWidget = () => {
     };
 
     return (
-      <Container fluid style={{ paddingBottom: '4rem' }}>
+      <Container id='list-suggestions' fluid style={{ paddingBottom: '4rem' }}>
         <Row>
           <h4 className='text-center' style={{ paddingTop: '2rem' }}>
             Suggestions

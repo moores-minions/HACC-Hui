@@ -69,7 +69,7 @@ class ListSuggestionsCard extends React.Component {
   render() {
     // console.log(this.props);
     return (
-        <Item
+        <Item id={`${this.props.type}-${this.props.name}`}
               style={{ padding: '0rem 2rem 2rem 2rem' }}>
             <Item.Content>
               <Item.Header>

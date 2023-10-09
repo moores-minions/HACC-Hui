@@ -61,6 +61,14 @@ class NavBar {
     await testController.click('#list-parts');
   }
 
+  async gotoYourTeamsPage(testController) {
+    await testController.click('#your-teams');
+  }
+
+  async gotoListSuggestionsPage(testController) {
+    await testController.click('#list-suggestions');
+  }
+
   /** Check that the specified user is currently logged in. */
   async isLoggedIn(testController, username) {
     await testController.expect(Selector('#navbar-current-user').innerText).eql(username);
@@ -78,10 +86,6 @@ class NavBar {
     await this.ensureLogout(testController);
     await testController.click('#login-dropdown');
     await testController.click('#login-dropdown-sign-up');
-  }
-
-  async gotoYourTeamsPage(testController) {
-    await testController.click('#your-teams');
   }
 }
 

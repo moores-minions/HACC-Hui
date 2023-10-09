@@ -51,7 +51,9 @@ class NavBar extends React.Component {
               <>
                 <Nav.Link id="configHACC" as={NavLink} to={ROUTES.CONFIGURE_HACC}>Configure HACC</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.UPDATE_MP}>Update Minor Participants Status</Nav.Link>
-                <Nav.Link as={NavLink} to={ROUTES.LIST_SUGGESTIONS}>Suggestions List ({suggestionCount})</Nav.Link>
+                <Nav.Link id='list-suggestions' as={NavLink} to={ROUTES.LIST_SUGGESTIONS}>
+                  Suggestions List ({suggestionCount})
+                </Nav.Link>
                 <Nav.Link id="list-parts" as={NavLink} to={ROUTES.LIST_PARTICIPANTS_ADMIN}>List Participants
                   ({numParticipants})</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.VIEW_TEAMS}>View Teams ({teamCount})</Nav.Link>

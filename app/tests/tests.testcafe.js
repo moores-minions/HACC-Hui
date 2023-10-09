@@ -14,6 +14,7 @@ import { agePage } from './age.page';
 import { listparticipantscardadminPage } from './listparticipantscardadmin.page';
 import { listparticipantscardPage } from './listparticipantscard.page';
 import { yourTeamsPage } from './yourteams.page';
+import { listSuggestionsPage } from './listsuggestions.page';
 
 /* global fixture:false, test:false */
 
@@ -115,4 +116,11 @@ test('Test that the Your Teams page shows up and works', async (testController) 
   await signinPage.signin(testController, 'gsummey@hotmail.com', userCred.password);
   await navBar.gotoYourTeamsPage(testController);
   await yourTeamsPage.invite(testController, userCred.username);
+});
+
+test('Test that the List Suggestions page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListSuggestionsPage(testController);
+  await listSuggestionsPage.isDisplayed(testController);
 });
