@@ -94,7 +94,7 @@ const ListSuggestionsWidget = () => {
                   </InputGroup>
                   <div style={{ paddingTop: '2rem' }}>
                     <h5>Suggestion Types</h5>
-                    <Form.Control value='All' as='select' onChange={getType} id='type-filter'>
+                    <Form.Control as='select' onChange={getType} id='type-filter'>
                       <option id='all' value='All'>All</option>
                       <option id='tool' value='Tool'>Tool</option>
                       <option id='skill' value='Skill'>Skill</option>
