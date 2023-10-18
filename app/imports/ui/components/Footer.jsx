@@ -1,5 +1,4 @@
 import React from 'react';
-import { footer } from '../styles';
 import '../ui.css';
 
 /**
@@ -7,7 +6,7 @@ import '../ui.css';
  * @memberOf ui/components
  */
 const Footer = () => (
-    <footer className="footer" style={footer}>
+    <footer className="footer">
       <div className="ui center aligned container">
         Department of Information and Computer Sciences<br />
         University of Hawaii<br />

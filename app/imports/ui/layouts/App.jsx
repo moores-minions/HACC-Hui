@@ -125,14 +125,14 @@ class App extends React.Component {
           {isDesktop ? (
             <>
               <NavBar/>
-              {routes()}
+              <div className="pageWrapper">{routes()}</div>
               <Footer/>
             </>
           ) : (
             <div style={{ display: 'flex', padding: `${10}px` }}>
               <meta name="viewport" content="width=device-width, maximum-scale=1.5"/>
               <SideBar visible={this.state.visible}>
-                {routes()}
+                <div className="pageWrapper">{routes()}</div>
                 <Footer/>
               </SideBar>
             </div>
