@@ -25,7 +25,11 @@ class SuggestToolSkillWidget extends React.Component {
 
   buildTheFormSchema() {
     const schema = new SimpleSchema({
-      type: { type: String, allowedValues: ['Tool', 'Skill'], optional: false },
+      type: {
+        type: String,
+        allowedValues: ['Tool', 'Skill'],
+        defaultValue: 'Tool',
+        optional: false },
       name: String,
       description: String,
     });
