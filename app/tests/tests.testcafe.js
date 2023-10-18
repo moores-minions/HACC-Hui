@@ -34,13 +34,6 @@ test('Test that landing page shows up and all pages work', async (testController
   await landingPage.isDisplayed(testController);
 });
 
-test('Test that a user can delete their account', async (testController) => {
-  await navBar.gotoSigninPage(testController);
-  await signinPage.signin(testController, userCred.username, userCred.password);
-  await navBar.gotoDeleteAccount(testController);
-  await signoutPage.isDisplayed(testController);
-});
-
 test('Test that a user can sign in and signout work', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
@@ -130,4 +123,11 @@ test('Test that the List Suggestions page shows up and works', async (testContro
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoListSuggestionsPage(testController);
   await listSuggestionsPage.isDisplayed(testController);
+});
+
+test('Test that a user can delete their account', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoDeleteAccount(testController);
+  await signoutPage.isDisplayed(testController);
 });
