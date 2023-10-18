@@ -69,6 +69,10 @@ class NavBar {
     await testController.click('#list-suggestions');
   }
 
+  async gotoListParticipantsPage(testController) {
+    await testController.click('#list-participants');
+  }
+
   async gotoDeleteAccount(testController) {
     await testController.click('#navbar-current-user');
     await testController.click('#delete-account');
