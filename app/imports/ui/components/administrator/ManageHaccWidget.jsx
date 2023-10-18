@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Container, Row, Col, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useTracker } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
@@ -18,11 +18,7 @@ import { CanChangeChallenges } from '../../../api/team/CanChangeChallengeCollect
  * Renders the Page for Managing HACC. **deprecated**
  * @memberOf ui/pages
  */
-const ManageHaccWidget = () => {
-  const challenges = useTracker(() => Challenges.find({}).fetch());
-  const skills = useTracker(() => Skills.find({}).fetch());
-  const tools = useTracker(() => Tools.find({}).fetch());
-
+const ManageHaccWidget = ({ challenges, skills, tools }) => {
   const [canCreateTeams, setCanCreateTeams] = useState(
     CanCreateTeams.findOne()?.canCreateTeams || false,
   );
@@ -194,4 +190,11 @@ ManageHaccWidget.propTypes = {
   tools: PropTypes.array.isRequired,
 };
 
-export default ManageHaccWidget;
+// withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+export default withTracker(() => (
+  {
+    challenges: Challenges.find({}).fetch(),
+    skills: Skills.find({}).fetch(),
+    tools: Tools.find({}).fetch(),
+  }
+))(ManageHaccWidget);
