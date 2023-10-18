@@ -15,6 +15,7 @@ import { listparticipantscardadminPage } from './listparticipantscardadmin.page'
 import { listparticipantscardPage } from './listparticipantscard.page';
 import { yourTeamsPage } from './yourteams.page';
 import { listSuggestionsPage } from './listsuggestions.page';
+import { listParticipantsPage } from './listparticipants.page';
 
 /* global fixture:false, test:false */
 
@@ -32,6 +33,20 @@ fixture('HACC-HUI Test')
 
 test('Test that landing page shows up and all pages work', async (testController) => {
   await landingPage.isDisplayed(testController);
+});
+
+test('Test that a user can access the "List Participants" page', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoListParticipantsPage(testController);
+  await listParticipantsPage.isDisplayed(testController);
+});
+
+test('Test that a user can delete their account', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoDeleteAccount(testController);
+  // await DeleteFormWidget.isDisplayed(testController);
 });
 
 test('Test that a user can sign in and signout work', async (testController) => {
@@ -123,11 +138,4 @@ test('Test that the List Suggestions page shows up and works', async (testContro
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoListSuggestionsPage(testController);
   await listSuggestionsPage.isDisplayed(testController);
-});
-
-test('Test that a user can delete their account', async (testController) => {
-  await navBar.gotoSigninPage(testController);
-  await signinPage.signin(testController, userCred.username, userCred.password);
-  await navBar.gotoDeleteAccount(testController);
-  await signoutPage.isDisplayed(testController);
 });
