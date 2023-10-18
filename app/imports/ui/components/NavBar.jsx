@@ -36,7 +36,7 @@ class NavBar extends React.Component {
           <Nav className="mr-auto">
             {isParticipant ? (
               <>
-                <Nav.Link as={NavLink} to={ROUTES.YOUR_PROFILE}>Profile</Nav.Link>
+                <Nav.Link id="profile" as={NavLink} to={ROUTES.YOUR_PROFILE}>Profile</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.CREATE_TEAM} disabled={!isCompliant}>Create Team</Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.BEST_FIT}>Open Teams ({numTeams})</Nav.Link>
                 <Nav.Link id='your-teams' as={NavLink} to={ROUTES.YOUR_TEAMS}>Your Teams</Nav.Link>

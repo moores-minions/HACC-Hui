@@ -83,6 +83,10 @@ class NavBar {
   async gotoYourTeamsPage(testController) {
     await testController.click('#your-teams');
   }
+
+  async gotoProfilePage(testController) {
+    await testController.click('#profile');
+  }
 }
 
 export const navBar = new NavBar();
