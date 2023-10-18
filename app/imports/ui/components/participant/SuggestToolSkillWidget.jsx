@@ -28,7 +28,6 @@ class SuggestToolSkillWidget extends React.Component {
       type: {
         type: String,
         allowedValues: ['Tool', 'Skill'],
-        defaultValue: 'Tool',
         optional: false },
       name: String,
       description: String,
@@ -78,7 +77,9 @@ class SuggestToolSkillWidget extends React.Component {
               fRef = ref;
             }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
               <Row>
-                <Col><SelectField name="type" /></Col>
+                <Col><SelectField name="type"
+                                  options={[{ label: 'Tool', value: 'Tool' },
+                                    { label: 'Skill', value: 'Skill' }]} /></Col>
                 <Col><TextField name="name" /></Col>
                 <Col><TextField name="description" /></Col>
                 <SubmitField className="text-center" value='Submit'/>
@@ -87,29 +88,6 @@ class SuggestToolSkillWidget extends React.Component {
           </Card.Body>
         </Card>
       </Container>
-      // <Container style={{ paddingBottom: '50px', paddingTop: '40px' }}>
-      //   <Segment style = { paleBlueStyle }>
-      //     {/* eslint-disable-next-line max-len */}
-      //     <Header as="h2" textAlign="center">Hello {firstname}, please fill out the form to
-      //       suggest a new tool or skill. </Header>
-      //     <Card fluid>
-      //       <AutoForm ref={ref => {
-      //         fRef = ref;
-      //       }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
-      //         <Form.Group widths="equal" style={{ paddingRight: '10px', paddingLeft: '10px',
-      //           paddingTop: '10px', paddingBottom: '10px' }}>
-      //           <SelectField name="type" />
-      //           <TextField name="name" />
-      //           <TextField name="description" />
-      //         </Form.Group>
-      //         <SubmitField style={{
-      //           display: 'block',
-      //           marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px',
-      //         }}/>
-      //       </AutoForm>
-      //     </Card>
-      //   </Segment>
-      // </Container>
     );
   }
 }
