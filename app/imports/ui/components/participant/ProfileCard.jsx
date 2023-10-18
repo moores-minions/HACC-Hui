@@ -1,67 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Grid, Header, Icon, List } from 'semantic-ui-react';
-import SkillItem from './SkillItem';
-import ToolItem from './ToolItem';
+import { Card, Row, Col } from 'react-bootstrap';
+import * as Icon from 'react-bootstrap-icons';
 
-class ProfileCard extends React.Component {
-  render() {
-    return (
+const ProfileCard = ({ model }) => (
         <Card fluid>
-          <Card.Content>
-            <Card.Header>{this.props.model.firstName} {this.props.model.lastName}</Card.Header>
-            <Card.Meta>
-              {this.props.model.username} <br /> {this.props.model.demographicLevel}
-            </Card.Meta>
-            <Card.Description>
-              <Grid container stackable columns={4}>
-                <Grid.Column><Icon name="github" /> GitHub:<br />
-                  <a href={this.props.model.gitHub}>{this.props.model.gitHub}</a>
-                </Grid.Column>
-                <Grid.Column><Icon name="linkedin" /> Linked In:<br />
-                  <a href={this.props.model.linkedIn}>{this.props.model.linkedIn}</a>
-                </Grid.Column>
-                <Grid.Column><Icon name="server" /> Website:<br />
-                  <a href={this.props.model.website}>{this.props.model.website}</a>
-                </Grid.Column>
-                <Grid.Column><Icon name="slack" /> Slack:<br />
-                  <a href={this.props.model.slackUsername}>{this.props.model.slackUsername}</a>
-                </Grid.Column>
-              </Grid>
-              <Grid container columns={1}>
-                <Grid.Column><Icon name="comment" /> About me: {this.props.model.aboutMe}</Grid.Column>
-              </Grid>
-            </Card.Description>
-          </Card.Content>
-          <Card.Content>
-            <Grid container stackable columns={3}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Header dividing size="small">Challenges</Header>
-                  <List bulleted>
-                  {this.props.model.challenges.map((item) => <List.Item key={item}>{item}</List.Item>)}
-                  </List>
-                </Grid.Column>
-                <Grid.Column>
-                  <Header dividing size="tiny">Skills</Header>
-                  <List bulleted>
-                    {this.props.model.skills.map((item) => <SkillItem item={item} key={item._id} />)}
-                  </List>
-                </Grid.Column>
-                <Grid.Column>
-                  <Header dividing size="tiny">Tools</Header>
-                  <List bulleted>
-                    {this.props.model.tools.map((item) => <ToolItem item={item} key={item._id} />)}
-                  </List>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Card.Content>
+          <Card.Body>
+            <Card.Title><h2>{model.firstName} {model.lastName}</h2></Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              {model.username} <br /> {model.demographicLevel}
+            </Card.Subtitle>
+            <Card.Text>
+              <Row>
+                <Col><Icon.Github/> GitHub:<br />
+                  <a href={model.gitHub}>{model.gitHub}</a>
+                </Col>
+                <Col><Icon.Linkedin/> Linked In:<br />
+                  <a href={model.linkedIn}>{model.linkedIn}</a>
+                </Col>
+                <Col><Icon.Server/> Website:<br />
+                  <a href={model.website}>{model.website}</a>
+                </Col>
+                <Col><Icon.Slack/> Slack:<br />
+                  <a href={model.slackUsername}>{model.slackUsername}</a>
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col><Icon.ChatDotsFill/> About me: <br />
+                  {model.aboutMe}</Col>
+              </Row>
+            </Card.Text>
+          </Card.Body>
+              <Row style={{ padding: 15 }}>
+                <Col>
+                  <h5>Challenges</h5>
+                  <hr/>
+                  {model.challenges.map((item) => <p key={item}>- {item}</p>)}
+                </Col>
+                <Col>
+                  <h5>Skills</h5>
+                  <hr/>
+                    {model.skills.map((item) => <p key={item}>- {item}</p>)}
+                </Col>
+                <Col>
+                  <h5>Tools</h5>
+                  <hr/>
+                    {model.tools.map((item) => <p key={item}>- {item}</p>)}
+                </Col>
+              </Row>
+          <br />
         </Card>
-    );
-  }
-
-}
+);
 
 ProfileCard.propTypes = {
   model: PropTypes.object.isRequired,

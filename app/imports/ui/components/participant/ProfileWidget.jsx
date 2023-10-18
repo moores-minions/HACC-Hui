@@ -14,6 +14,8 @@ import { paleBlueStyle } from '../../styles';
 import ProfileCard from './ProfileCard';
 import { ROUTES } from '../../../startup/client/route-constants';
 import TeamMembershipWidget from './TeamMembershipWidget';
+import { Tools } from '../../../api/tool/ToolCollection';
+import { Skills } from '../../../api/skill/SkillCollection';
 
 class EditProfileWidget extends React.Component {
 
@@ -23,8 +25,14 @@ class EditProfileWidget extends React.Component {
       const c = Challenges.findDoc(challenge.challengeID);
       return c.title;
     });
-    model.skills = this.props.devSkills;
-    model.tools = this.props.devTools;
+    model.skills = _.map(this.props.devSkills, (skill) => {
+      const s = Skills.findDoc(skill.skillID);
+      return s.name;
+    });
+    model.tools = _.map(this.props.devTools, (tool) => {
+      const t = Tools.findDoc(tool.toolID);
+      return t.name;
+    });
     return model;
   }
 
@@ -32,7 +40,7 @@ class EditProfileWidget extends React.Component {
     // console.log(this.props);
     const model = this.buildTheModel();
     return (
-        <div style={{ paddingBottom: '50px', paddingTop: '40px' }}><Container>
+        <div style={{ paddingBottom: '50px', paddingTop: '40px' }}><Container id="profile-page">
           <Segment style={paleBlueStyle}>
             <Header as="h2" textAlign="center">Your Profile</Header>
             <ProfileCard model={model} />

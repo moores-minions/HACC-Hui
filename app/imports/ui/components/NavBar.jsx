@@ -44,7 +44,7 @@ class NavBar extends React.Component {
           <Nav className="mr-auto">
             {isParticipant ? (
               <>
-                <Nav.Link as={NavLink} to={ROUTES.YOUR_PROFILE}>
+                <Nav.Link id="profile" as={NavLink} to={ROUTES.YOUR_PROFILE}>
                   Profile
                 </Nav.Link>
                 <Nav.Link
