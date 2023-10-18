@@ -69,6 +69,11 @@ class NavBar {
     await testController.click('#list-suggestions');
   }
 
+  async gotoDeleteAccount(testController) {
+    await testController.click('#navbar-current-user');
+    await testController.click('#delete-account');
+  }
+
   /** Check that the specified user is currently logged in. */
   async isLoggedIn(testController, username) {
     await testController.expect(Selector('#navbar-current-user').innerText).eql(username);
