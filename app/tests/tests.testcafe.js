@@ -17,6 +17,7 @@ import { yourTeamsPage } from './yourteams.page';
 import { listSuggestionsPage } from './listsuggestions.page';
 import { listParticipantsPage } from './listparticipants.page';
 import { profilePage } from './profile.page';
+import { deleteAccountPage } from './deleteaccount.page';
 
 /* global fixture:false, test:false */
 
@@ -138,8 +139,9 @@ test('Test that a user can delete their account', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, userCred.username, userCred.password);
   await navBar.gotoDeleteAccount(testController);
-  // await DeleteFormWidget.isDisplayed(testController);
-  
+  await deleteAccountPage.isDisplayed(testController);
+});
+
 test('Test that the Profile page shows up and works', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, userCred.username, userCred.password);
