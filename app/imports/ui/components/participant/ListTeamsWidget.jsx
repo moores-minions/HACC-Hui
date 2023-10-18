@@ -91,42 +91,6 @@ class ListTeamsWidget extends React.Component {
           </Col>
         </Row>
       </Container>
-
-        // <Grid>
-        //   <Grid.Row columns={7} only='computer'>
-        //     <Grid.Column>
-        //       <Header>Name</Header>
-        //     </Grid.Column>
-        //     <Grid.Column>
-        //       <Header>Challenges</Header>
-        //     </Grid.Column>
-        //     <Grid.Column>
-        //       <Header>Desired Skills</Header>
-        //     </Grid.Column>
-        //     <Grid.Column>
-        //       <Header>Desired Tools</Header>
-        //     </Grid.Column>
-        //     <Grid.Column>
-        //       <Header>Devpost / Github</Header>
-        //     </Grid.Column>
-        //     <Grid.Column>
-        //       <Header>Members</Header>
-        //     </Grid.Column>
-        //     <Grid.Column>
-        //       <Header>Join?</Header>
-        //     </Grid.Column>
-        //   </Grid.Row>
-        //   {this.props.teams.map((team) => (
-        //       <ListTeamExampleWidget key={team._id}
-        //                              team={getTeam(team._id)}
-        //                              teamChallenges={getTeamChallenges(team)}
-        //                              teamSkills={getTeamSkills(team)}
-        //                              teamTools={getTeamTools(team)}
-        //                              teamMembers={getTeamMembers(team)}
-        //       />
-        //   ))}
-        //   <Grid.Row><Message negative>There are {closed} closed teams.</Message></Grid.Row>
-        // </Grid>
     );
   }
 }
