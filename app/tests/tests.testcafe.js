@@ -37,7 +37,6 @@ test('Test that landing page shows up and all pages work', async (testController
 test('Test that a user can delete their account', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, userCred.username, userCred.password);
-  await navBar.logout(testController);
   await navBar.gotoDeleteAccount(testController);
   await signoutPage.isDisplayed(testController);
 });
