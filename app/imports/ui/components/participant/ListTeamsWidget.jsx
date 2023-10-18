@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
-// import { Grid, Header, Message } from 'semantic-ui-react';
 import ListTeamExampleWidget from './ListTeamExampleWidget';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
@@ -44,8 +43,7 @@ const getTeamMembers = team => {
   const memberNames = teamParticipants.map(tp => Participants.getFullName(tp.participantID)); return memberNames;
 };
 
-class ListTeamsWidget extends React.Component {
-  render() {
+const ListTeamsWidget = ({ teams }) => {
     const closed = Teams.find({ open: false }).count();
     return (
       <Container fluid>
@@ -73,7 +71,7 @@ class ListTeamsWidget extends React.Component {
           </Col>
         </Row>
 
-        {this.props.teams.map((team) => (
+        {teams.map((team) => (
                 <ListTeamExampleWidget key={team._id}
                                        team={getTeam(team._id)}
                                        teamChallenges={getTeamChallenges(team)}
@@ -84,7 +82,7 @@ class ListTeamsWidget extends React.Component {
             ))}
 
         <Row>
-          <Col>
+          <Col className="mt-3">
             <Alert variant="danger">
               There are {closed} closed teams.
             </Alert>
@@ -92,8 +90,7 @@ class ListTeamsWidget extends React.Component {
         </Row>
       </Container>
     );
-  }
-}
+};
 
 ListTeamsWidget.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.object),
