@@ -12,7 +12,6 @@ import { dumpdatabasePage } from './dumpdatabase.page';
 import { allTeamsInvitationPage } from './allteamsinvitationpage';
 import { agePage } from './age.page';
 import { listparticipantscardadminPage } from './listparticipantscardadmin.page';
-import { listparticipantscardPage } from './listparticipantscard.page';
 import { yourTeamsPage } from './yourteams.page';
 import { listSuggestionsPage } from './listsuggestions.page';
 import { listParticipantsPage } from './listparticipants.page';
@@ -111,8 +110,8 @@ test('Test that an admin can access the list participants page and its features'
 test('Test that a regular user can access the list participants page and its features', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, userCred.username, userCred.password);
-  await navBar.gotoListPartsPage(testController);
-  await listparticipantscardPage.listPartsCard(testController);
+  await navBar.gotoListParticipantsPage(testController);
+  await listParticipantsPage.isDisplayed(testController);
 });
 
 test('Test that the Your Teams page shows up and works', async (testController) => {
