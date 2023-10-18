@@ -190,7 +190,7 @@ class ListParticipantsWidget extends React.Component {
 
     return (
       <div style={{ paddingBottom: '50px' }}>
-        <Container fluid>
+        <Container id="list-participants-page" fluid>
           <Row className="justify-content-center">
             <Col xs={16}>
               <div
