@@ -84,7 +84,7 @@ class DeleteFormWidget extends React.Component {
     const formSchema = new SimpleSchema2Bridge(schema);
 
     return (
-      <Container className="mt-3">
+      <Container id="delete-account" className="mt-3">
         <Row className="justify-content-md-center">
           <Col md="auto">
             <h2 className="text-center">Feedback</h2>
