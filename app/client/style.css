@@ -1,3 +1,8 @@
+:root {
+  --navbar-height: 4rem;
+  --footer-height: 0px;
+}
+
 .navbar-brand {
   font-size: 1.5rem !important;
   font-weight: bold;
@@ -32,6 +37,16 @@
   padding-top: 6rem !important;
 }
 
+.footer {
+  background-color: #124884;
+  color: white;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pageWrapper {
+  min-height: calc(100vh - 166px);
+}
 
 @media screen and (max-width: 750px) {
   .navBar {
