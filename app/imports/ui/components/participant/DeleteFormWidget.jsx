@@ -110,7 +110,7 @@ class DeleteFormWidget extends React.Component {
                   We&apos;re sorry to hear you&apos;re deleting your account.
                 </h3>
                 <h4>
-                  Please provide fee dback on why you&apos;re leaving to improve
+                  Please provide feedback on why you&apos;re leaving to improve
                   the HACC experience for next year.
                 </h4>
                 <Row>
