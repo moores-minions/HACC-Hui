@@ -61,7 +61,7 @@ class NavBar extends React.Component {
                   Your Teams
                 </Nav.Link>
                 <Nav.Link
-                  id="list-parts"
+                  id="list-participants"
                   as={NavLink}
                   to={ROUTES.LIST_PARTICIPANTS}
                 >
