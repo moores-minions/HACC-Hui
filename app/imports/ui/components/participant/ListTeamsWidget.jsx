@@ -46,7 +46,7 @@ const getTeamMembers = team => {
 const ListTeamsWidget = ({ teams }) => {
     const closed = Teams.find({ open: false }).count();
     return (
-      <Container fluid>
+      <Container id="open-teams" fluid>
         <Row className="d-none d-md-flex">
           <Col className="border">
             <h4>Name</h4>

@@ -104,5 +104,9 @@ class NavBar {
   async gotoSuggestToolSkill(testController) {
     await testController.click('#suggest-tool-skill');
   }
+
+  async gotoOpenTeams(testController) {
+    await testController.click('#open-teams');
+  }
 }
 export const navBar = new NavBar();

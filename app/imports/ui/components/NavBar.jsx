@@ -54,7 +54,7 @@ class NavBar extends React.Component {
                 >
                   Create Team
                 </Nav.Link>
-                <Nav.Link as={NavLink} to={ROUTES.BEST_FIT}>
+                <Nav.Link id="open-teams" as={NavLink} to={ROUTES.BEST_FIT}>
                   Open Teams ({numTeams})
                 </Nav.Link>
                 <Nav.Link id="your-teams" as={NavLink} to={ROUTES.YOUR_TEAMS}>

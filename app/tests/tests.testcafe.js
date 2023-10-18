@@ -19,6 +19,7 @@ import { listParticipantsPage } from './listparticipants.page';
 import { profilePage } from './profile.page';
 import { deleteAccountPage } from './deleteaccount.page';
 import { suggesttoolskillwidgetPage } from './suggesttoolskillwidget.page';
+import { listteamswidgetPage } from './listteamswidget.page';
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
@@ -154,4 +155,11 @@ test('Test that the Suggest Tool/Skill page shows up and works', async (testCont
   await signinPage.signin(testController, userCred.username, userCred.password);
   await navBar.gotoSuggestToolSkill(testController);
   await suggesttoolskillwidgetPage.isDisplayed(testController);
+});
+
+test('Test that the Open Teams page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoOpenTeams(testController);
+  await listteamswidgetPage.isDisplayed(testController);
 });
