@@ -1,14 +1,12 @@
 import React from 'react';
-import { Card, Form, Container } from 'react-bootstrap';
-import { AutoForm, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
-// import { Header, Segment, Form, Container, Card } from 'semantic-ui-react';
+import { Container, Card, Row, Col } from 'react-bootstrap';
 import { withTracker } from 'meteor/react-meteor-data';
-// import {
-//   AutoForm,
-//   SelectField,
-//   SubmitField,
-//   TextField,
-// } from 'uniforms-semantic';
+import {
+  AutoForm,
+  SelectField,
+  SubmitField,
+  TextField,
+} from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
@@ -19,12 +17,20 @@ import { defineMethod } from '../../../api/base/BaseCollection.methods';
 import { Suggestions } from '../../../api/suggestions/SuggestionCollection';
 import { paleBlueStyle } from '../../styles';
 
-const schema = new SimpleSchema({
-  type: { type: String, allowedValues: ['Tool', 'Skill'], optional: false },
-  name: String,
-  description: String,
-});
 class SuggestToolSkillWidget extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { redirectToReferer: false };
+  }
+
+  buildTheFormSchema() {
+    const schema = new SimpleSchema({
+      type: { type: String, allowedValues: ['Tool', 'Skill'], optional: false },
+      name: String,
+      description: String,
+    });
+    return schema;
+  }
 
   submit(data, formRef) {
     // console.log('CreateProfileWidget.submit', data);
@@ -35,69 +41,71 @@ class SuggestToolSkillWidget extends React.Component {
     newData.name = data.name;
     newData.type = data.type;
     newData.description = data.description;
+    console.log(newData);
 
     defineMethod.call({ collectionName: collectionName, definitionData: newData },
-        (error) => {
-          if (error) {
-            swal('Error', error.message, 'error');
-          } else {
-            swal('Success', 'Thank you for your suggestion', 'success');
-            formRef.reset();
-          }
-        });
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Thank you for your suggestion', 'success');
+          formRef.reset();
+        }
+      });
   }
 
   render() {
     let fRef = null;
     const model = this.props.participant;
+    const schema = this.buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
+    console.log(schema);
+
     const firstname = model.firstName;
+    console.log(formSchema);
     return (
       <Container style={{ paddingBottom: '50px', paddingTop: '40px' }}>
         <Card style = { paleBlueStyle }>
-            <h2 className="text-center">Hello {firstname}, please fill out the form
-              to suggest a new tool or skill.</h2>
-          <Card>
+          <Card.Header as="h2" className="text-center">
+            Hello {firstname}, please fill out the form to suggest a new tool or skill.
+          </Card.Header>
+          <Card.Body>
             <AutoForm ref={ref => {
               fRef = ref;
             }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
-              <Form.Group widths="equal" style={{ paddingRight: '10px', paddingLeft: '10px',
-                paddingTop: '10px', paddingBottom: '10px' }}>
-                    <SelectField name="type" />
-                    <TextField name="name" />
-                    <TextField name="description" />
-                    <SubmitField style={{
-                      display: 'block',
-                      marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px',
-                    }} value='Submit'/>
-              </Form.Group>
+              <Row>
+                <Col><SelectField name="type" /></Col>
+                <Col><TextField name="name" /></Col>
+                <Col><TextField name="description" /></Col>
+                <SubmitField className="text-center" value='Submit'/>
+              </Row>
             </AutoForm>
-          </Card>
+          </Card.Body>
         </Card>
       </Container>
-//         <Container style={{ paddingBottom: '50px', paddingTop: '40px' }}>
-//         <Segment style = { paleBlueStyle }>
-//           {/* eslint-disable-next-line max-len */}
-//           <Header as="h2" textAlign="center">Hello {firstname}, please fill out the form to
-//             suggest a new tool or skill. </Header>
-//           <Card fluid>
-//           <AutoForm ref={ref => {
-//             fRef = ref;
-//           }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
-//             <Form.Group widths="equal" style={{ paddingRight: '10px', paddingLeft: '10px',
-//               paddingTop: '10px', paddingBottom: '10px' }}>
-//               <SelectField name="type" />
-//               <TextField name="name" />
-//               <TextField name="description" />
-//             </Form.Group>
-//             <SubmitField style={{
-//   display: 'block',
-//   marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px',
-// }}/>
-//           </AutoForm>
-//           </Card>
-//         </Segment>
-//         </Container>
+      // <Container style={{ paddingBottom: '50px', paddingTop: '40px' }}>
+      //   <Segment style = { paleBlueStyle }>
+      //     {/* eslint-disable-next-line max-len */}
+      //     <Header as="h2" textAlign="center">Hello {firstname}, please fill out the form to
+      //       suggest a new tool or skill. </Header>
+      //     <Card fluid>
+      //       <AutoForm ref={ref => {
+      //         fRef = ref;
+      //       }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
+      //         <Form.Group widths="equal" style={{ paddingRight: '10px', paddingLeft: '10px',
+      //           paddingTop: '10px', paddingBottom: '10px' }}>
+      //           <SelectField name="type" />
+      //           <TextField name="name" />
+      //           <TextField name="description" />
+      //         </Form.Group>
+      //         <SubmitField style={{
+      //           display: 'block',
+      //           marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px',
+      //         }}/>
+      //       </AutoForm>
+      //     </Card>
+      //   </Segment>
+      // </Container>
     );
   }
 }
