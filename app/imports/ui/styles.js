@@ -11,6 +11,7 @@ export const footer = {
   color: 'white',
   paddingTop: 15,
   paddingBottom: 15,
+  flex: 0,
 };
 export const greyStyle = {
   backgroundColor: '#C4C4C4',
