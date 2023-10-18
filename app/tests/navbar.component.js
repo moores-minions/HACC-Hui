@@ -100,6 +100,9 @@ class NavBar {
   async gotoProfilePage(testController) {
     await testController.click('#profile');
   }
-}
 
+  async gotoSuggestToolSkill(testController) {
+    await testController.click('#suggest-tool-skill');
+  }
+}
 export const navBar = new NavBar();

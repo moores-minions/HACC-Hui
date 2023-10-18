@@ -67,7 +67,7 @@ class NavBar extends React.Component {
                 >
                   List Participants ({numParticipants})
                 </Nav.Link>
-                <Nav.Link as={NavLink} to={ROUTES.SUGGEST_TOOL_SKILL}>
+                <Nav.Link id="suggest-tool-skill" as={NavLink} to={ROUTES.SUGGEST_TOOL_SKILL}>
                   Suggest Tool/Skill
                 </Nav.Link>
                 <Nav.Link as={NavLink} to={ROUTES.TEAM_INVITATIONS}>

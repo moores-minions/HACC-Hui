@@ -64,7 +64,7 @@ class SuggestToolSkillWidget extends React.Component {
     const firstname = model.firstName;
     console.log(formSchema);
     return (
-      <Container style={{ paddingBottom: '50px', paddingTop: '40px' }}>
+      <Container id="suggest-tool-skill" style={{ paddingBottom: '50px', paddingTop: '40px' }}>
         <Card style = { paleBlueStyle }>
           <Card.Header as="h2" className="text-center">
             Hello {firstname}, please fill out the form to suggest a new tool or skill.
