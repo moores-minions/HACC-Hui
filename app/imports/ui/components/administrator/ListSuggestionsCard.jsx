@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Header,
-  Item,
-  Button,
-} from 'semantic-ui-react';
-import { withTracker } from 'meteor/react-meteor-data';
+import { Button, Card, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { defineMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
@@ -12,9 +7,9 @@ import { Suggestions } from '../../../api/suggestions/SuggestionCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 
-class ListSuggestionsCard extends React.Component {
+const ListSuggestionsCard = ({ type, username, name, description, suggestionObj }) => {
 
-  removeItem() {
+  const removeItem = () => {
     swal({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this suggestion!',
@@ -23,11 +18,10 @@ class ListSuggestionsCard extends React.Component {
       dangerMode: true,
     })
         .then((willDelete) => {
-          console.log(this.props.suggestionObj);
           if (willDelete) {
             removeItMethod.call({
               collectionName: Suggestions.getCollectionName(),
-              instance: this.props.suggestionObj._id,
+              instance: suggestionObj._id,
             }, (error) => (error ?
                 swal('Error', error.message, 'error') :
                 swal('Success', 'Suggestion removed', 'success')));
@@ -35,63 +29,58 @@ class ListSuggestionsCard extends React.Component {
             swal('You canceled the deletion!');
           }
         });
-  }
+  };
 
-  addSuggestion(type, name, description, instance) {
+  const addSuggestion = (addType, addName, addDesc, instance) => {
     let collectionName;
-    console.log(type, name, description);
-    if (type.toLowerCase() === 'skill') {
+    if (addType.toLowerCase() === 'skill') {
       collectionName = Skills.getCollectionName();
-    } else if (type.toLowerCase() === 'tool') {
+    } else if (addType.toLowerCase() === 'tool') {
       collectionName = Tools.getCollectionName();
     } else {
       swal('Error', 'Undefined type of suggestion', 'error');
       return false;
     }
     const definitionData = {
-      name,
-      description,
+      name: addName,
+      description: addDesc,
     };
     defineMethod.call({ collectionName, definitionData }, (error) => {
       if (error) {
         swal('Error defining', error.message, 'error');
+      } else {
+        collectionName = Suggestions.getCollectionName();
+        removeItMethod.call({ collectionName, instance }, (err) => {
+          if (err) {
+            swal('Error removing', err.message, 'error');
+          } else {
+            swal('Success', `${addType} added`, 'success');
+          }
+        });
       }
-      collectionName = Suggestions.getCollectionName();
-      removeItMethod.call({ collectionName, instance }, (err) => {
-        if (err) {
-          swal('Error removing', err.message, 'error');
-        }
-      });
     });
     return true;
-  }
+  };
 
-  render() {
-    // console.log(this.props);
-    return (
-        <Item id={`${this.props.type}-${this.props.name}`}
-              style={{ padding: '0rem 2rem 2rem 2rem' }}>
-            <Item.Content>
-              <Item.Header>
-                <Header as={'h3'} style={{ color: '#263763', paddingTop: '2rem' }}>
-                  {this.props.name}
-                </Header>
-              </Item.Header>
-              <Item.Meta>
-                {this.props.type}
-              </Item.Meta>
-              <Item.Description>
-                {this.props.description}
-              </Item.Description>
-              <Item.Extra>Suggested By: {this.props.username} </Item.Extra>
-              <Button negative onClick={() => this.removeItem()}>Delete</Button>
-              <Button positive onClick={() => this.addSuggestion(this.props.type,
-                  this.props.name, this.props.description, this.props.suggestionObj._id)}>Add Suggestion</Button>
-            </Item.Content>
-        </Item>
-    );
-  }
-}
+  return (
+    <Card id={`${type}-${name}`}
+        style={{ padding: '0rem 2rem 2rem 2rem' }}>
+      <Card.Body>
+        <Container>
+          <h5 style={{ color: '#263763', paddingTop: '2rem' }}>
+            {name}
+          </h5>
+            <p style={{ color: '#9e9e9e' }}> {type} </p>
+            <p> {description} </p>
+            <p> Suggested By: {username} </p>
+            <Button id={`del-${suggestionObj._id}`} variant='danger' onClick={removeItem}>Delete</Button>
+            <Button id={`add-${suggestionObj._id}`} variant='success' onClick={() => addSuggestion(type,
+              name, description, suggestionObj._id)}>Add Suggestion</Button>
+        </Container>
+      </Card.Body>
+    </Card>
+  );
+};
 
 ListSuggestionsCard.propTypes = {
   type: PropTypes.string.isRequired,
@@ -100,6 +89,5 @@ ListSuggestionsCard.propTypes = {
   description: PropTypes.string.isRequired,
   suggestionObj: PropTypes.object.isRequired,
 };
-export default withTracker(() => ({
-    suggestion: Suggestions.find({}).fetch(),
-  }))(ListSuggestionsCard);
+
+export default ListSuggestionsCard;

@@ -65,6 +65,7 @@ const ListSuggestionsWidget = () => {
 
     useEffect(setFilters, [search, type]);
 
+    // useEffect(() => setResult(suggestions), [result]);
     const handleSearchChange = (event) => {
       setSearch(event.target.value);
     };
@@ -108,7 +109,6 @@ const ListSuggestionsWidget = () => {
             </Card>
           </Col>
           <Col>
-            <Card>
               {result.map((s) => <ListSuggestionsCard
                 key={s._id}
                 type={s.type}
@@ -117,7 +117,6 @@ const ListSuggestionsWidget = () => {
                 description={s.description}
                 suggestionObj={s}
               />)}
-            </Card>
           </Col>
         </Row>
       </Container>
