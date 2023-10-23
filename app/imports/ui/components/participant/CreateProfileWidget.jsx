@@ -1,14 +1,13 @@
-import React from 'react';
-import { Header, Segment, Form } from 'semantic-ui-react';
-import { withTracker } from 'meteor/react-meteor-data';
+import React, { useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useTracker } from 'meteor/react-meteor-data';
 import {
-  AutoForm, BoolField,
+  AutoForm, BoolField, ErrorsField,
   LongTextField, SelectField,
   SubmitField,
   TextField,
-} from 'uniforms-semantic';
+} from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
-import PropTypes from 'prop-types';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import _ from 'lodash';
@@ -19,28 +18,37 @@ import { Challenges } from '../../../api/challenge/ChallengeCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
 import { demographicLevels } from '../../../api/level/Levels';
-import MultiSelectField from '../form-fields/MultiSelectField';
 import { ROUTES } from '../../../startup/client/route-constants';
 import { Slugs } from '../../../api/slug/SlugCollection';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 
-class CreateProfileWidget extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-  }
+const CreateProfileWidget = () => {
 
-  buildTheFormSchema() {
-    const challengeNames = _.map(this.props.challenges, (c) => c.title);
-    const skillNames = _.map(this.props.skills, (s) => s.name);
-    const toolNames = _.map(this.props.tools, (t) => t.name);
+  const [redirect, setRedirect] = useState(false);
+
+  const { participant, challenges, skills, tools } = useTracker(() => {
+      const getParticipant = Participants.findDoc({ userID: Meteor.userId() });
+      const getChallenges = Challenges.find({}).fetch();
+      const getSkills = Skills.find({}).fetch();
+      const getTools = Tools.find({}).fetch();
+      return {
+        participant: getParticipant,
+        challenges: getChallenges,
+        skills: getSkills,
+        tools: getTools,
+      };
+    });
+
+    const challengeNames = _.map(challenges, (c) => c.title);
+    const skillNames = _.map(skills, (s) => s.name);
+    const toolNames = _.map(tools, (t) => t.name);
     const schema = new SimpleSchema({
       firstName: String,
       lastName: String,
       username: String,
-      demographicLevel: { type: String, allowedValues: demographicLevels, optional: true },
-      linkedIn: { type: String, optional: true },
-      gitHub: { type: String, optional: true },
+      demographicLevel: { type: String },
+      linkedIn: { type: String, label: 'LinkedIn', optional: true },
+      gitHub: { type: String, label: 'GitHub', optional: true },
       slackUsername: { type: String, optional: true },
       website: { type: String, optional: true },
       aboutMe: { type: String, optional: true },
@@ -48,16 +56,14 @@ class CreateProfileWidget extends React.Component {
       lookingForTeam: { type: Boolean, optional: true },
       isCompliant: { type: Boolean, optional: true },
       challenges: { type: Array, optional: true },
-      'challenges.$': { type: String, allowedValues: challengeNames },
+      'challenges.$': { type: String },
       skills: { type: Array, optional: true },
-      'skills.$': { type: String, allowedValues: skillNames },
+      'skills.$': { type: String },
       tools: { type: Array, optional: true },
-      'tools.$': { type: String, allowedValues: toolNames },
+      'tools.$': { type: String },
     });
-    return schema;
-  }
 
-  submit(data) {
+  const submit = (data) => {
     const collectionName = Participants.getCollectionName();
     const updateData = {};
     updateData.id = data._id;
@@ -101,10 +107,8 @@ class CreateProfileWidget extends React.Component {
       updateData.aboutMe = data.aboutMe;
     }
     updateData.editedProfile = true;
-    // console.log(collectionName, updateData);
     updateMethod.call({ collectionName, updateData }, (error) => {
       if (error) {
-        console.error(error);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -118,76 +122,56 @@ class CreateProfileWidget extends React.Component {
         });
       }
     });
-    this.setState({ redirectToReferer: true });
-  }
+    setRedirect(true);
+  };
 
-  render() {
-    const model = this.props.participant;
-    const schema = this.buildTheFormSchema();
-    const formSchema = new SimpleSchema2Bridge(schema);
-    const firstname = model.firstName;
-    if (this.state.redirectToReferer) {
-      const from = { pathname: ROUTES.YOUR_PROFILE };
-      return <Redirect to={from} />;
-    }
-    return (
-        <Segment>
-          <Header dividing>Hello {firstname}, this is your first time to login, so please fill out your profile</Header>
-          <AutoForm schema={formSchema} model={model} onSubmit={data => {
-            this.submit(data);
-          }}>
-            <Form.Group widths="equal">
-              <TextField name="username" disabled />
-              <BoolField name="isCompliant" disabled />
-            </Form.Group>
-            <Form.Group widths="equal">
-              <TextField name="firstName" />
-              <TextField name="lastName" />
-              <SelectField name="demographicLevel" />
-            </Form.Group>
-            <Form.Group widths="equal">
-              <TextField name="linkedIn" />
-              <TextField name="gitHub" />
-              <TextField name="slackUsername" />
-            </Form.Group>
-            <Form.Group widths="equal">
-              <TextField name="website" />
-              <LongTextField name="aboutMe" />
-            </Form.Group>
-            <MultiSelectField name="challenges" />
-            <Form.Group widths="equal">
-              <MultiSelectField name="skills" />
-              <MultiSelectField name="tools" />
-            </Form.Group>
-            <SubmitField />
-          </AutoForm>
-        </Segment>
-    );
+  const model = participant;
+  const formSchema = new SimpleSchema2Bridge(schema);
+  const firstname = model.firstName;
+  if (redirect) {
+    return <Redirect to={ ROUTES.YOUR_PROFILE } />;
   }
-}
-
-CreateProfileWidget.propTypes = {
-  participant: PropTypes.object.isRequired,
-  skills: PropTypes.arrayOf(
-      PropTypes.object,
-  ).isRequired,
-  challenges: PropTypes.arrayOf(
-      PropTypes.object,
-  ).isRequired,
-  tools: PropTypes.arrayOf(
-      PropTypes.object,
-  ).isRequired,
+  return (
+    <Container id='create-profile' style={{ paddingBottom: '4rem' }}>
+      <h3 style={{ paddingTop: '2rem' }}>
+        Hello {firstname}, this is your first time to login, so please fill out your profile
+      </h3>
+      <hr/>
+      <AutoForm schema={formSchema} model={participant}
+                onSubmit={data => submit(data)}>
+        <Row>
+          <Col><TextField name="username" disabled/></Col>
+          <Col xs={2}><BoolField name="isCompliant" disabled/></Col>
+        </Row>
+        <Row>
+          <Col><TextField id='first-name' name="firstName"/></Col>
+          <Col><TextField id='last-name' name="lastName"/></Col>
+          <Col><SelectField id='demographic-level' name="demographicLevel"
+                            options={demographicLevels.map((val) => ({ label: val, value: val }))}/></Col>
+        </Row>
+        <Row>
+          <Col><TextField id='linked-in' name="linkedIn"/></Col>
+          <Col><TextField id='github' name="gitHub"/></Col>
+          <Col><TextField id='slack-username' name="slackUsername"/></Col>
+          <Col><TextField id='website' name="website"/></Col>
+        </Row>
+        <Row>
+          <LongTextField id='about-me' name="aboutMe"/>
+        </Row>
+        <Row>
+          <Col><SelectField id='challenges' name="challenges" multiple
+                            options={challengeNames.map((val) => ({ label: val, value: val }))}/>
+          </Col>
+          <Col><SelectField id='skills' name="skills" multiple
+                            options={skillNames.map((val) => ({ label: val, value: val }))}/></Col>
+          <Col><SelectField id='tools' name="tools" multiple
+                            options={toolNames.map((val) => ({ label: val, value: val }))}/></Col>
+        </Row>
+        <ErrorsField />
+        <SubmitField id='create-profile-submit' />
+      </AutoForm>
+    </Container>
+  );
 };
 
-export default withTracker(() => {
-  const participant = Participants.findDoc({ userID: Meteor.userId() });
-  const challenges = Challenges.find({}).fetch();
-  const skills = Skills.find({}).fetch();
-  const tools = Tools.find({}).fetch();
-  return {
-    participant,
-    challenges,
-    skills,
-    tools,
-  };
-})(CreateProfileWidget);
+export default CreateProfileWidget;
