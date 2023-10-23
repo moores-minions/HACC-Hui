@@ -19,6 +19,10 @@ import { profilePage } from './profile.page';
 import { deleteAccountPage } from './deleteaccount.page';
 import { suggesttoolskillwidgetPage } from './suggesttoolskillwidget.page';
 import { listteamswidgetPage } from './listteamswidget.page';
+import { createProfilePage } from './createprofile.page';
+import { editSkillPage } from './editskill.page';
+import { editToolPage } from './edittool.page';
+import { editChallengePage } from './editchallenge.page';
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
@@ -55,6 +59,15 @@ test('Test that NotFound page shows up and all pages work', async (testControlle
   await notFoundPage.isDisplayed(testController);
 }).page('http://localhost:3400/#/NotFound');
 
+test('Test that the add challenge page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoAddChallengePage(testController);
+  await addChallengePage.addChallenge(testController, testAddChallenge.title,
+    testAddChallenge.description, testAddChallenge.subDetail, testAddChallenge.pitch);
+});
+
 test('Test that add skill page shows up and works', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
@@ -71,13 +84,28 @@ test('Test that the add tool page shows up and works', async (testController) =>
   await addToolPage.addTool(testController, testAddTool.name, testAddTool.description);
 });
 
-test('Test that the challenge tool page shows up and works', async (testController) => {
+test('Test that the edit challenge page shows up and works', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoConfigureHACC(testController);
-  await configurehaccPage.gotoAddChallengePage(testController);
-  await addChallengePage.addChallenge(testController, testAddChallenge.title,
-    testAddChallenge.description, testAddChallenge.subDetail, testAddChallenge.pitch);
+  await configurehaccPage.gotoEditChallengePage(testController);
+  await editChallengePage.editChallenge(testController, 'amer');
+});
+
+test('Test that the edit skill page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoEditSkillPage(testController);
+  await editSkillPage.editSkill(testController, 'icles');
+});
+
+test('Test that the edit tool page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoEditToolPage(testController);
+  await editToolPage.editTool(testController, 'nananananana batman');
 });
 
 test('Test that an admin can access and download files from the Dump Database page', async (testController) => {
@@ -161,4 +189,11 @@ test('Test that the Open Teams page shows up and works', async (testController) 
   await signinPage.signin(testController, userCred.username, userCred.password);
   await navBar.gotoOpenTeams(testController);
   await listteamswidgetPage.isDisplayed(testController);
+});
+
+test('Test that the Create Profile page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await createProfilePage.isDisplayed(testController);
+  await createProfilePage.createProfile(testController, 'test');
 });
