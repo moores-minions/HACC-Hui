@@ -22,7 +22,7 @@ const EditSkillWidget = () => {
     };
   });
 
-    /** On submit, insert the data.
+  /** On submit, insert the data.
    * @param data {Object} the results from the form.
    * @param formRef {FormRef} reference to the form.
    */
@@ -39,20 +39,20 @@ const EditSkillWidget = () => {
 
     const collectionName = Skills.getCollectionName();
     updateMethod.call({ collectionName: collectionName, updateData: updateData },
-        (error) => {
-          if (error) {
-            swal('Error', error.message, 'error');
-          } else {
-            swal('Success', 'Item edited successfully', 'success');
-            setRedirect(true);
-          }
-        });
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Item edited successfully', 'success');
+          setRedirect(true);
+        }
+      });
   };
 
   // const { from } = { pathname: ROUTES.CONFIGURE_HACC } };
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirect) {
-    return <Redirect to={ ROUTES.CONFIGURE_HACC } />;
+    return <Redirect to={ROUTES.CONFIGURE_HACC}/>;
   }
 
   const formSchema = new SimpleSchema2Bridge(Skills.getSchema());
