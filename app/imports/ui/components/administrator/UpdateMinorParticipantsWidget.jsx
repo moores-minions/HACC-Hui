@@ -93,7 +93,7 @@ const UpdateMinorParticipantsWidget = ({ MinorParticipantsID }) => {
     return <Redirect to={from}/>;
   }
   return (
-    <Container style={{ paddingBottom: '50px' }}>
+    <Container id='minor-participant-list' style={{ paddingBottom: '50px' }}>
       <div className='text-center' style={{
         backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
         borderRadius: '2rem',

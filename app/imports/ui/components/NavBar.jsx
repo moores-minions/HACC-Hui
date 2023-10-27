@@ -87,7 +87,7 @@ class NavBar extends React.Component {
                 >
                   Configure HACC
                 </Nav.Link>
-                <Nav.Link as={NavLink} to={ROUTES.UPDATE_MP}>
+                <Nav.Link id='update-minors' as={NavLink} to={ROUTES.UPDATE_MP}>
                   Update Minor Participants Status
                 </Nav.Link>
                 <Nav.Link

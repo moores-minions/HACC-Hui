@@ -28,7 +28,7 @@ const UpdateMinorParticipantsCompliant = () => {
   const MinorCFParticipantsID = getMinorCFParticipants();
   if (MinorCFParticipantsID.length === 0) {
     return (
-      <Container id='no-suggestions' fluid>
+      <Container id='no-minors' fluid>
         <h4 className='text-center'>
           <Icon.PeopleFill />
           {' '}
