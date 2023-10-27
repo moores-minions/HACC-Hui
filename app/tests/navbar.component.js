@@ -108,5 +108,9 @@ class NavBar {
   async gotoOpenTeams(testController) {
     await testController.click('#open-teams');
   }
+
+  async gotoUpdateMinors(testController) {
+    await testController.click('#update-minors');
+  }
 }
 export const navBar = new NavBar();
