@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Header } from 'semantic-ui-react';
-import { withTracker } from 'meteor/react-meteor-data';
+import { Row, Col, Alert, Container } from 'react-bootstrap';
 import ListTeamExampleWidget from './ListTeamExampleWidget';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
@@ -12,7 +11,6 @@ import { Tools } from '../../../api/tool/ToolCollection';
 import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { Teams } from '../../../api/team/TeamCollection';
-import { paleBlueStyle } from '../../styles';
 
 const getTeam = (teamID) => Teams.findDoc(teamID);
 
@@ -46,31 +44,32 @@ const getTeamMembers = (team) => {
 
 class ListTeamsWidget extends React.Component {
   render() {
+    const closed = Teams.find({ open: false }).count();
     return (
-        <Grid celled style={paleBlueStyle}>
-          <Grid.Row columns={7}>
-            <Grid.Column>
-              <Header>Name</Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header>Challenges</Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header>Desired Skills</Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header>Desired Tools</Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header>Devpost/Github</Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header>Members</Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header>Join?</Header>
-            </Grid.Column>
-          </Grid.Row>
+        <Container>
+          <Row className="d-none d-md-flex">
+            <Col className="border">
+              <h4>Name</h4>
+            </Col>
+            <Col className="border">
+              <h4>Challenges</h4>
+            </Col>
+            <Col className="border">
+              <h4>Desired Skills</h4>
+            </Col>
+            <Col className="border">
+              <h4>Desired Tools</h4>
+            </Col>
+            <Col className="border">
+              <h4>Devpost / Github</h4>
+            </Col>
+            <Col className="border">
+              <h4>Members</h4>
+            </Col>
+            <Col className="border">
+              <h4>Join?</h4>
+            </Col>
+          </Row>
           {this.props.teams.map((team) => (
               <ListTeamExampleWidget key={team._id}
                                      team={getTeam(team._id)}
@@ -80,20 +79,20 @@ class ListTeamsWidget extends React.Component {
                                      teamMembers={getTeamMembers(team)}
               />
           ))}
-        </Grid>
+          <Row>
+          <Col className="mt-3">
+            <Alert variant="danger">
+              There are {closed} closed teams.
+            </Alert>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
 
 ListTeamsWidget.propTypes = {
-  teams: PropTypes.arrayOf(
-      PropTypes.object,
-  ),
+  teams: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default withTracker(() => {
-  const teams = Teams.find({}).fetch();
-  return {
-    teams,
-  };
-})(ListTeamsWidget);
+export default ListTeamsWidget;

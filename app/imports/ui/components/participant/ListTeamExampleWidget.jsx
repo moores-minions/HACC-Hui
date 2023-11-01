@@ -1,8 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, Header, List } from 'semantic-ui-react';
-// import _ from 'lodash';
+import { Card, Row, Col, Button } from 'react-bootstrap';
 import _ from 'underscore';
 import swal from 'sweetalert';
 import { WantsToJoin } from '../../../api/team/WantToJoinCollection';
@@ -18,7 +17,7 @@ class ListTeamExampleWidget extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e, inst) {
+  handleClick = (e, inst) => {
     console.log(e, inst);
     const collectionName = WantsToJoin.getCollectionName();
     const teamDoc = Teams.findDoc(inst.id);
@@ -41,7 +40,7 @@ class ListTeamExampleWidget extends React.Component {
     });
   }
 
-  renderButton() {
+  renderButton = () => {
     const participant = Participants.findDoc({ userID: Meteor.userId() });
     const participantName = Participants.getFullName(participant._id);
     const isAMember = _.includes(this.props.teamMembers, participantName);
@@ -51,16 +50,16 @@ class ListTeamExampleWidget extends React.Component {
     const Requested = _.contains(Joinsentusers, participant._id);
 
     if (isAMember) {
-      return (<Button id={this.props.team._id} color="green"
+      return (<Button id={this.props.team._id} variant="success"
                       disabled={true} style={{ width: `${100}px`,
         height: `${50}px`, textAlign: 'center' }} >You own the team</Button>);
     }
     if (this.state.sent || Requested) {
-      return (<Button id={this.props.team._id} color="green"
+      return (<Button id={this.props.team._id} variant="success"
                       disabled={true} style={{ width: `${100}px`,
         height: `${50}px`, textAlign: 'center' }} >You sent the request</Button>);
     }
-    return (<Button id={this.props.team._id} color="green"
+    return (<Button id={this.props.team._id} variant="success"
                     onClick={this.handleClick} style={{ width: `${100}px`,
       height: `${50}px`, textAlign: 'center' }} >Request to Join</Button>);
   }
@@ -68,62 +67,47 @@ class ListTeamExampleWidget extends React.Component {
   render() {
 
     return (
-        <Grid.Row columns={7} >
-          <Grid.Column>
-            <Header as="h3">{this.props.team.name}</Header>
-          </Grid.Column>
-          <Grid.Column only='computer'>
-            <List bulleted>
-              {this.props.teamChallenges.map((c) => <List.Item key={c}>{c}</List.Item>)}
-            </List>
-          </Grid.Column>
-          <Grid.Column only='tablet mobile'>
-            <Header>Challenges</Header>
-            <List bulleted>
-              {this.props.teamChallenges.map((c) => <List.Item key={c}>{c}</List.Item>)}
-            </List>
-          </Grid.Column>
-          <Grid.Column only='computer'>
-            <List bulleted>
-              {this.props.teamSkills.map((s) => <List.Item key={s}>{s}</List.Item>)}
-            </List>
-          </Grid.Column>
-          <Grid.Column only='tablet mobile'>
-            <Header>Desired Skills</Header>
-            <List bulleted>
-              {this.props.teamSkills.map((s) => <List.Item key={s}>{s}</List.Item>)}
-            </List>
-          </Grid.Column>
-          <Grid.Column only='computer'>
-            <List bulleted>
-              {this.props.teamTools.map((t) => <List.Item key={t}>{t}</List.Item>)}
-            </List>
-          </Grid.Column>
-          <Grid.Column only='tablet mobile'>
-            <Header>Desired Tools</Header>
-            <List bulleted>
-              {this.props.teamTools.map((t) => <List.Item key={t}>{t}</List.Item>)}
-            </List>
-          </Grid.Column>
-          <Grid.Column>
-            <a href={this.props.team.devPostPage}>Devpost Page</a> <br />
-            <a href={this.props.team.gitHubRepo}>GitHub repo</a>
-          </Grid.Column>
-          <Grid.Column only='computer'>
-            <List bulleted>
-              {this.props.teamMembers.map((t) => <List.Item key={t}>{t}</List.Item>)}
-            </List>
-          </Grid.Column>
-          <Grid.Column only='tablet mobile'>
-            <Header>Team Members</Header>
-            <List bulleted>
-              {this.props.teamMembers.map((t) => <List.Item key={t}>{t}</List.Item>)}
-            </List>
-          </Grid.Column>
-          <Grid.Column textAlign='center'>
-            {this.renderButton()}
-          </Grid.Column>
-        </Grid.Row>
+      <Card style={ { marginTop: 15 } }>
+        <Card.Body>
+          <Row className="d-none d-md-flex">
+            <Col>
+              <h5>{this.props.team.name}</h5>
+            </Col>
+            <Col>
+              <h5>Challenges</h5>
+                {this.props.teamChallenges.map((item) => <p key={item}>{`\u2022 ${item}`}</p>)}
+              {_.uniq(this.props.teamChallenges).length === 0 ? (<p>N/A</p>) : ''}
+            </Col>
+            <Col>
+              <h5>Desired Skills</h5>
+                {this.props.teamSkills.map((item) => <p key={item}>{`\u2022 ${item}`}</p>)}
+              {_.uniq(this.props.teamSkills).length === 0 ? (<p>N/A</p>) : ''}
+            </Col>
+            <Col>
+              <h5>Desired Tools</h5>
+                {this.props.teamTools.map((item) => <p key={item}>{`\u2022 ${item}`}</p>)}
+              {_.uniq(this.props.teamTools).length === 0 ? (<p>N/A</p>) : ''}
+            </Col>
+            <Col>
+              {_.uniq(this.props.team.devPostPage).length === 1 ? (
+                <a href={this.props.team.devPostPage}>Devpost Page</a>) : ''}
+              {_.uniq(this.props.team.devPostPage).length === 0 ? (<p>DevPost page not listed</p>) : ''}
+              <br />
+              {_.uniq(this.props.team.gitHubRepo).length === 1 ? (
+                <a href={this.props.team.gitHubRepo}>GitHub Repo</a>) : ''}
+              {_.uniq(this.props.team.gitHubRepo).length === 0 ? (<p>GitHub Repo not listed</p>) : ''}
+            </Col>
+            <Col>
+              <h5>Members</h5>
+                {this.props.teamMembers.map((item) => <p key={item}>{`\u2022 ${item}`}</p>)}
+              {_.uniq(this.props.teamMembers).length === 0 ? (<p>No members listed</p>) : ''}
+            </Col>
+            <Col textAlign='center'>
+              {this.renderButton()}
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
     );
   }
 }
@@ -142,4 +126,5 @@ ListTeamExampleWidget.propTypes = {
       PropTypes.string,
   ).isRequired,
 };
+
 export default ListTeamExampleWidget;
