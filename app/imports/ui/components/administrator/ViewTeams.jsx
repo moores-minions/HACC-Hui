@@ -52,7 +52,7 @@ const ViewTeams = ({
     let compliant = true;
     tps.forEach((tp) => {
       const participant = participants.filter(
-        (p) => p._id === tp.participantID
+        (p) => p._id === tp.participantID,
       );
       // console.log(participant);
       compliant = compliant && participant[0].isCompliant;
@@ -68,7 +68,7 @@ const ViewTeams = ({
       case 'Challenge':
         localTeams.forEach((team) => {
           const challengeIDs = teamChallenges.filter(
-            (tc) => tc.teamID === team._id
+            (tc) => tc.teamID === team._id,
           );
           if (challengeIDs.length === 0) {
             remainingTeams.push(team);
@@ -109,7 +109,7 @@ const ViewTeams = ({
     const zip = new ZipZap();
     const dir = 'hacchui-team-captains';
     const fileName = `${dir}/${moment().format(
-      databaseFileDateFormat
+      databaseFileDateFormat,
     )}-team-captains.txt`;
     const localTeams = filteredTeams;
     const ownerIDs = localTeams.map((t) => t.owner);
