@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Meteor } from 'meteor/meteor';
 // import { Dropdown } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -21,42 +21,43 @@ import { WantsToJoin } from '../../../api/team/WantToJoinCollection';
 import { paleBlueStyle } from '../../styles';
 
 /** Renders a table containing all of the Book documents. Use <BookItem> to render each row. */
-class BestTeam extends React.Component {
+const BestTeam = (props) => {
+  const [select, setSelect] = useState('default');
 
-  constructor(props) {
-    super(props);
-    this.state = { select: 'default' };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { select: 'default' };
+  // }
 
-  getDeveloper = () => Participants.findOne({ username: Meteor.user().username })
+  const getDeveloper = () => Participants.findOne({ username: Meteor.user().username });
 
-  getAllOpenTeams = () => {
+  const getAllOpenTeams = () => {
     const teams = Teams.find({ open: true }).fetch();
     return teams;
     // console.log(this.AllOpenTeam);
-  }
+  };
 
-  byAtoZ = () => {
+  const byAtoZ = () => {
     const allTeams = this.getAllOpenTeams();
     return _.sortBy(allTeams, (team) => team.name.toLowerCase());
-  }
+  };
 
-  byChallengeMatch = () => {
-    const participantID = this.getDeveloper()._id;
+  const byChallengeMatch = () => {
+    const participantID = getDeveloper()._id;
     const pChallenges = ParticipantChallenges.find({ participantID }).fetch();
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     _.forEach(allTeams, (team) => {
       const tChallenges = TeamChallenges.find({ teamID: team._id }).fetch();
       // eslint-disable-next-line no-param-reassign
       team.priority = _.intersectionBy(pChallenges, tChallenges, 'challengeID').length;
     });
     return _.sortBy(allTeams, 'priority').reverse();
-  }
+  };
 
-  bySkillMatch = () => {
-    const participantID = this.getDeveloper()._id;
+  const bySkillMatch = () => {
+    const participantID = getDeveloper()._id;
     const pSkills = ParticipantSkills.find({ participantID }).fetch();
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     _.forEach(allTeams, (team) => {
       const tSkills = TeamSkills.find({ teamID: team._id }).fetch();
       // eslint-disable-next-line no-param-reassign
@@ -65,10 +66,10 @@ class BestTeam extends React.Component {
     return _.sortBy(allTeams, 'priority').reverse();
   }
 
-  byToolMatch = () => {
-    const participantID = this.getDeveloper()._id;
+  const byToolMatch = () => {
+    const participantID = getDeveloper()._id;
     const pTools = ParticipantTools.find({ participantID }).fetch();
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     _.forEach(allTeams, (team) => {
       const tTools = TeamTools.find({ teamID: team._id }).fetch();
       // eslint-disable-next-line no-param-reassign
@@ -77,12 +78,12 @@ class BestTeam extends React.Component {
     return _.sortBy(allTeams, 'priority').reverse();
   }
 
-  byBestMatch = () => {
-    const participantID = this.getDeveloper()._id;
+  const byBestMatch = () => {
+    const participantID = getDeveloper()._id;
     const pChallenges = ParticipantChallenges.find({ participantID }).fetch();
     const pSkills = ParticipantSkills.find({ participantID }).fetch();
     const pTools = ParticipantTools.find({ participantID }).fetch();
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     _.forEach(allTeams, (team) => {
       const tChallenges = TeamChallenges.find({ teamID: team._id }).fetch();
       const tSkills = TeamSkills.find({ teamID: team._id }).fetch();
@@ -98,7 +99,7 @@ class BestTeam extends React.Component {
 
   }
 
-  renderDropDown = () => {
+  const renderDropDown = () => {
     const _select = (e, data) => {
       const newState = { select: data.value };
       this.setState(newState);
@@ -110,7 +111,8 @@ class BestTeam extends React.Component {
       { key: 3, text: 'Sort the teams by the tools that match your tools', value: 'tool' },
       { key: 4, text: 'Sort the teams by the name in alphabet order', value: 'AToZ' },
     ];
-    return <div>
+    return (
+      <div>
       <Row>
         <Col style={ { marginTop: '15px' } }>
           <h5 style={ { textAlign: 'center' } }>
@@ -128,8 +130,9 @@ class BestTeam extends React.Component {
         </Col>
       </Row>
       <hr />
-    </div>;
-  }
+    </div>
+    );
+  };
 
   render() {
     return (this.props.ready) ? this.renderPage() : <Spinner animation="border" />;
