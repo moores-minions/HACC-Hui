@@ -32,12 +32,21 @@ const getTeamMembers = (team) => {
   return _.uniq(memberNames);
 };
 
-const ViewTeams = ({
-  participants,
-  teams,
-  teamChallenges,
-  teamParticipants,
-}) => {
+const ViewTeams = () => {
+  const { participants, teams, teamChallenges, teamParticipants } = useTracker(() => {
+    const teamsData = Teams.find({}, { sort: { name: 1 } }).fetch();
+    const teamChallengesData = TeamChallenges.find({}).fetch();
+    const teamParticipantsData = TeamParticipants.find({}).fetch();
+    const participantsData = Participants.find({}).fetch();
+
+    return {
+      participants: participantsData,
+      teams: teamsData,
+      teamChallenges: teamChallengesData,
+      teamParticipants: teamParticipantsData,
+    };
+  });
+
   const [filteredTeams, setFilteredTeams] = useState(teams);
   const [filterValue, setFilterValue] = useState('None');
   // console.log(filteredTeams);
