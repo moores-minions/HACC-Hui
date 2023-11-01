@@ -1,14 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import {
-  Grid,
-  Header,
-  Item,
-  Icon, Segment,
-} from 'semantic-ui-react';
+import { Card, Col, Container } from 'react-bootstrap';
+import * as Icon from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 import { _ } from 'lodash';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import { Teams } from '../../../api/team/TeamCollection';
 import { TeamSkills } from '../../../api/team/TeamSkillCollection';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
@@ -26,23 +22,37 @@ import { paleBlueStyle } from '../../styles';
  * Renders the Page for adding stuff. **deprecated**
  * @memberOf ui/pages
  */
-class TeamInvitationsWidget extends React.Component {
+const TeamInvitationsWidget = () => {
+
+  const { teamChallenges, teamInvitations, teamSkills, teamTools, teams, skills, challenges, tools,
+    participants, teamParticipants } = useTracker(() => ({
+      teamChallenges: TeamChallenges.find({}).fetch(),
+      // eslint-disable-next-line max-len
+      teamInvitations: TeamInvitations.find({ participantID: Participants.findDoc({ userID: Meteor.userId() })._id }).fetch(),
+      teamSkills: TeamSkills.find({}).fetch(),
+      teamTools: TeamTools.find({}).fetch(),
+      // eslint-disable-next-line max-len
+      teams: Teams.find({}).fetch(),
+      skills: Skills.find({}).fetch(),
+      challenges: Challenges.find({}).fetch(),
+      tools: Tools.find({}).fetch(),
+      participants: Participants.find({}).fetch(),
+      teamParticipants: TeamParticipants.find({}).fetch(),
+    }));
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-
-  render() {
-
-    if (this.props.teamInvitations.length === 0) {
+    if (teamInvitations.length === 0) {
       return (
-          <div align={'center'} style={{ margin: '3rem 0' }}>
-            <Header as='h2' icon>
-              <Icon name='users'/>
+          <Container align={'center'}>
+            <h4 className='text-center'>
+              <Icon.PeopleFill/>
+              {' '}
               You have no invitations at the moment.
-              <Header.Subheader>
+              <h5>
                 Please check back later.
-              </Header.Subheader>
-            </Header>
-          </div>
+              </h5>
+            </h4>
+          </Container>
       );
     }
 
@@ -54,9 +64,9 @@ class TeamInvitationsWidget extends React.Component {
       { key: 'tools', text: 'tools', value: 'tools' },
     ];
 
-    const universalTeams = this.props.teams;
+    const universalTeams = teams;
 
-    function getTeamInvitations(invs) {
+    const getTeamInvitations = (invs) => {
       const data = [];
       for (let i = 0; i < invs.length; i++) {
         for (let j = 0; j < universalTeams.length; j++) {
@@ -66,61 +76,61 @@ class TeamInvitationsWidget extends React.Component {
         }
       }
       return data;
-    }
+    };
 
-    const universalSkills = this.props.skills;
+    const universalSkills = skills;
 
-    function getTeamSkills(teamID, teamSkills) {
+    const getTeamSkills = (teamID, teamSkillsParam) => {
       const data = [];
-      const skills = _.filter(teamSkills, { teamID: teamID });
-      for (let i = 0; i < skills.length; i++) {
+      const getSkills = _.filter(teamSkillsParam, { teamID: teamID });
+      for (let i = 0; i < getSkills.length; i++) {
         for (let j = 0; j < universalSkills.length; j++) {
-          if (skills[i].skillID === universalSkills[j]._id) {
+          if (getSkills[i].skillID === universalSkills[j]._id) {
             data.push(universalSkills[j].name);
           }
         }
       }
       return data;
-    }
+    };
 
-    const universalTools = this.props.tools;
+    const universalTools = tools;
 
-    function getTeamTools(teamID, teamTools) {
+    const getTeamTools = (teamID, teamToolsParam) => {
       const data = [];
-      const tools = _.filter(teamTools, { teamID: teamID });
-      for (let i = 0; i < tools.length; i++) {
+      const getTools = _.filter(teamToolsParam, { teamID: teamID });
+      for (let i = 0; i < getTools.length; i++) {
         for (let j = 0; j < universalTools.length; j++) {
-          if (tools[i].toolID === universalTools[j]._id) {
+          if (getTools[i].toolID === universalTools[j]._id) {
             data.push(universalTools[j].name);
           }
         }
       }
       return data;
-    }
+    };
 
-    const universalChallenges = this.props.challenges;
+    const universalChallenges = challenges;
 
-    function getTeamChallenges(teamID, teamChallenges) {
+    const getTeamChallenges = (teamID, teamChallengesParam) => {
       const data = [];
-      const challenges = _.filter(teamChallenges, { teamID: teamID });
-      for (let i = 0; i < challenges.length; i++) {
+      const getChallenges = _.filter(teamChallengesParam, { teamID: teamID });
+      for (let i = 0; i < getChallenges.length; i++) {
         for (let j = 0; j < universalChallenges.length; j++) {
-          if (challenges[i].challengeID === universalChallenges[j]._id) {
+          if (getChallenges[i].challengeID === universalChallenges[j]._id) {
             data.push(universalChallenges[j].title);
           }
         }
       }
       return data;
-    }
+    };
 
-    const allDevelopers = this.props.participants;
+    const allDevelopers = participants;
 
-    function getTeamDevelopers(teamID, teamParticipants) {
+    const getTeamDevelopers = (teamID, teamParticipantsParam) => {
       const data = [];
-      const participants = _.filter(teamParticipants, { teamID: teamID });
-      for (let i = 0; i < participants.length; i++) {
+      const getParticipants = _.filter(teamParticipantsParam, { teamID: teamID });
+      for (let i = 0; i < getParticipants.length; i++) {
         for (let j = 0; j < allDevelopers.length; j++) {
-          if (participants[i].participantID === allDevelopers[j]._id) {
+          if (getParticipants[i].participantID === allDevelopers[j]._id) {
             data.push({
               firstName: allDevelopers[j].firstName,
               lastName: allDevelopers[j].lastName,
@@ -129,37 +139,28 @@ class TeamInvitationsWidget extends React.Component {
         }
       }
       return data;
-    }
+    };
 
     return (
-        <div style={{ paddingBottom: '50px', paddingTop: '40px',
+        <Container style={{ paddingBottom: '50px', paddingTop: '40px', display: 'block',
+          marginLeft: 'auto', marginRight: 'auto',
         }}>
-          <Grid container doubling relaxed stackable style={{ display: 'block',
-            marginLeft: 'auto', marginRight: 'auto' }}>
-            <Segment style = {paleBlueStyle} >
-              <Grid.Row centered>
-                <Header as='h2' textAlign="center" style={{ paddingBottom: '1rem' }}>
-                  Team Invitations
-                </Header>
-              </Grid.Row>
-              <Grid.Column width={15}>
-                  <Item.Group divided>
-                    {/* eslint-disable-next-line max-len */}
-                    {getTeamInvitations(this.props.teamInvitations).map((teams) => <TeamInvitationCard key={teams._id}
-                                       teams={teams}
-                                       skills={getTeamSkills(teams._id, this.props.teamSkills)}
-                                       tools={getTeamTools(teams._id, this.props.teamTools)}
-                                       challenges={getTeamChallenges(teams._id, this.props.teamChallenges)}
-                                       participants={getTeamDevelopers(teams._id, this.props.teamParticipants)}
-                    />)}
-                  </Item.Group>
-              </Grid.Column>
-            </Segment>
-          </Grid>
-        </div>
+            <Card style={paleBlueStyle} >
+              <Card.Body><h4 className="text-center" style={{ paddingBottom: '1rem' }}>
+                Team Invitations
+              </h4>
+                <Col>
+                  {getTeamInvitations(teamInvitations).map((mapTeams) => <TeamInvitationCard key={mapTeams._id}
+                                        teams={mapTeams} skills={getTeamSkills(mapTeams._id, teamSkills)}
+                                        tools={getTeamTools(mapTeams._id, teamTools)}
+                                        challenges={getTeamChallenges(mapTeams._id, teamChallenges)}
+                                        participants={getTeamDevelopers(mapTeams._id, teamParticipants)}
+                  />)}
+                </Col></Card.Body>
+            </Card>
+        </Container>
     );
-  }
-}
+};
 
 TeamInvitationsWidget.propTypes = {
   teamChallenges: PropTypes.array.isRequired,
@@ -175,18 +176,4 @@ TeamInvitationsWidget.propTypes = {
 
 };
 
-export default withTracker(() => ({
-  teamChallenges: TeamChallenges.find({}).fetch(),
-  // eslint-disable-next-line max-len
-  teamInvitations: TeamInvitations.find({ participantID: Participants.findDoc({ userID: Meteor.userId() })._id }).fetch(),
-  teamSkills: TeamSkills.find({}).fetch(),
-  teamTools: TeamTools.find({}).fetch(),
-  // eslint-disable-next-line max-len
-  teams: Teams.find({}).fetch(),
-  skills: Skills.find({}).fetch(),
-  challenges: Challenges.find({}).fetch(),
-  tools: Tools.find({}).fetch(),
-  participants: Participants.find({}).fetch(),
-  teamParticipants: TeamParticipants.find({}).fetch(),
-  // eslint-disable-next-line max-len
-}))(TeamInvitationsWidget);
+export default TeamInvitationsWidget;
