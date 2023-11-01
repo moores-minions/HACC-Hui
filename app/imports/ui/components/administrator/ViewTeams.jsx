@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import _ from 'lodash';
@@ -207,7 +207,7 @@ ViewTeams.propTypes = {
   teamParticipants: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default withTracker(() => {
+export default useTracker(() => {
   const teams = Teams.find({}, { sort: { name: 1 } }).fetch();
   const teamChallenges = TeamChallenges.find({}).fetch();
   const teamParticipants = TeamParticipants.find({}).fetch();
