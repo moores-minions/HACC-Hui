@@ -207,15 +207,4 @@ ViewTeams.propTypes = {
   teamParticipants: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default useTracker(() => {
-  const teams = Teams.find({}, { sort: { name: 1 } }).fetch();
-  const teamChallenges = TeamChallenges.find({}).fetch();
-  const teamParticipants = TeamParticipants.find({}).fetch();
-  const participants = Participants.find({}).fetch();
-  return {
-    participants,
-    teams,
-    teamChallenges,
-    teamParticipants,
-  };
-})(ViewTeams);
+export default ViewTeams;
