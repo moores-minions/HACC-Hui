@@ -4,7 +4,7 @@ import {
   Grid,
   Header,
   Item,
-  Icon, Segment, Card,
+  Icon, Segment,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'lodash';
@@ -143,7 +143,6 @@ class TeamInvitationsWidget extends React.Component {
                 </Header>
               </Grid.Row>
               <Grid.Column width={15}>
-                <Card fluid>
                   <Item.Group divided>
                     {/* eslint-disable-next-line max-len */}
                     {getTeamInvitations(this.props.teamInvitations).map((teams) => <TeamInvitationCard key={teams._id}
@@ -154,7 +153,6 @@ class TeamInvitationsWidget extends React.Component {
                                        participants={getTeamDevelopers(teams._id, this.props.teamParticipants)}
                     />)}
                   </Item.Group>
-                </Card>
               </Grid.Column>
             </Segment>
           </Grid>

@@ -195,7 +195,6 @@
           ],
           "tools": [
             "python",
-            "dart",
             "django",
             "react",
             "flutter"
