@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Form, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -29,7 +29,16 @@ import MultiSelectField from '../form-fields/MultiSelectField';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { ROUTES } from '../../../startup/client/route-constants';
 
-const EditProfileWidget = (props) => {
+const EditProfileWidget = () => {
+
+    const allChallenges = useTracker(() => Challenges.find({}).fetch());
+    const allSkills = useTracker(() => Skills.find({}).fetch());
+    const allTools = useTracker(() => Tools.find({}).fetch());
+    const participant = useTracker(() => Participants.findDoc({ userID: Meteor.userId() }));
+    const participantID = participant._id;
+    const devChallenges = useTracker(() => ParticipantChallenges.find({ participantID }).fetch());
+    const devSkills = useTracker(() => ParticipantSkills.find({ participantID }).fetch());
+    const devTools = useTracker(() => ParticipantTools.find({ participantID }).fetch());
 
   const [redirectToReferer, setRedirectToReferer] = useState(false);
   // const newSkillRef = React.createRef();
@@ -47,9 +56,9 @@ const EditProfileWidget = (props) => {
   // }
 
   const buildTheFormSchema = () => {
-    const challengeNames = _.map(props.allChallenges, (c) => c.title);
-    const skillNames = _.map(props.allSkills, (s) => s.name);
-    const toolNames = _.map(props.allTools, (t) => t.name);
+    const challengeNames = _.map(allChallenges, (c) => c.title);
+    const skillNames = _.map(allSkills, (s) => s.name);
+    const toolNames = _.map(allTools, (t) => t.name);
     const schema = new SimpleSchema({
       firstName: String,
       lastName: String,
@@ -74,17 +83,17 @@ const EditProfileWidget = (props) => {
   };
 
   const buildTheModel = () => {
-    const model = props.participant;
-    model.challenges = _.map(props.devChallenges, (challenge) => {
+    const model = participant;
+    model.challenges = _.map(devChallenges, (challenge) => {
       const c = Challenges.findDoc(challenge.challengeID);
       return c.title;
     });
-    model.skills = _.map(props.devSkills, (skill) => {
+    model.skills = _.map(devSkills, (skill) => {
       // console.log(skill);
       const s = Skills.findDoc(skill.skillID);
       return s.name;
     });
-    model.tools = _.map(props.devTools, (tool) => {
+    model.tools = _.map(devTools, (tool) => {
       const t = Tools.findDoc(tool.toolID);
       return t.name;
     });
@@ -237,23 +246,4 @@ EditProfileWidget.propTypes = {
       PropTypes.object,
   ),
 };
-
-export default withTracker(() => {
-  const allChallenges = Challenges.find({}).fetch();
-  const allSkills = Skills.find({}).fetch();
-  const allTools = Tools.find({}).fetch();
-  const participant = Participants.findDoc({ userID: Meteor.userId() });
-  const participantID = participant._id;
-  const devChallenges = ParticipantChallenges.find({ participantID }).fetch();
-  const devSkills = ParticipantSkills.find({ participantID }).fetch();
-  const devTools = ParticipantTools.find({ participantID }).fetch();
-  return {
-    allChallenges,
-    allSkills,
-    allTools,
-    participant,
-    devChallenges,
-    devSkills,
-    devTools,
-  };
-})(EditProfileWidget);
+export default EditProfileWidget;
