@@ -89,7 +89,6 @@ const EditProfileWidget = () => {
       return c.title;
     });
     model.skills = _.map(devSkills, (skill) => {
-      // console.log(skill);
       const s = Skills.findDoc(skill.skillID);
       return s.name;
     });
@@ -101,7 +100,6 @@ const EditProfileWidget = () => {
   };
 
   const submitData = (data) => {
-    // console.log('submit', data);
     const collectionName = Participants.getCollectionName();
     const updateData = {};
     updateData.id = data._id;
@@ -145,7 +143,6 @@ const EditProfileWidget = () => {
       updateData.aboutMe = data.aboutMe;
     }
     updateData.editedProfile = true;
-    // console.log(collectionName, updateData);
     updateMethod.call({ collectionName, updateData }, (error) => {
       if (error) {
         console.error(error);
