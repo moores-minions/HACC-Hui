@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 // import { Dropdown } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -38,7 +38,7 @@ const BestTeam = (props) => {
   };
 
   const byAtoZ = () => {
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     return _.sortBy(allTeams, (team) => team.name.toLowerCase());
   };
 
@@ -64,7 +64,7 @@ const BestTeam = (props) => {
       team.priority = _.intersectionBy(pSkills, tSkills, 'skillID').length;
     });
     return _.sortBy(allTeams, 'priority').reverse();
-  }
+  };
 
   const byToolMatch = () => {
     const participantID = getDeveloper()._id;
@@ -76,7 +76,7 @@ const BestTeam = (props) => {
       team.priority = _.intersectionBy(pTools, tTools, 'toolID').length;
     });
     return _.sortBy(allTeams, 'priority').reverse();
-  }
+  };
 
   const byBestMatch = () => {
     const participantID = getDeveloper()._id;
@@ -97,12 +97,13 @@ const BestTeam = (props) => {
     });
     return _.sortBy(allTeams, 'priority').reverse();
 
-  }
+  };
 
   const renderDropDown = () => {
     const _select = (e, data) => {
-      const newState = { select: data.value };
-      this.setState(newState);
+      setSelect(data.value);
+      // const newState = { select: data.value };
+      // this.setState(newState);
     };
     const options = [
       { key: 0, text: 'Sort the teams by the challenges that match your challenges', value: 'default' },
@@ -134,27 +135,27 @@ const BestTeam = (props) => {
     );
   };
 
-  render() {
-    return (this.props.ready) ? this.renderPage() : <Spinner animation="border" />;
-  }
+  // render() {
+  //   return (this.props.ready) ? this.renderPage() : <Spinner animation="border" />;
+  // }
 
-  renderPage() {
+  const renderPage = () => {
     let teams;
-    switch (this.state.select) {
+    switch (select) {
       case 'skill':
-        teams = this.bySkillMatch();
+        teams = bySkillMatch();
         break;
       case 'tool':
-        teams = this.byToolMatch();
+        teams = byToolMatch();
         break;
       case 'AToZ':
-        teams = this.byAtoZ();
+        teams = byAtoZ();
         break;
       case 'best':
-        teams = this.byBestMatch();
+        teams = byBestMatch();
         break;
       default:
-        teams = this.byChallengeMatch();
+        teams = byChallengeMatch();
     }
     return (
         <div style={{ paddingBottom: '50px', paddingTop: '40px', paddingRight: '40px', paddingLeft: '40px' }}>
@@ -163,7 +164,7 @@ const BestTeam = (props) => {
                 Open Teams
               </h2>
               <Card style={ { marginLeft: '30px', marginRight: '30px', marginBottom: '30px' } }>
-                {this.renderDropDown()}
+                {renderDropDown()}
                 <div style={{ paddingTop: '1rem', paddingBottom: '2rem' }}>
                   <ListTeamsWidget teams={teams} />
                 </div>
@@ -171,8 +172,9 @@ const BestTeam = (props) => {
           </Card>
         </div>
     );
-  }
-}
+  };
+  return (props.ready) ? renderPage() : <Spinner animation="border" />;
+};
 
 /** Require an array of Book documents in the props. */
 BestTeam.propTypes = {
