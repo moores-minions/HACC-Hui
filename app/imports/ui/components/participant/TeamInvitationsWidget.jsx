@@ -43,7 +43,7 @@ const TeamInvitationsWidget = () => {
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
     if (teamInvitations.length === 0) {
       return (
-          <Container align={'center'}>
+          <Container id='no-invitations' align={'center'}>
             <h4 className='text-center'>
               <Icon.PeopleFill/>
               {' '}
@@ -142,7 +142,7 @@ const TeamInvitationsWidget = () => {
     };
 
     return (
-        <Container style={{ paddingBottom: '50px', paddingTop: '40px', display: 'block',
+        <Container id='team-invitations' style={{ paddingBottom: '50px', paddingTop: '40px', display: 'block',
           marginLeft: 'auto', marginRight: 'auto',
         }}>
             <Card style={paleBlueStyle} >
