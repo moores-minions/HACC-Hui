@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header, Segment, Form } from 'semantic-ui-react';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import {
   AutoForm,
   SelectField,
@@ -16,27 +16,26 @@ import { Administrators } from '../../../api/user/AdministratorCollection';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
 import { Suggestions } from '../../../api/suggestions/SuggestionCollection';
 
-class SuggestToolSkillWidgetAdmin extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-  }
+const SuggestToolSkillWidgetAdmin = () => {
 
-  buildTheFormSchema() {
+  // const [redirectToReferer, setRedirectToReferer] = useState(false);
+  const admin = useTracker(() => Administrators.findDoc({ userID: Meteor.userId() }));
+
+  const buildTheFormSchema = () => {
     const schema = new SimpleSchema({
       type: { type: String, allowedValues: ['Tool', 'Skill'], optional: false },
       name: String,
       description: String,
     });
     return schema;
-  }
+  };
 
-  submit(data, formRef) {
+  const submit = (data, formRef) => {
     // console.log('CreateProfileWidget.submit', data);
     const collectionName = Suggestions.getCollectionName();
     const newData = {};
-    const model = this.props.admin;
-    newData.username = model.username;
+    // const model = this.props.admin;
+    newData.username = admin.username;
     newData.name = data.name;
     newData.type = data.type;
     newData.description = data.description;
@@ -51,18 +50,17 @@ class SuggestToolSkillWidgetAdmin extends React.Component {
             formRef.reset();
           }
         });
-  }
+  };
 
-  render() {
     let fRef = null;
-    const schema = this.buildTheFormSchema();
+    const schema = buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
     return (
         <Segment>
           <Header dividing> Add suggestion to list. </Header>
           <AutoForm ref={ref => {
             fRef = ref;
-          }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
+          }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
             <Form.Group widths="equal">
               <SelectField name="type" />
             </Form.Group>
@@ -76,16 +74,10 @@ class SuggestToolSkillWidgetAdmin extends React.Component {
           </AutoForm>
         </Segment>
     );
-  }
-}
+  };
 
 SuggestToolSkillWidgetAdmin.propTypes = {
   admin: PropTypes.object.isRequired,
 };
 
-export default withTracker(() => {
-  const admin = Administrators.findDoc({ userID: Meteor.userId() });
-  return {
-    admin,
-  };
-})(SuggestToolSkillWidgetAdmin);
+export default SuggestToolSkillWidgetAdmin;
