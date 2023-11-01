@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Header, Loader, Grid, Dropdown, Segment, Card } from 'semantic-ui-react';
+// import { Dropdown } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { Row, Col, Card, Spinner, Form } from 'react-bootstrap';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
@@ -20,70 +21,69 @@ import { WantsToJoin } from '../../../api/team/WantToJoinCollection';
 import { paleBlueStyle } from '../../styles';
 
 /** Renders a table containing all of the Book documents. Use <BookItem> to render each row. */
-class BestTeam extends React.Component {
+const BestTeam = (props) => {
+  const [select, setSelect] = useState('default');
 
-  constructor(props) {
-    super(props);
-    this.state = { select: 'default' };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { select: 'default' };
+  // }
 
-  getDeveloper() {
-    return Participants.findOne({ username: Meteor.user().username });
-  }
+  const getDeveloper = () => Participants.findOne({ username: Meteor.user().username });
 
-  getAllOpenTeams() {
+  const getAllOpenTeams = () => {
     const teams = Teams.find({ open: true }).fetch();
     return teams;
     // console.log(this.AllOpenTeam);
-  }
+  };
 
-  byAtoZ() {
-    const allTeams = this.getAllOpenTeams();
+  const byAtoZ = () => {
+    const allTeams = getAllOpenTeams();
     return _.sortBy(allTeams, (team) => team.name.toLowerCase());
-  }
+  };
 
-  byChallengeMatch() {
-    const participantID = this.getDeveloper()._id;
+  const byChallengeMatch = () => {
+    const participantID = getDeveloper()._id;
     const pChallenges = ParticipantChallenges.find({ participantID }).fetch();
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     _.forEach(allTeams, (team) => {
       const tChallenges = TeamChallenges.find({ teamID: team._id }).fetch();
       // eslint-disable-next-line no-param-reassign
       team.priority = _.intersectionBy(pChallenges, tChallenges, 'challengeID').length;
     });
     return _.sortBy(allTeams, 'priority').reverse();
-  }
+  };
 
-  bySkillMatch() {
-    const participantID = this.getDeveloper()._id;
+  const bySkillMatch = () => {
+    const participantID = getDeveloper()._id;
     const pSkills = ParticipantSkills.find({ participantID }).fetch();
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     _.forEach(allTeams, (team) => {
       const tSkills = TeamSkills.find({ teamID: team._id }).fetch();
       // eslint-disable-next-line no-param-reassign
       team.priority = _.intersectionBy(pSkills, tSkills, 'skillID').length;
     });
     return _.sortBy(allTeams, 'priority').reverse();
-  }
+  };
 
-  byToolMatch() {
-    const participantID = this.getDeveloper()._id;
+  const byToolMatch = () => {
+    const participantID = getDeveloper()._id;
     const pTools = ParticipantTools.find({ participantID }).fetch();
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     _.forEach(allTeams, (team) => {
       const tTools = TeamTools.find({ teamID: team._id }).fetch();
       // eslint-disable-next-line no-param-reassign
       team.priority = _.intersectionBy(pTools, tTools, 'toolID').length;
     });
     return _.sortBy(allTeams, 'priority').reverse();
-  }
+  };
 
-  byBestMatch() {
-    const participantID = this.getDeveloper()._id;
+  const byBestMatch = () => {
+    const participantID = getDeveloper()._id;
     const pChallenges = ParticipantChallenges.find({ participantID }).fetch();
     const pSkills = ParticipantSkills.find({ participantID }).fetch();
     const pTools = ParticipantTools.find({ participantID }).fetch();
-    const allTeams = this.getAllOpenTeams();
+    const allTeams = getAllOpenTeams();
     _.forEach(allTeams, (team) => {
       const tChallenges = TeamChallenges.find({ teamID: team._id }).fetch();
       const tSkills = TeamSkills.find({ teamID: team._id }).fetch();
@@ -97,75 +97,84 @@ class BestTeam extends React.Component {
     });
     return _.sortBy(allTeams, 'priority').reverse();
 
-  }
+  };
 
-  renderDropDown() {
+  const renderDropDown = () => {
     const _select = (e, data) => {
-      const newState = { select: data.value };
-      this.setState(newState);
+      setSelect(data.value);
+      // const newState = { select: data.value };
+      // this.setState(newState);
     };
     const options = [
-      { key: 0, text: 'sort the teams by the challenges that match your challenges', value: 'default' },
-      { key: 1, text: 'sort by best fit teams', value: 'best' },
-      { key: 2, text: 'sort the teams by the skills that match your skills', value: 'skill' },
-      { key: 3, text: 'sort the teams by the tools that match your tools', value: 'tool' },
-      { key: 4, text: 'sort the teams by the name in alphabet order', value: 'AToZ' },
+      { key: 0, text: 'Sort the teams by the challenges that match your challenges', value: 'default' },
+      { key: 1, text: 'Sort by best fit teams', value: 'best' },
+      { key: 2, text: 'Sort the teams by the skills that match your skills', value: 'skill' },
+      { key: 3, text: 'Sort the teams by the tools that match your tools', value: 'tool' },
+      { key: 4, text: 'Sort the teams by the name in alphabet order', value: 'AToZ' },
     ];
-    return <div>
-      <Grid stackable columns={2} style={{ paddingTop: '1rem' }}>
-        <Grid.Column width={7}>
-          <Header>Please select a filter to reorder the teams: </Header>
-        </Grid.Column>
-        <Grid.Column>
-          <Dropdown style={{ fontSize: `${20}px`, width: 'device-width' }} options={options} onChange={_select}
-                    placeholder="Select an option to reorder the team" />
-        </Grid.Column>
-      </Grid>
-      <hr />
-    </div>;
-  }
+    return (
+      <div>
+        <Row>
+          <Col style={ { marginTop: '15px' } }>
+            <h5 style={ { textAlign: 'center' } }>
+              Please select a filter to reorder the teams:
+            </h5>
+          </Col>
+          <Col style={ { marginTop: '10px', marginRight: '100px' } }>
+            <Form.Select onChange={_select} id="#filter-button">
+              {options.map((option) => (
+                <option key={options.key} value={option.value}>
+                  {option.text}
+                </option>
+              ))}
+            </Form.Select>
+          </Col>
+        </Row>
+        <hr />
+      </div>
+    );
+  };
 
-  render() {
-    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
-  }
+  // render() {
+  //   return (this.props.ready) ? this.renderPage() : <Spinner animation="border" />;
+  // }
 
-  renderPage() {
+  const renderPage = () => {
     let teams;
-    switch (this.state.select) {
+    switch (select) {
       case 'skill':
-        teams = this.bySkillMatch();
+        teams = bySkillMatch();
         break;
       case 'tool':
-        teams = this.byToolMatch();
+        teams = byToolMatch();
         break;
       case 'AToZ':
-        teams = this.byAtoZ();
+        teams = byAtoZ();
         break;
       case 'best':
-        teams = this.byBestMatch();
+        teams = byBestMatch();
         break;
       default:
-        teams = this.byChallengeMatch();
+        teams = byChallengeMatch();
     }
     return (
-        <div style={{ paddingBottom: '50px', paddingTop: '40px' }}>
-          <Container>
-            <Segment style={paleBlueStyle}>
-              <Header as={'h2'} textAlign="center">
-                Open Teams
-              </Header>
-              <Card fluid>
-                {this.renderDropDown()}
-                <div style={{ paddingTop: '1rem', paddingBottom: '2rem' }}>
-                  <ListTeamsWidget teams={teams} />
-                </div>
-              </Card>
-            </Segment>
-          </Container>
-        </div>
+      <div style={{ paddingBottom: '50px', paddingTop: '40px', paddingRight: '40px', paddingLeft: '40px' }}>
+        <Card style={paleBlueStyle}>
+          <h2 style={ { textAlign: 'center' } }>
+            Open Teams
+          </h2>
+          <Card style={ { marginLeft: '30px', marginRight: '30px', marginBottom: '30px' } }>
+            {renderDropDown()}
+            <div style={{ paddingTop: '1rem', paddingBottom: '2rem' }}>
+              <ListTeamsWidget teams={teams} />
+            </div>
+          </Card>
+        </Card>
+      </div>
     );
-  }
-}
+  };
+  return (props.ready) ? renderPage() : <Spinner animation="border" />;
+};
 
 /** Require an array of Book documents in the props. */
 BestTeam.propTypes = {
