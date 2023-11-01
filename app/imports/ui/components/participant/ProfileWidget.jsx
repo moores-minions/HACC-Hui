@@ -44,7 +44,7 @@ class EditProfileWidget extends React.Component {
           <Segment style={paleBlueStyle}>
             <Header as="h2" textAlign="center">Your Profile</Header>
             <ProfileCard model={model} />
-            <Button color="olive"><Link to={ROUTES.EDIT_PROFILE}>Edit Profile</Link></Button>
+            <Button id="edit-profile-button" color="olive"><Link to={ROUTES.EDIT_PROFILE}>Edit Profile</Link></Button>
           </Segment>
           <Segment style={paleBlueStyle}>
             <Header as="h2" textAlign="center">Team Membership</Header>

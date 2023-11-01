@@ -169,7 +169,7 @@ const EditProfileWidget = () => {
     const schema = buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
     return (
-      <Container style={{ paddingBottom: '50px' }}>
+      <Container id='editprofile-page' style={{ paddingBottom: '50px' }}>
         <Row className="justify-content-center">
           <Col>
             <Card className="text-center" style={{
