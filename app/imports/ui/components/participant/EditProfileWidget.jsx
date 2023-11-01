@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Form, Container, Row, Col, Card, Button } from 'react-bootstrap';
@@ -29,20 +29,27 @@ import MultiSelectField from '../form-fields/MultiSelectField';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { ROUTES } from '../../../startup/client/route-constants';
 
-class EditProfileWidget extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-    this.newSkillRef = React.createRef();
-    this.newSkillLevelRef = React.createRef();
-    this.newToolRef = React.createRef();
-    this.newToolLevelRef = React.createRef();
-  }
+const EditProfileWidget = (props) => {
 
-  buildTheFormSchema() {
-    const challengeNames = _.map(this.props.allChallenges, (c) => c.title);
-    const skillNames = _.map(this.props.allSkills, (s) => s.name);
-    const toolNames = _.map(this.props.allTools, (t) => t.name);
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
+  // const newSkillRef = React.createRef();
+  // const newSkillLevelRef = React.createRef();
+  // const newToolRef = React.createRef();
+  // const newToolLevelRef = React.createRef();
+
+    // constructor(props) {
+    // super(props);
+    // this.state = { redirectToReferer: false };
+    // this.newSkillRef = React.createRef();
+    // this.newSkillLevelRef = React.createRef();
+    // this.newToolRef = React.createRef();
+    // this.newToolLevelRef = React.createRef();
+  // }
+
+  const buildTheFormSchema = () => {
+    const challengeNames = _.map(props.allChallenges, (c) => c.title);
+    const skillNames = _.map(props.allSkills, (s) => s.name);
+    const toolNames = _.map(props.allTools, (t) => t.name);
     const schema = new SimpleSchema({
       firstName: String,
       lastName: String,
@@ -64,27 +71,27 @@ class EditProfileWidget extends React.Component {
       'tools.$': { type: String, allowedValues: toolNames },
     });
     return schema;
-  }
+  };
 
-  buildTheModel() {
-    const model = this.props.participant;
-    model.challenges = _.map(this.props.devChallenges, (challenge) => {
+  const buildTheModel = () => {
+    const model = props.participant;
+    model.challenges = _.map(props.devChallenges, (challenge) => {
       const c = Challenges.findDoc(challenge.challengeID);
       return c.title;
     });
-    model.skills = _.map(this.props.devSkills, (skill) => {
+    model.skills = _.map(props.devSkills, (skill) => {
       // console.log(skill);
       const s = Skills.findDoc(skill.skillID);
       return s.name;
     });
-    model.tools = _.map(this.props.devTools, (tool) => {
+    model.tools = _.map(props.devTools, (tool) => {
       const t = Tools.findDoc(tool.toolID);
       return t.name;
     });
     return model;
-  }
+  };
 
-  submitData(data) {
+  const submitData = (data) => {
     // console.log('submit', data);
     const collectionName = Participants.getCollectionName();
     const updateData = {};
@@ -145,16 +152,15 @@ class EditProfileWidget extends React.Component {
         });
       }
     });
-    this.setState({ redirectToReferer: true });
-  }
+    setRedirectToReferer(true);
+  };
 
-  render() {
-    if (this.state.redirectToReferer) {
+    if (redirectToReferer) {
       const from = { pathname: ROUTES.YOUR_PROFILE };
       return <Redirect to={from} />;
     }
-    const model = this.buildTheModel();
-    const schema = this.buildTheFormSchema();
+    const model = buildTheModel();
+    const schema = buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
     return (
       <Container style={{ paddingBottom: '50px' }}>
@@ -167,7 +173,7 @@ class EditProfileWidget extends React.Component {
               <Card.Header as="h2">Edit Profile</Card.Header>
               <Card.Body>
                 <AutoForm schema={formSchema} model={model} onSubmit={data => {
-                  this.submitData(data);
+                  submitData(data);
                 }}>
                   <Form.Group as={Row}>
                     <Col>
@@ -208,8 +214,7 @@ class EditProfileWidget extends React.Component {
         </Row>
       </Container>
     );
-  }
-}
+  };
 
 EditProfileWidget.propTypes = {
   allChallenges: PropTypes.arrayOf(
