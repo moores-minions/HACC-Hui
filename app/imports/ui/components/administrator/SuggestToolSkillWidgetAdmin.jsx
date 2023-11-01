@@ -1,12 +1,12 @@
 import React from 'react';
-import { Header, Segment, Form } from 'semantic-ui-react';
-import { withTracker } from 'meteor/react-meteor-data';
+import { Card, Form } from 'react-bootstrap';
+import { useTracker } from 'meteor/react-meteor-data';
 import {
   AutoForm,
   SelectField,
   SubmitField,
   TextField,
-} from 'uniforms-semantic';
+} from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
@@ -16,31 +16,28 @@ import { Administrators } from '../../../api/user/AdministratorCollection';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
 import { Suggestions } from '../../../api/suggestions/SuggestionCollection';
 
-class SuggestToolSkillWidgetAdmin extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-  }
+const SuggestToolSkillWidgetAdmin = () => {
 
-  buildTheFormSchema() {
+  // const [redirectToReferer, setRedirectToReferer] = useState(false);
+  const admin = useTracker(() => Administrators.findDoc({ userID: Meteor.userId() }));
+
+  const buildTheFormSchema = () => {
     const schema = new SimpleSchema({
       type: { type: String, allowedValues: ['Tool', 'Skill'], optional: false },
       name: String,
       description: String,
     });
     return schema;
-  }
+  };
 
-  submit(data, formRef) {
-    // console.log('CreateProfileWidget.submit', data);
+  const submit = (data, formRef) => {
     const collectionName = Suggestions.getCollectionName();
     const newData = {};
-    const model = this.props.admin;
-    newData.username = model.username;
+    // const model = this.props.admin;
+    newData.username = admin.username;
     newData.name = data.name;
     newData.type = data.type;
     newData.description = data.description;
-    // console.log(newData);
 
     defineMethod.call({ collectionName: collectionName, definitionData: newData },
         (error) => {
@@ -51,41 +48,38 @@ class SuggestToolSkillWidgetAdmin extends React.Component {
             formRef.reset();
           }
         });
-  }
+  };
 
-  render() {
     let fRef = null;
-    const schema = this.buildTheFormSchema();
+    const schema = buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
     return (
-        <Segment>
-          <Header dividing> Add suggestion to list. </Header>
-          <AutoForm ref={ref => {
-            fRef = ref;
-          }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
-            <Form.Group widths="equal">
-              <SelectField name="type" />
-            </Form.Group>
+        <Card>
+          <Card.Header className="text-center"> Add suggestion to list. </Card.Header>
+          <Card.Body className="p-4">
+            <AutoForm ref={ref => {
+              fRef = ref;
+            }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
               <Form.Group widths="equal">
-              <TextField name="name" />
+                <SelectField name="type" options={[{ label: 'Tool', value: 'Tool' },
+                  { label: 'Skill', value: 'Skill' }]} />
               </Form.Group>
-                <Form.Group widths="equal">
-              <TextField name="description" />
-            </Form.Group>
-            <SubmitField />
-          </AutoForm>
-        </Segment>
+              <Form.Group widths="equal">
+                <TextField name="name" />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <TextField name="description" />
+              </Form.Group>
+              <SubmitField className="mt-3" />
+            </AutoForm>
+          </Card.Body>
+
+        </Card>
     );
-  }
-}
+  };
 
 SuggestToolSkillWidgetAdmin.propTypes = {
   admin: PropTypes.object.isRequired,
 };
 
-export default withTracker(() => {
-  const admin = Administrators.findDoc({ userID: Meteor.userId() });
-  return {
-    admin,
-  };
-})(SuggestToolSkillWidgetAdmin);
+export default SuggestToolSkillWidgetAdmin;
