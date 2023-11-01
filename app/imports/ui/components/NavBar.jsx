@@ -115,7 +115,7 @@ class NavBar extends React.Component {
                   View All Team Invitations
                 </Nav.Link>
                 <Nav.Link id="dump-page" as={NavLink} to={ROUTES.DUMP_DATABASE}>
-                  Dump Database
+                  Manage Database
                 </Nav.Link>
               </>
             ) : (
