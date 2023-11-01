@@ -12,8 +12,6 @@ import {
   Row,
   Col,
   Card,
-  ListGroup,
-  Header,
 } from 'react-bootstrap';
 import { Teams } from '../../../api/team/TeamCollection';
 import ViewTeamExample from './ViewTeam';
