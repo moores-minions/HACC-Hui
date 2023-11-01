@@ -31,7 +31,6 @@ const SuggestToolSkillWidgetAdmin = () => {
   };
 
   const submit = (data, formRef) => {
-    // console.log('CreateProfileWidget.submit', data);
     const collectionName = Suggestions.getCollectionName();
     const newData = {};
     // const model = this.props.admin;
@@ -39,7 +38,6 @@ const SuggestToolSkillWidgetAdmin = () => {
     newData.name = data.name;
     newData.type = data.type;
     newData.description = data.description;
-    // console.log(newData);
 
     defineMethod.call({ collectionName: collectionName, definitionData: newData },
         (error) => {
