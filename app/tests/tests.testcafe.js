@@ -24,6 +24,7 @@ import { editSkillPage } from './editskill.page';
 import { editToolPage } from './edittool.page';
 import { editChallengePage } from './editchallenge.page';
 import { updateMinorsPage } from './updateminorparticipantscompliant.page';
+import { teamInvitationsPage } from './teaminvitations.page';
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
@@ -42,166 +43,173 @@ test('Test that landing page shows up and all pages work', async (testController
   await landingPage.isDisplayed(testController);
 });
 
-// test('Test that a user can sign in and signout work', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.logout(testController);
-//   await signoutPage.isDisplayed(testController);
-// });
-//
-// test('Test that a user can access the helppage', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoHelpPage(testController);
-//   await helpPage.isDisplayed(testController);
-// });
-//
-// test('Test that NotFound page shows up and all pages work', async (testController) => {
-//   await notFoundPage.isDisplayed(testController);
-// }).page('http://localhost:3400/#/NotFound');
-//
-// test('Test that the add challenge page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoConfigureHACC(testController);
-//   await configurehaccPage.gotoAddChallengePage(testController);
-//   await addChallengePage.addChallenge(testController, testAddChallenge.title,
-//     testAddChallenge.description, testAddChallenge.subDetail, testAddChallenge.pitch);
-// });
-//
-// test('Test that add skill page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoConfigureHACC(testController);
-//   await configurehaccPage.gotoAddSkillPage(testController);
-//   await addSkillPage.addSkill(testController, testAddSkill.name, testAddSkill.description);
-// });
-//
-// test('Test that the add tool page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoConfigureHACC(testController);
-//   await configurehaccPage.gotoAddToolPage(testController);
-//   await addToolPage.addTool(testController, testAddTool.name, testAddTool.description);
-// });
-//
-// test('Test that the edit challenge page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoConfigureHACC(testController);
-//   await configurehaccPage.gotoEditChallengePage(testController);
-//   await editChallengePage.editChallenge(testController, 'amer');
-// });
-//
-// test('Test that the edit skill page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoConfigureHACC(testController);
-//   await configurehaccPage.gotoEditSkillPage(testController);
-//   await editSkillPage.editSkill(testController, 'icles');
-// });
-//
-// test('Test that the edit tool page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoConfigureHACC(testController);
-//   await configurehaccPage.gotoEditToolPage(testController);
-//   await editToolPage.editTool(testController, 'nananananana batman');
-// });
-//
-// test('Test that an admin can access and download files from the Dump Database page', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoDumpDatabasePage(testController);
-//   await dumpdatabasePage.dumpDatabase(testController, testDumpDatabase.database, testDumpDatabase.teams);
-// });
-//
-// test('Test that an admin can access the View All Team Invitations page ', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoAllTeamInvitationsPage(testController);
-//   await allTeamsInvitationPage.isDisplayed(testController);
-// });
-//
-// test('Test that the age page shows up and works', async (testController) => {
-//   await testController.navigateTo('http://localhost:3400/#/age-consent');
-//   await signinPage.signin(testController, userCred.username, userCred.password);
-//   await agePage.isDisplayed(testController);
-// });
-//
-// test('Test that an admin can access the list participants page and its features', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoListPartsPage(testController);
-//   await listparticipantscardadminPage.listPartsCardAdmin(testController);
-// });
-//
-// test('Test that a regular user can access the list participants page and its features', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, userCred.username, userCred.password);
-//   await navBar.gotoListParticipantsPage(testController);
-//   await listParticipantsPage.isDisplayed(testController);
-// });
-//
-// test('Test that the Your Teams page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, 'gsummey@hotmail.com', userCred.password);
-//   await navBar.gotoYourTeamsPage(testController);
-//   await yourTeamsPage.invite(testController, userCred.username);
-// });
-//
-// test('Test that the List Suggestions page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoListSuggestionsPage(testController);
-//   await listSuggestionsPage.isDisplayed(testController);
-// });
-//
-// test('Test that a user can access the "List Participants" page', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, userCred.username, userCred.password);
-//   await navBar.gotoListParticipantsPage(testController);
-//   await listParticipantsPage.isDisplayed(testController);
-// });
-//
-// test('Test that a user can delete their account', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, userCred.username, userCred.password);
-//   await navBar.gotoDeleteAccount(testController);
-//   await deleteAccountPage.isDisplayed(testController);
-// });
-//
-// test('Test that the Profile page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, userCred.username, userCred.password);
-//   await navBar.gotoProfilePage(testController);
-//   await profilePage.isDisplayed(testController);
-// });
-//
-// test('Test that the Suggest Tool/Skill page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, userCred.username, userCred.password);
-//   await navBar.gotoSuggestToolSkill(testController);
-//   await suggesttoolskillwidgetPage.isDisplayed(testController);
-// });
-//
-// test('Test that the Open Teams page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, userCred.username, userCred.password);
-//   await navBar.gotoOpenTeams(testController);
-//   await listteamswidgetPage.isDisplayed(testController);
-// });
-//
-// test('Test that the Create Profile page shows up and works', async (testController) => {
-//   await navBar.gotoSigninPage(testController);
-//   await signinPage.signin(testController, userCred.username, userCred.password);
-//   await createProfilePage.isDisplayed(testController);
-//   await createProfilePage.createProfile(testController, 'test');
-// });
+test('Test that a user can sign in and signout work', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.logout(testController);
+  await signoutPage.isDisplayed(testController);
+});
+
+test('Test that a user can access the helppage', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoHelpPage(testController);
+  await helpPage.isDisplayed(testController);
+});
+
+test('Test that NotFound page shows up and all pages work', async (testController) => {
+  await notFoundPage.isDisplayed(testController);
+}).page('http://localhost:3400/#/NotFound');
+
+test('Test that the add challenge page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoAddChallengePage(testController);
+  await addChallengePage.addChallenge(testController, testAddChallenge.title,
+    testAddChallenge.description, testAddChallenge.subDetail, testAddChallenge.pitch);
+});
+
+test('Test that add skill page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoAddSkillPage(testController);
+  await addSkillPage.addSkill(testController, testAddSkill.name, testAddSkill.description);
+});
+
+test('Test that the add tool page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoAddToolPage(testController);
+  await addToolPage.addTool(testController, testAddTool.name, testAddTool.description);
+});
+
+test('Test that the edit challenge page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoEditChallengePage(testController);
+  await editChallengePage.editChallenge(testController, 'amer');
+});
+
+test('Test that the edit skill page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoEditSkillPage(testController);
+  await editSkillPage.editSkill(testController, 'icles');
+});
+
+test('Test that the edit tool page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoConfigureHACC(testController);
+  await configurehaccPage.gotoEditToolPage(testController);
+  await editToolPage.editTool(testController, 'nananananana batman');
+});
+
+test('Test that an admin can access and download files from the Dump Database page', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoDumpDatabasePage(testController);
+  await dumpdatabasePage.dumpDatabase(testController, testDumpDatabase.database, testDumpDatabase.teams);
+});
+
+test('Test that an admin can access the View All Team Invitations page ', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoAllTeamInvitationsPage(testController);
+  await allTeamsInvitationPage.isDisplayed(testController);
+});
+
+test('Test that the age page shows up and works', async (testController) => {
+  await testController.navigateTo('http://localhost:3400/#/age-consent');
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await agePage.isDisplayed(testController);
+});
+
+test('Test that an admin can access the list participants page and its features', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListPartsPage(testController);
+  await listparticipantscardadminPage.listPartsCardAdmin(testController);
+});
+
+test('Test that a regular user can access the list participants page and its features', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoListParticipantsPage(testController);
+  await listParticipantsPage.isDisplayed(testController);
+});
+
+test('Test that the Your Teams page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, 'gsummey@hotmail.com', userCred.password);
+  await navBar.gotoYourTeamsPage(testController);
+  await yourTeamsPage.invite(testController, userCred.username);
+});
+
+test('Test that the List Suggestions page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListSuggestionsPage(testController);
+  await listSuggestionsPage.isDisplayed(testController);
+});
+
+test('Test that a user can access the "List Participants" page', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoListParticipantsPage(testController);
+  await listParticipantsPage.isDisplayed(testController);
+});
+
+test('Test that a user can delete their account', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoDeleteAccount(testController);
+  await deleteAccountPage.isDisplayed(testController);
+});
+
+test('Test that the Profile page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoProfilePage(testController);
+  await profilePage.isDisplayed(testController);
+});
+
+test('Test that the Suggest Tool/Skill page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoSuggestToolSkill(testController);
+  await suggesttoolskillwidgetPage.isDisplayed(testController);
+});
+
+test('Test that the Open Teams page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoOpenTeams(testController);
+  await listteamswidgetPage.isDisplayed(testController);
+});
+
+test('Test that the Create Profile page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await createProfilePage.isDisplayed(testController);
+  await createProfilePage.createProfile(testController, 'test');
+});
 
 test('Test that the Update Minor Participants Status page shows up and works', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoUpdateMinors(testController);
   await updateMinorsPage.isDisplayed(testController);
+});
+
+test('Test that the participant Team Invitations shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, userCred.username, userCred.password);
+  await navBar.gotoTeamInvitations(testController);
+  await teamInvitationsPage.isDisplayed(testController);
 });

@@ -112,5 +112,9 @@ class NavBar {
   async gotoUpdateMinors(testController) {
     await testController.click('#update-minors');
   }
+
+  async gotoTeamInvitations(testController) {
+    await testController.click('#invitations');
+  }
 }
 export const navBar = new NavBar();
