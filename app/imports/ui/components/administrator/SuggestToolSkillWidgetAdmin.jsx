@@ -1,12 +1,12 @@
 import React from 'react';
-import { Header, Segment, Form } from 'semantic-ui-react';
+import { Card, Form } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import {
   AutoForm,
   SelectField,
   SubmitField,
   TextField,
-} from 'uniforms-semantic';
+} from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
@@ -56,23 +56,27 @@ const SuggestToolSkillWidgetAdmin = () => {
     const schema = buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
     return (
-        <Segment>
-          <Header dividing> Add suggestion to list. </Header>
-          <AutoForm ref={ref => {
-            fRef = ref;
-          }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
-            <Form.Group widths="equal">
-              <SelectField name="type" />
-            </Form.Group>
+        <Card>
+          <Card.Header className="text-center"> Add suggestion to list. </Card.Header>
+          <Card.Body className="p-4">
+            <AutoForm ref={ref => {
+              fRef = ref;
+            }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
               <Form.Group widths="equal">
-              <TextField name="name" />
+                <SelectField name="type" options={[{ label: 'Tool', value: 'Tool' },
+                  { label: 'Skill', value: 'Skill' }]} />
               </Form.Group>
-                <Form.Group widths="equal">
-              <TextField name="description" />
-            </Form.Group>
-            <SubmitField />
-          </AutoForm>
-        </Segment>
+              <Form.Group widths="equal">
+                <TextField name="name" />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <TextField name="description" />
+              </Form.Group>
+              <SubmitField className="mt-3" />
+            </AutoForm>
+          </Card.Body>
+
+        </Card>
     );
   };
 
