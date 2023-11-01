@@ -49,7 +49,7 @@ const ViewTeams = () => {
 
   const [filteredTeams, setFilteredTeams] = useState(teams);
   const [filterValue, setFilterValue] = useState('None');
-  // console.log(filteredTeams);
+
   const stickyStyle = {
     position1: '-webkit-sticky',
     position: 'sticky',
