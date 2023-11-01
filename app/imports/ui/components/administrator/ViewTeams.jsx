@@ -60,7 +60,8 @@ const ViewTeams = ({
     return compliant;
   };
 
-  const handleChange = (e, { value }) => {
+  const handleChange = (e) => {
+    const value = e.target.value;
     setFilterValue(value);
     const remainingTeams = [];
     const localTeams = filteredTeams;
