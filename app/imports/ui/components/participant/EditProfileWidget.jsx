@@ -190,8 +190,8 @@ const EditProfileWidget = () => {
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row}>
-                    <Col><TextField name="firstName" className="form-control" /></Col>
-                    <Col><TextField name="lastName" className="form-control" /></Col>
+                    <Col><TextField id='first-name' name="firstName" className="form-control" /></Col>
+                    <Col><TextField id='last-name' name="lastName" className="form-control" /></Col>
                     <Col><SelectField name="demographicLevel" className="form-control" /></Col>
                   </Form.Group>
                   <Form.Group as={Row}>
@@ -201,14 +201,14 @@ const EditProfileWidget = () => {
                   </Form.Group>
                   <Form.Group as={Row}>
                     <Col><TextField name="website" className="form-control" /></Col>
-                    <Col><LongTextField name="aboutMe" className="form-control" /></Col>
+                    <Col><LongTextField id='aboutme' name="aboutMe" className="form-control" /></Col>
                   </Form.Group>
                   <Form.Group as={Row}>
                     <Col><MultiSelectField name="challenges" /></Col>
                     <Col><MultiSelectField name="skills" /></Col>
                     <Col><MultiSelectField name="tools" /></Col>
                   </Form.Group>
-                  <Button type="submit" style={{
+                  <Button id="edit-profile-submit" type="submit" style={{
                     color: 'white', backgroundColor: '#DB2828',
                     margin: '2rem 0rem',
                   }}>Submit</Button>

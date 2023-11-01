@@ -25,6 +25,7 @@ import { editToolPage } from './edittool.page';
 import { editChallengePage } from './editchallenge.page';
 import { updateMinorsPage } from './updateminorparticipantscompliant.page';
 import { teamInvitationsPage } from './teaminvitations.page';
+import { editProfileWidgetPage } from './editprofilewidget.page';
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
@@ -35,6 +36,7 @@ const testAddSkill = { name: 'test', description: 'testing' };
 const testAddTool = { name: 'test', description: 'testing' };
 const testAddChallenge = { title: 'test', description: 'testing', subDetail: 'ok', pitch: 'bruh' };
 const testDumpDatabase = { database: './Downloads/hacchui-db.zip', teams: './Downloads/hacchui-teams.zip' };
+const testEditProfile = { aboutme: 'test' };
 
 fixture('HACC-HUI Test')
   .page('http://127.0.0.1:3400/');
@@ -178,6 +180,7 @@ test('Test that the Profile/Edit Profile page shows up and works', async (testCo
   await navBar.gotoProfilePage(testController);
   await profilePage.isDisplayed(testController);
   await profilePage.gotoEditProfilePage(testController);
+  await editProfileWidgetPage.editProfile(testController, testEditProfile.aboutme);
 });
 
 test('Test that the Suggest Tool/Skill page shows up and works', async (testController) => {
