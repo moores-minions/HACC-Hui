@@ -1,5 +1,5 @@
-import React from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
+import React, { useState } from 'react';
+import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Form, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -29,20 +29,36 @@ import MultiSelectField from '../form-fields/MultiSelectField';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { ROUTES } from '../../../startup/client/route-constants';
 
-class EditProfileWidget extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-    this.newSkillRef = React.createRef();
-    this.newSkillLevelRef = React.createRef();
-    this.newToolRef = React.createRef();
-    this.newToolLevelRef = React.createRef();
-  }
+const EditProfileWidget = () => {
 
-  buildTheFormSchema() {
-    const challengeNames = _.map(this.props.allChallenges, (c) => c.title);
-    const skillNames = _.map(this.props.allSkills, (s) => s.name);
-    const toolNames = _.map(this.props.allTools, (t) => t.name);
+    const allChallenges = useTracker(() => Challenges.find({}).fetch());
+    const allSkills = useTracker(() => Skills.find({}).fetch());
+    const allTools = useTracker(() => Tools.find({}).fetch());
+    const participant = useTracker(() => Participants.findDoc({ userID: Meteor.userId() }));
+    const participantID = participant._id;
+    const devChallenges = useTracker(() => ParticipantChallenges.find({ participantID }).fetch());
+    const devSkills = useTracker(() => ParticipantSkills.find({ participantID }).fetch());
+    const devTools = useTracker(() => ParticipantTools.find({ participantID }).fetch());
+
+  const [redirectToReferer, setRedirectToReferer] = useState(false);
+  // const newSkillRef = React.createRef();
+  // const newSkillLevelRef = React.createRef();
+  // const newToolRef = React.createRef();
+  // const newToolLevelRef = React.createRef();
+
+    // constructor(props) {
+    // super(props);
+    // this.state = { redirectToReferer: false };
+    // this.newSkillRef = React.createRef();
+    // this.newSkillLevelRef = React.createRef();
+    // this.newToolRef = React.createRef();
+    // this.newToolLevelRef = React.createRef();
+  // }
+
+  const buildTheFormSchema = () => {
+    const challengeNames = _.map(allChallenges, (c) => c.title);
+    const skillNames = _.map(allSkills, (s) => s.name);
+    const toolNames = _.map(allTools, (t) => t.name);
     const schema = new SimpleSchema({
       firstName: String,
       lastName: String,
@@ -64,28 +80,26 @@ class EditProfileWidget extends React.Component {
       'tools.$': { type: String, allowedValues: toolNames },
     });
     return schema;
-  }
+  };
 
-  buildTheModel() {
-    const model = this.props.participant;
-    model.challenges = _.map(this.props.devChallenges, (challenge) => {
+  const buildTheModel = () => {
+    const model = participant;
+    model.challenges = _.map(devChallenges, (challenge) => {
       const c = Challenges.findDoc(challenge.challengeID);
       return c.title;
     });
-    model.skills = _.map(this.props.devSkills, (skill) => {
-      // console.log(skill);
+    model.skills = _.map(devSkills, (skill) => {
       const s = Skills.findDoc(skill.skillID);
       return s.name;
     });
-    model.tools = _.map(this.props.devTools, (tool) => {
+    model.tools = _.map(devTools, (tool) => {
       const t = Tools.findDoc(tool.toolID);
       return t.name;
     });
     return model;
-  }
+  };
 
-  submitData(data) {
-    // console.log('submit', data);
+  const submitData = (data) => {
     const collectionName = Participants.getCollectionName();
     const updateData = {};
     updateData.id = data._id;
@@ -129,7 +143,6 @@ class EditProfileWidget extends React.Component {
       updateData.aboutMe = data.aboutMe;
     }
     updateData.editedProfile = true;
-    // console.log(collectionName, updateData);
     updateMethod.call({ collectionName, updateData }, (error) => {
       if (error) {
         console.error(error);
@@ -145,16 +158,15 @@ class EditProfileWidget extends React.Component {
         });
       }
     });
-    this.setState({ redirectToReferer: true });
-  }
+    setRedirectToReferer(true);
+  };
 
-  render() {
-    if (this.state.redirectToReferer) {
+    if (redirectToReferer) {
       const from = { pathname: ROUTES.YOUR_PROFILE };
       return <Redirect to={from} />;
     }
-    const model = this.buildTheModel();
-    const schema = this.buildTheFormSchema();
+    const model = buildTheModel();
+    const schema = buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
     return (
       <Container style={{ paddingBottom: '50px' }}>
@@ -167,7 +179,7 @@ class EditProfileWidget extends React.Component {
               <Card.Header as="h2">Edit Profile</Card.Header>
               <Card.Body>
                 <AutoForm schema={formSchema} model={model} onSubmit={data => {
-                  this.submitData(data);
+                  submitData(data);
                 }}>
                   <Form.Group as={Row}>
                     <Col>
@@ -208,8 +220,7 @@ class EditProfileWidget extends React.Component {
         </Row>
       </Container>
     );
-  }
-}
+  };
 
 EditProfileWidget.propTypes = {
   allChallenges: PropTypes.arrayOf(
@@ -232,23 +243,4 @@ EditProfileWidget.propTypes = {
       PropTypes.object,
   ),
 };
-
-export default withTracker(() => {
-  const allChallenges = Challenges.find({}).fetch();
-  const allSkills = Skills.find({}).fetch();
-  const allTools = Tools.find({}).fetch();
-  const participant = Participants.findDoc({ userID: Meteor.userId() });
-  const participantID = participant._id;
-  const devChallenges = ParticipantChallenges.find({ participantID }).fetch();
-  const devSkills = ParticipantSkills.find({ participantID }).fetch();
-  const devTools = ParticipantTools.find({ participantID }).fetch();
-  return {
-    allChallenges,
-    allSkills,
-    allTools,
-    participant,
-    devChallenges,
-    devSkills,
-    devTools,
-  };
-})(EditProfileWidget);
+export default EditProfileWidget;
