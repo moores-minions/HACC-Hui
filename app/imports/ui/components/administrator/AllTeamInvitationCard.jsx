@@ -15,11 +15,11 @@ const AllTeamInvitationCard = (props) => {
   const changeBackground = (e) => {
     e.currentTarget.style.backgroundColor = '#fafafa';
     e.currentTarget.style.cursor = 'pointer';
-  }
+  };
 
   const onLeave = (e) => {
     e.currentTarget.style.backgroundColor = 'transparent';
-  }
+  };
 
   const teamID = Teams.findDoc({ name: props.teams.name })._id;
   const invitations = TeamInvitations.find({ teamID }).fetch();
@@ -45,7 +45,8 @@ const AllTeamInvitationCard = (props) => {
         <Card.Text>
           <Row>
             <Col>
-              <img src={props.teams.image} alt={props.teams.name} roundedCircle style={{ width: '100px', height: '100px' }} />
+              <img src={props.teams.image} alt={props.teams.name}
+                   roundedCircle style={{ width: '100px', height: '100px' }} />
               <div style={{ paddingBottom: '0.3rem' }}>
                 {props.challenges.slice(0, 3).map((challenge) => (
                   <p style={{ color: 'rgb(89, 119, 199)' }} key={challenge}>

@@ -141,3 +141,14 @@ label {
 .top-lvl {
   padding-bottom: 50px;
 }
+
+.card-pages {
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.card-pages h4 {
+  padding-bottom: 1rem;
+}

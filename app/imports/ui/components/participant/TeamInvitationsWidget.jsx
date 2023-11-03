@@ -19,7 +19,7 @@ import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
 import { paleBlueStyle } from '../../styles';
 
 /**
- * Renders the Page for adding stuff. **deprecated**
+ * Renders the Page for team invitations. **deprecated**
  * @memberOf ui/pages
  */
 const TeamInvitationsWidget = () => {
@@ -27,11 +27,11 @@ const TeamInvitationsWidget = () => {
   const { teamChallenges, teamInvitations, teamSkills, teamTools, teams, skills, challenges, tools,
     participants, teamParticipants } = useTracker(() => ({
       teamChallenges: TeamChallenges.find({}).fetch(),
-      // eslint-disable-next-line max-len
-      teamInvitations: TeamInvitations.find({ participantID: Participants.findDoc({ userID: Meteor.userId() })._id }).fetch(),
+      teamInvitations: TeamInvitations.find({ participantID: Participants.findDoc(
+        { userID: Meteor.userId() },
+        )._id }).fetch(),
       teamSkills: TeamSkills.find({}).fetch(),
       teamTools: TeamTools.find({}).fetch(),
-      // eslint-disable-next-line max-len
       teams: Teams.find({}).fetch(),
       skills: Skills.find({}).fetch(),
       challenges: Challenges.find({}).fetch(),
@@ -142,13 +142,12 @@ const TeamInvitationsWidget = () => {
     };
 
     return (
-        <Container id='team-invitations' style={{ paddingBottom: '50px', paddingTop: '40px', display: 'block',
-          marginLeft: 'auto', marginRight: 'auto',
-        }}>
+        <Container id='team-invitations' className='card-pages'>
             <Card style={paleBlueStyle} >
-              <Card.Body><h4 className="text-center" style={{ paddingBottom: '1rem' }}>
-                Team Invitations
-              </h4>
+              <Card.Body>
+                <h4 className="text-center">
+                  Team Invitations
+                </h4>
                 <Col>
                   {getTeamInvitations(teamInvitations).map((mapTeams) => <TeamInvitationCard key={mapTeams._id}
                                         teams={mapTeams} skills={getTeamSkills(mapTeams._id, teamSkills)}
@@ -156,24 +155,11 @@ const TeamInvitationsWidget = () => {
                                         challenges={getTeamChallenges(mapTeams._id, teamChallenges)}
                                         participants={getTeamDevelopers(mapTeams._id, teamParticipants)}
                   />)}
-                </Col></Card.Body>
+                </Col>
+              </Card.Body>
             </Card>
         </Container>
     );
-};
-
-TeamInvitationsWidget.propTypes = {
-  teamChallenges: PropTypes.array.isRequired,
-  teamSkills: PropTypes.array.isRequired,
-  skills: PropTypes.array.isRequired,
-  teamTools: PropTypes.array.isRequired,
-  teams: PropTypes.array.isRequired,
-  challenges: PropTypes.array.isRequired,
-  participants: PropTypes.array.isRequired,
-  tools: PropTypes.array.isRequired,
-  teamParticipants: PropTypes.array.isRequired,
-  teamInvitations: PropTypes.array.isRequired,
-
 };
 
 export default TeamInvitationsWidget;
