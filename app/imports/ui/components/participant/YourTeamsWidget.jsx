@@ -19,21 +19,21 @@ import { paleBlueStyle } from '../../styles';
 const YourTeamsWidget = () => {
 
   const { participant, teams, memberTeams, participants, teamParticipants, teamInvitation } = useTracker(() => {
-    const part = Participants.findDoc({ userID: Meteor.userId() });
-    const participantID = part._id;
-    const tms = Teams.find({ owner: participantID }).fetch();
-    const memTms = _.map(_.uniqBy(TeamParticipants.find({ participantID }).fetch(), 'teamID'),
+    const findParticipant = Participants.findDoc({ userID: Meteor.userId() });
+    const participantID = findParticipant._id;
+    const findMemberTeams = _.map(_.uniqBy(TeamParticipants.find({ participantID }).fetch(), 'teamID'),
       (tp) => Teams.findDoc(tp.teamID));
-    const parts = Participants.find({}).fetch();
-    const tmParts = TeamParticipants.find({}).fetch();
-    const tmInv = TeamInvitations.find({}).fetch();
+    const findTeams = _.remove(findMemberTeams, (team) => team.owner === participantID);
+    const findParticipants = Participants.find({}).fetch();
+    const findTeamParticipants = TeamParticipants.find({}).fetch();
+    const findTeamInvitations = TeamInvitations.find({}).fetch();
     return {
-      participant: part,
-      teams: tms,
-      memberTeams: memTms,
-      participants: parts,
-      teamParticipants: tmParts,
-      teamInvitation: tmInv,
+      participant: findParticipant,
+      teams: findTeams,
+      memberTeams: findMemberTeams,
+      participants: findParticipants,
+      teamParticipants: findTeamParticipants,
+      teamInvitation: findTeamInvitations,
     };
   });
   const allParticipants = participants;
@@ -103,7 +103,7 @@ const YourTeamsWidget = () => {
         </Card></Container>)
       }
       {memberTeams.length === 0 ? '' : (
-          <Container className='your-teams'><Card>
+        <Container className='your-teams'><Card>
           <Card.Body><Container><h5 className='text-center'>Member</h5>
             <Row>
               {memberTeams.map((team) => <MemberTeamCard key={team._id}
