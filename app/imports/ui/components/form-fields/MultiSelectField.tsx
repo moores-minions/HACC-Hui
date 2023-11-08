@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import classnames from 'classnames';
 import { connectField, filterDOMProps } from 'uniforms';
 import { Dropdown } from 'semantic-ui-react';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 /* eslint react/prop-types: 0 */
 const renderDropdown = ({ allowedValues, disabled, placeholder, onChange, transform, value }) => {
