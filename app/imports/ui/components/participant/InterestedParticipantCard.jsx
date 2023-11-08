@@ -13,13 +13,6 @@ const InterestedParticipantCard = ({ teams, skills, tools, challenges, developer
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const isAdded = (tID, dID) => {
-    if (typeof TeamParticipants.findOne({ teamID: tID, participantID: dID }) !== 'undefined') {
-      return true;
-    }
-    return false;
-  };
-
   const handleClick = (tID, dID) => {
     const thisTeam = tID;
     const devID = dID;
@@ -56,8 +49,6 @@ const InterestedParticipantCard = ({ teams, skills, tools, challenges, developer
     });
   };
 
-  /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-
   const changeBackground = (e) => {
     e.currentTarget.style.backgroundColor = '#fafafa';
     e.currentTarget.style.cursor = 'pointer';
@@ -71,7 +62,7 @@ const InterestedParticipantCard = ({ teams, skills, tools, challenges, developer
     <Card onMouseEnter={changeBackground} onMouseLeave={onLeave}
           style={{ backgroundColor: 'transparent', padding: '0rem 2rem 0rem 2rem' }}>
       <Card.Body>
-        <Container onClick={handleShow}>
+        <Container id='modal' onClick={handleShow}>
           <h5 style={{ color: '#263763', paddingTop: '2rem' }}>
             <Icon.PersonFill size={32}/>
             {developers.firstName} {developers.lastName}
@@ -100,16 +91,11 @@ const InterestedParticipantCard = ({ teams, skills, tools, challenges, developer
             </Col>
           </Row>
         </Container>
-        {!isAdded(teams[0]._id, developers._id) ? (
-          <Button id={teams._id} variant='success' onClick={() => handleClick(teams[0]._id, developers._id)}>
-            Add member
-          </Button>
-        ) : (
-          <Button id={teams._id} variant='success' disabled>
-            Member already added
-          </Button>
-        )}
-        <Button id={teams._id} variant='danger'
+        <Button id={`add-${developers._id}`} variant='success'
+                onClick={() => handleClick(teams[0]._id, developers._id)}>
+          Add member
+        </Button>
+        <Button id={`del-${developers._id}`} variant='danger'
                 onClick={() => removeDev(developers._id)}>
           Remove
         </Button></Card.Body>
@@ -155,19 +141,12 @@ const InterestedParticipantCard = ({ teams, skills, tools, challenges, developer
           </p>
         </Modal.Body>
         <Modal.Footer>
-          {!isAdded(teams[0]._id, developers._id) ? (
-            <Button id={teams._id} variant='success'
-                    onClick={() => handleClick(teams[0]._id, developers._id)}>
-              <Icon.Plus/>
-              Add member
-            </Button>
-          ) : (
-            <Button id={teams._id} variant='success' disabled>
-              <Icon.Plus/>
-              Member already added
-            </Button>
-          )}
-          <Button id={teams._id} variant='danger'
+          <Button id={`add-${developers._id}-inner`} variant='success'
+                  onClick={() => handleClick(teams[0]._id, developers._id)}>
+            <Icon.Plus/>
+            Add member
+          </Button>
+          <Button id={`del-${developers._id}-inner`} variant='danger'
                   onClick={() => removeDev(developers._id)}>
             <Icon.Dash/>
             Remove
