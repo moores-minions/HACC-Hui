@@ -1,209 +1,183 @@
-import React from 'react';
-import {
-  Grid,
-  Header,
-  Item,
-  Modal,
-  Icon, Button,
-} from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Button, Card, Col, Container, Modal, Row } from 'react-bootstrap';
+import * as Icon from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 import { defineMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
 import { WantsToJoin } from '../../../api/team/WantToJoinCollection';
 
-class InterestedParticipantCard extends React.Component {
-  isAdded(tID, dID) {
-    // console.log(typeof TeamDevelopers.findOne({ teamID: tID, developerID: dID }) !== 'undefined');
+const InterestedParticipantCard = ({ teams, skills, tools, challenges, developers }) => {
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const isAdded = (tID, dID) => {
     if (typeof TeamParticipants.findOne({ teamID: tID, participantID: dID }) !== 'undefined') {
       return true;
     }
     return false;
-  }
+  };
 
-  handleClick(tID, dID) {
-    // console.log(e);
-    // console.log(tID);
-    // console.log(dID);
+  const handleClick = (tID, dID) => {
     const thisTeam = tID;
     const devID = dID;
-    // console.log(thisTeam);
     const definitionData = { team: thisTeam, participant: devID };
-    const collectionName = TeamParticipants.getCollectionName();
-    // console.log(collectionName);
+    let collectionName = TeamParticipants.getCollectionName();
     defineMethod.call({ collectionName: collectionName, definitionData: definitionData },
-        (error) => {
-          if (error) {
-            swal('Error', error.message, 'error');
-            // console.error(error.message);
-          } else {
-            swal('Success', 'Member added successfully', 'success');
-            // console.log('Success');
-          }
-        });
-    const collectionName2 = WantsToJoin.getCollectionName();
-    // console.log(collectionName2, devID);
-    const intID = WantsToJoin.findDoc({ participantID: devID })._id;
-    // console.log(intID);
-    removeItMethod.call({ collectionName: collectionName2, instance: intID }, (error) => {
-      if (error) {
-        console.error('Failed to remove', error);
-      }
-    });
-  }
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          collectionName = WantsToJoin.getCollectionName();
+          const intID = WantsToJoin.findDoc({ participantID: devID })._id;
+          removeItMethod.call({ collectionName: collectionName, instance: intID }, (err) => {
+            if (err) {
+              swal('Error', err.message, 'error');
+            } else {
+              swal('Success', 'Member added successfully', 'success');
+            }
+          });
+        }
+      });
+  };
 
-  removeDev(dID) {
-    // console.log(e);
+  const removeDev = (dID) => {
     const devID = dID;
-    const collectionName2 = WantsToJoin.getCollectionName();
-    // console.log(collectionName2, devID);
-    const intID = WantsToJoin.findDoc({ participantID: devID })._id;
-    // console.log(intID);
-    removeItMethod.call({ collectionName: collectionName2, instance: intID }, (error) => {
+    const collectionName = WantsToJoin.getCollectionName();
+    const intID = WantsToJoin.findDoc({ participantID: devID });
+    removeItMethod.call({ collectionName: collectionName, instance: intID }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
-        // console.error(error.message);
       } else {
-        swal('Success', 'Removed Interested Developer', 'success');
-        // console.log('Success');
+        swal('Success', 'Removed interested developer', 'success');
       }
     });
-  }
+  };
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-  render() {
 
-    function changeBackground(e) {
-      e.currentTarget.style.backgroundColor = '#fafafa';
-      e.currentTarget.style.cursor = 'pointer';
-    }
+  const changeBackground = (e) => {
+    e.currentTarget.style.backgroundColor = '#fafafa';
+    e.currentTarget.style.cursor = 'pointer';
+  };
 
-    function onLeave(e) {
-      e.currentTarget.style.backgroundColor = 'transparent';
-    }
+  const onLeave = (e) => {
+    e.currentTarget.style.backgroundColor = 'transparent';
+  };
 
-    return (
-        <Item onMouseEnter={changeBackground} onMouseLeave={onLeave}
-              style={{ padding: '0rem 2rem 0rem 2rem' }}>
-          <Modal closeIcon trigger={
-            <Item.Content>
-              <Item.Header>
-                <Header as={'h3'} style={{ color: '#263763', paddingTop: '2rem' }}>
-                  <Icon name='user' size='tiny' />
-                  {this.props.developers.firstName} {this.props.developers.lastName}
-                </Header>
-              </Item.Header>
-              <Item.Meta>
-                <Item.Meta>
-                  <Grid doubling columns={5}>
-                    <Grid.Column>
-                      <Grid.Column floated={'left'} style={{ paddingBottom: '0.3rem' }}>
-                        {this.props.challenges.map((challenge) => <p
-                            style={{ color: 'rgb(89, 119, 199)' }}
-                            key={challenge}>
-                          {challenge}</p>)}
-                      </Grid.Column>
-
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Header>Skills</Header>
-                      {this.props.skills.map((skill) => <p key={skill}>
-                        {skill.name}</p>)}
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Header>Tools</Header>
-                      {this.props.tools.map((tool) => <p key={tool}>
-                        {tool.name}</p>)}
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Header>Slack Username</Header>
-                      {this.props.developers.username}
-                    </Grid.Column>
-                  </Grid>
-                </Item.Meta>
-              </Item.Meta>
-            </Item.Content>
-          }>
-            <Modal.Header>{this.props.developers.firstName} {this.props.developers.lastName}</Modal.Header>
-            <Modal.Content image scrolling>
-              <Modal.Description>
-                <Header>About Me</Header>
-                <p>
-                  {this.props.developers.aboutMe}
-                </p>
-                <Header>Slack Username</Header>
-                <p>
-                  {this.props.developers.username}
-                </p>
-                <Header>LinkedIn</Header>
-                <p>
-                  {this.props.developers.linkedIn}
-                </p>
-                <Header>GitHub</Header>
-                <p>
-                  {this.props.developers.gitHub}
-                </p>
-                <Header>Website</Header>
-                <p>
-                  {this.props.developers.website}
-                </p>
-                <Header>Challenges</Header>
-                <p>
-                  {this.props.challenges.map((challenge) => <p key={challenge}>
-                    {challenge}</p>)}
-                </p>
-                <Header>Skills</Header>
-                <p>
-                  {this.props.skills.map((skill) => <p key={skill}>
-                    {skill.name}</p>)}
-                </p>
-                <Header>Tools</Header>
-                <p>
-                  {this.props.tools.map((tool) => <p key={tool}>
-                    {tool.name}</p>)}
-                </p>
-              </Modal.Description>
-            </Modal.Content>
-            <Modal.Actions>
-              {!this.isAdded(this.props.teams[0]._id, this.props.developers._id) ? (
-                  // eslint-disable-next-line max-len
-                  <Button id={this.props.teams._id} style={{ backgroundColor: 'rgb(89, 119, 199)', color: 'white' }} onClick={this.handleClick.bind(this, this.props.teams[0]._id, this.props.developers._id)}>
-                    <Icon name='plus'/>
-                    Add member
-                  </Button>
-              ) : ''}
-              {this.isAdded(this.props.teams[0]._id, this.props.developers._id) ? (
-                  // eslint-disable-next-line max-len
-                  <Button id={this.props.teams._id} style={{ backgroundColor: 'rgb(89, 119, 199)', color: 'white' }} disabled>
-                    <Icon name='plus'/>
-                    Member already added
-                  </Button>
-              ) : '' }
-              {/* eslint-disable-next-line max-len */}
-              <Button id={this.props.teams._id} style={{ backgroundColor: 'rgb(192, 0, 0)', color: 'white' }} onClick={this.removeDev.bind(this, this.props.developers._id)}>
-                Remove
-              </Button>
-            </Modal.Actions>
-          </Modal>
-          {!this.isAdded(this.props.teams[0]._id, this.props.developers._id) ? (
-              // eslint-disable-next-line max-len
-              <Button id={this.props.teams._id} style={{ backgroundColor: 'transparent' }} onClick={this.handleClick.bind(this, this.props.teams[0]._id, this.props.developers._id)}>
-                Add member
-              </Button>
-          ) : ''}
-          {this.isAdded(this.props.teams[0]._id, this.props.developers._id) ? (
-              <Button id={this.props.teams._id} style={{ backgroundColor: 'transparent' }} disabled>
-                Member already added
-              </Button>
-          ) : '' }
-          {/* eslint-disable-next-line max-len */}
-          <Button id={this.props.teams._id} style={{ backgroundColor: 'transparent' }} onClick={this.removeDev.bind(this, this.props.developers._id)}>
+  return (
+    <Card onMouseEnter={changeBackground} onMouseLeave={onLeave}
+          style={{ backgroundColor: 'transparent', padding: '0rem 2rem 0rem 2rem' }}>
+      <Card.Body>
+        <Container onClick={handleShow}>
+          <h5 style={{ color: '#263763', paddingTop: '2rem' }}>
+            <Icon.PersonFill size={32}/>
+            {developers.firstName} {developers.lastName}
+          </h5>
+          <Row>
+            <Col>
+              <h5>Challenges</h5>
+              {challenges.slice(0, 3).map((challenge) => <p
+                style={{ color: 'rgb(89, 119, 199)' }}
+                key={challenge}>
+                {challenge}</p>)}
+            </Col>
+            <Col>
+              <h5>Skills</h5>
+              {skills.slice(0, 3).map((skill) => <p key={skill}>
+                {skill.name}</p>)}
+            </Col>
+            <Col>
+              <h5>Tools</h5>
+              {tools.slice(0, 3).map((tool) => <p key={tool}>
+                {tool.name}</p>)}
+            </Col>
+            <Col>
+              <h5>Slack Username</h5>
+              {developers.username}
+            </Col>
+          </Row>
+        </Container>
+        {!isAdded(teams[0]._id, developers._id) ? (
+          <Button id={teams._id} variant='success' onClick={() => handleClick(teams[0]._id, developers._id)}>
+            Add member
+          </Button>
+        ) : (
+          <Button id={teams._id} variant='success' disabled>
+            Member already added
+          </Button>
+        )}
+        <Button id={teams._id} variant='danger'
+                onClick={() => removeDev(developers._id)}>
+          Remove
+        </Button></Card.Body>
+      <Modal onHide={handleClose} show={show}>
+        <Modal.Header closeButton>
+          <Modal.Title>{developers.firstName} {developers.lastName}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h5>About Me</h5>
+          <p>
+            {developers.aboutMe}
+          </p>
+          <h5>Slack Username</h5>
+          <p>
+            {developers.username}
+          </p>
+          <h5>LinkedIn</h5>
+          <p>
+            {developers.linkedIn}
+          </p>
+          <h5>GitHub</h5>
+          <p>
+            {developers.gitHub}
+          </p>
+          <h5>Website</h5>
+          <p>
+            {developers.website}
+          </p>
+          <h5>Challenges</h5>
+          <p>
+            {challenges.map((challenge) => <p key={challenge}>
+              {challenge}</p>)}
+          </p>
+          <h5>Skills</h5>
+          <p>
+            {skills.map((skill) => <p key={skill}>
+              {skill.name}</p>)}
+          </p>
+          <h5>Tools</h5>
+          <p>
+            {tools.map((tool) => <p key={tool}>
+              {tool.name}</p>)}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          {!isAdded(teams[0]._id, developers._id) ? (
+            <Button id={teams._id} variant='success'
+                    onClick={() => handleClick(teams[0]._id, developers._id)}>
+              <Icon.Plus/>
+              Add member
+            </Button>
+          ) : (
+            <Button id={teams._id} variant='success' disabled>
+              <Icon.Plus/>
+              Member already added
+            </Button>
+          )}
+          <Button id={teams._id} variant='danger'
+                  onClick={() => removeDev(developers._id)}>
+            <Icon.Dash/>
             Remove
           </Button>
-        </Item>
-    );
-  }
-}
+        </Modal.Footer>
+      </Modal>
+    </Card>
+  );
+};
+
 InterestedParticipantCard.propTypes = {
   teams: PropTypes.array.isRequired,
   skills: PropTypes.array.isRequired,

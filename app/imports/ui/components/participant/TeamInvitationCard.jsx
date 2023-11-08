@@ -73,15 +73,14 @@ const TeamInvitationCard = ({ teams, skills, tools, challenges, participants }) 
             <Icon.PeopleFill size={32}/>
             {teams.name}
           </h5>
+          <Image src={teams.image} rounded size='small'/>
           <Row>
             <Col>
-              <Image src={teams.image} rounded size='small'/>
-              <Col style={{ paddingBottom: '0.3rem' }}>
+                <h5>Challenges</h5>
                 {challenges.slice(0, 3).map((challenge) => <p
                   style={{ color: 'rgb(89, 119, 199)' }}
                   key={challenge}>
                   {challenge}</p>)}
-              </Col>
 
             </Col>
             <Col>

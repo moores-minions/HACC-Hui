@@ -118,6 +118,7 @@ label {
   color: blue;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .your-teams a {
