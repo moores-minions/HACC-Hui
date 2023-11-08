@@ -1,13 +1,6 @@
 import React from 'react';
-// import {
-//   Grid,
-//   Header,
-//   Item,
-//   Icon,
-// } from 'semantic-ui-react';
 import { Card, Container, Col } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
-import PropTypes from 'prop-types';
 import { _ } from 'lodash';
 import { useTracker } from 'meteor/react-meteor-data';
 import { useParams } from 'react-router';
@@ -24,21 +17,17 @@ import InterestedParticipantCard from './InterestedParticipantCard';
 import { paleBlueStyle } from '../../styles';
 
 /**
- * Renders the interested participants
+ * Renders the page for interested participants
  * @memberOf ui/pages
  */
 const InterestedParticipants = () => {
 
+  const documentId = useParams()._id;
+
   const {
     developers, developerChallenges, developerSkills, developerTools,
     interestedDevs, teams, skills, challenges, tools,
-  } = useTracker(() => {
-    const documentId = useParams()._id;
-    console.log(documentId);
-    // console.log(Teams.find({ _id: documentId }).fetch());
-    // eslint-disable-next-line max-len
-    // console.log(InterestedDevs.find({ teamID: TeamDevelopers.findDoc({ developerID: Developers.findDoc({ userID: Meteor.userId() })._id }).teamID }).fetch());
-    return {
+  } = useTracker(() => ({
       developers: Participants.find({}).fetch(),
       developerChallenges: ParticipantChallenges.find({}).fetch(),
       developerSkills: ParticipantSkills.find({}).fetch(),
@@ -48,8 +37,7 @@ const InterestedParticipants = () => {
       skills: Skills.find({}).fetch(),
       challenges: Challenges.find({}).fetch(),
       tools: Tools.find({}).fetch(),
-    };
-  });
+    }));
 
   if (interestedDevs.length === 0) {
     return (
@@ -65,61 +53,51 @@ const InterestedParticipants = () => {
     );
   }
 
-  const universalSkills = skills;
-
   const getDeveloperSkills = (developerID, developerSkillsParam) => {
     const data = [];
     const getSkills = _.filter(developerSkillsParam, { developerID: developerID });
     for (let i = 0; i < getSkills.length; i++) {
-      for (let j = 0; j < universalSkills.length; j++) {
-        if (getSkills[i].skillID === universalSkills[j]._id) {
-          data.push({ name: universalSkills[j].name });
+      for (let j = 0; j < skills.length; j++) {
+        if (getSkills[i].skillID === skills[j]._id) {
+          data.push({ name: skills[j].name });
         }
       }
     }
     return data;
   };
-
-  const universalDevs = developers;
 
   const getInterestedDevelopers = (devs) => {
     const data = [];
     for (let i = 0; i < devs.length; i++) {
-      for (let j = 0; j < universalDevs.length; j++) {
-        if (devs[i].participantID === universalDevs[j]._id) {
-          data.push(universalDevs[j]);
+      for (let j = 0; j < developers.length; j++) {
+        if (devs[i].participantID === developers[j]._id) {
+          data.push(developers[j]);
         }
       }
     }
-    // console.log(data);
     return data;
   };
-
-  const universalTools = tools;
 
   const getDeveloperTools = (developerID, developerToolsParam) => {
     const data = [];
     const getTools = _.filter(developerToolsParam, { developerID: developerID });
     for (let i = 0; i < getTools.length; i++) {
-      for (let j = 0; j < universalTools.length; j++) {
-        if (getTools[i].toolID === universalTools[j]._id) {
-          data.push({ name: universalTools[j].name });
+      for (let j = 0; j < tools.length; j++) {
+        if (getTools[i].toolID === tools[j]._id) {
+          data.push({ name: tools[j].name });
         }
       }
     }
-    // console.log(data);
     return data;
   };
-
-  const universalChallenges = challenges;
 
   const getDeveloperChallenges = (developerID, developerChallengesParam) => {
     const data = [];
     const getChallenges = _.filter(developerChallengesParam, { developerID: developerID });
     for (let i = 0; i < getChallenges.length; i++) {
-      for (let j = 0; j < universalChallenges.length; j++) {
-        if (getChallenges[i].challengeID === universalChallenges[j]._id) {
-          data.push(universalChallenges[j].title);
+      for (let j = 0; j < challenges.length; j++) {
+        if (getChallenges[i].challengeID === challenges[j]._id) {
+          data.push(challenges[j].title);
         }
       }
     }
@@ -135,10 +113,9 @@ const InterestedParticipants = () => {
           </h4>
           <Col>
             {getInterestedDevelopers(interestedDevs).map((mapDevelopers) => <InterestedParticipantCard
-              key={mapDevelopers._id} developers={mapDevelopers} teams={teams}
-              skills={getDeveloperSkills(mapDevelopers._id, developerSkills)}
+              key={mapDevelopers._id} teams={teams} skills={getDeveloperSkills(mapDevelopers._id, developerSkills)}
               tools={getDeveloperTools(mapDevelopers._id, developerTools)}
-              challenges={getDeveloperChallenges(mapDevelopers._id, developerChallenges)}
+              challenges={getDeveloperChallenges(mapDevelopers._id, developerChallenges)} developers={mapDevelopers}
             />)}
           </Col>
         </Card.Body>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Card, Col, Container } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
-import PropTypes from 'prop-types';
 import { _ } from 'lodash';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Teams } from '../../../api/team/TeamCollection';
