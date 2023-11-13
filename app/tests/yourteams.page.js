@@ -6,6 +6,7 @@ class YourTeamsPage {
     this.pageSelector = Selector(this.pageId);
     this.inviteId = '#inv-NoM5s2evYrCSjDxkr';
     this.interested = Selector('a').withText('See interested participants');
+    this.edit = Selector('a').withText('Edit Team');
   }
 
   /** Asserts that this page is currently displayed. */
@@ -22,6 +23,10 @@ class YourTeamsPage {
 
   async seeInterested(testController) {
     await testController.click(this.interested);
+  }
+
+  async gotoEditTeamPage(testController) {
+    await testController.click(this.edit);
   }
 }
 

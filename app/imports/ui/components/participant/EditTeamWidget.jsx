@@ -165,7 +165,7 @@ const EditTeamWidget = () => {
     return <Redirect to={ ROUTES.YOUR_TEAMS } />;
   }
     return (
-        <Container id='edit-team' className='card-pages'>
+        <Container id='edit-team-page' className='card-pages'>
           <Card style={paleBlueStyle} className='createTeam'>
             <Card.Body>
             <AutoForm schema={formSchema} model={model} onSubmit={(data) => {
@@ -181,7 +181,7 @@ const EditTeamWidget = () => {
                       have to use the same name</Alert.Heading>
                   </Alert>
                   <Row>
-                    <Col><TextField name='name'/></Col>
+                    <Col><TextField id='name' name='name'/></Col>
                     <Col>
                       <Form.Label>Availability</Form.Label>
                       <Form.Check type='switch' id='availability'
@@ -191,23 +191,23 @@ const EditTeamWidget = () => {
                                   }}/>
                     </Col>
                   </Row>
-                  <LongTextField name='description'/>
-                  <SelectField name='challenge' disabled={!canChangeChallenges}/>
+                  <LongTextField id='description' name='description'/>
+                  <SelectField id='challenge' name='challenge' disabled={!canChangeChallenges}/>
                   <Row>
                     <Col><SelectField id='skills' name='skills' multiple
                                       options={skillNames.map((val) => ({ label: val, value: val }))}/></Col>
                     <Col><SelectField id='tools' name='tools' multiple
                                       options={toolNames.map((val) => ({ label: val, value: val }))}/></Col>
                   </Row>
-                  <TextField name="gitHubRepo" label="GitHub Repo" disabled/>
-                  <TextField name="devPostPage" label="Devpost Page"/>
-                  <TextField name="affiliation"/>
+                  <TextField id='github-repo' name="gitHubRepo" label="GitHub Repo" disabled/>
+                  <TextField id='devpost-page' name="devPostPage" label="Devpost Page"/>
+                  <TextField id='affiliation' name="affiliation"/>
                   <SelectField id='members' name='members' multiple
                                options={participantNames.map((val) => ({ label: val, value: val }))}/>
                 </Col>
                   <ErrorsField/>
                   <div align='center'>
-                    <SubmitField value='Submit' />
+                    <SubmitField id='submit' value='Submit' />
                   </div>
             </AutoForm>
                 </Card.Body>
