@@ -27,6 +27,7 @@ import { updateMinorsPage } from './updateminorparticipantscompliant.page';
 import { teamInvitationsPage } from './teaminvitations.page';
 import { editProfileWidgetPage } from './editprofilewidget.page';
 import { interestedParticipantPage } from './interestedparticipant.page';
+import { editTeamPage } from './editteam.page';
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
@@ -225,4 +226,12 @@ test('Test that the interested participant page shows up and works', async (test
   await navBar.gotoYourTeamsPage(testController);
   await yourTeamsPage.seeInterested(testController);
   await interestedParticipantPage.isDisplayed(testController);
+});
+
+test('Test that the edit team page shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, 'aung@foo.com', userCred.password);
+  await navBar.gotoYourTeamsPage(testController);
+  await yourTeamsPage.gotoEditTeamPage(testController);
+  await editTeamPage.editTeam(testController, 'beef');
 });
