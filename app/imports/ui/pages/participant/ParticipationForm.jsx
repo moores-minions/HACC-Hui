@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Alert, Container, Form } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import { AutoForm, BoolField, SubmitField, TextField } from 'uniforms-semantic';
+import { AutoForm, BoolField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
+import swal from 'sweetalert';
 import { ROUTES } from '../../../startup/client/route-constants';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
@@ -37,7 +38,7 @@ const ParticipationForm = () => {
       };
       updateMethod.call({ collectionName, updateData }, (error) => {
         if (error) {
-          console.error('Could not update Participant', error);
+          swal('Error', error.message, 'Could not update Participant');
         }
       });
       const interactionData = {
@@ -45,10 +46,9 @@ const ParticipationForm = () => {
         type: USER_INTERACTIONS.SIGNED_CONSENT,
         typeData: [firstName, lastName],
       };
-      console.log(interactionData);
       userInteractionDefineMethod.call(interactionData, (error) => {
         if (error) {
-          console.error('Could not define user interaction', error);
+          swal('Error', error.message, 'Could not define user interaction');
         }
       });
       setRedirect(true);
@@ -61,7 +61,7 @@ const ParticipationForm = () => {
     }
     return (
         <Container style={darkerBlueStyle}>
-          <h2 className='text-center' style={{ marginTop: '20px' }}>HACC Registration</h2>
+          <h2 className='text-center mt-3'>HACC Registration</h2>
           <AutoForm schema={formSchema} onSubmit={data => submit(data)}>
               <Alert className='text-center'>
                 <Alert.Heading>
@@ -75,7 +75,7 @@ const ParticipationForm = () => {
                   <TextField name="lastName" />
                 </Form.Group>
                 <BoolField name="agree" label="I have read the rules and agree to the terms" />
-                <SubmitField style={{ marginBottom: '20px' }} />
+                <SubmitField />
             </AutoForm>
         </Container>
     );
