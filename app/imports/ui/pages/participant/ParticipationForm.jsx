@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-// import { Form, Header, Message, Segment } from 'semantic-ui-react';
 import { Alert, Container, Form } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { AutoForm, BoolField, SubmitField, TextField } from 'uniforms-semantic';
@@ -20,16 +19,14 @@ const schema = new SimpleSchema({
 });
 
 /**
- * A simple static component to render some text for the landing page.
+ * A simple static component to render some text for the HACC Participation form page.
  * @memberOf ui/pages
  */
-class ParticipationForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-  }
+const ParticipationForm = () => {
 
-  submit(formData) {
+  const [redirect, setRedirect] = useState(false);
+
+  const submit = (formData) => {
     const { firstName, lastName, agree } = formData;
     if (agree) {
       const dev = Participants.findDoc({ userID: Meteor.userId() });
@@ -54,20 +51,18 @@ class ParticipationForm extends React.Component {
           console.error('Could not define user interaction', error);
         }
       });
-      this.setState({ redirectToReferer: true });
+      setRedirect(true);
     }
-  }
+  };
 
-  render() {
     const formSchema = new SimpleSchema2Bridge(schema);
-    if (this.state.redirectToReferer) {
-      const from = { pathname: ROUTES.CREATE_PROFILE };
-      return <Redirect to={from}/>;
+    if (redirect) {
+      return <Redirect to={ROUTES.CREATE_PROFILE}/>;
     }
     return (
         <Container style={darkerBlueStyle}>
-          <h2 className='text-center mt-2'>HACC Registration</h2>
-          <AutoForm schema={formSchema} onSubmit={data => this.submit(data)}>
+          <h2 className='text-center' style={{ marginTop: '20px' }}>HACC Registration</h2>
+          <AutoForm schema={formSchema} onSubmit={data => submit(data)}>
               <Alert className='text-center'>
                 <Alert.Heading>
                   Read the <a href="https://hacc.hawaii.gov/hacc-rules/">HACC Rules</a>.
@@ -80,12 +75,10 @@ class ParticipationForm extends React.Component {
                   <TextField name="lastName" />
                 </Form.Group>
                 <BoolField name="agree" label="I have read the rules and agree to the terms" />
-                <SubmitField />
-
+                <SubmitField style={{ marginBottom: '20px' }} />
             </AutoForm>
         </Container>
     );
-  }
-}
+};
 
 export default ParticipationForm;
