@@ -36,17 +36,17 @@ const ProfileCard = ({ model }) => (
                 <Col>
                   <h5>Challenges</h5>
                   <hr/>
-                  {model.challenges.map((item) => <p key={item}>- {item}</p>)}
+                  {model.challenges.map((item) => <p key={item}>{item}</p>)}
                 </Col>
                 <Col>
                   <h5>Skills</h5>
                   <hr/>
-                    {model.skills.map((item) => <p key={item}>- {item}</p>)}
+                    {model.skills.map((item) => <p key={item}>{item}</p>)}
                 </Col>
                 <Col>
                   <h5>Tools</h5>
                   <hr/>
-                    {model.tools.map((item) => <p key={item}>- {item}</p>)}
+                    {model.tools.map((item) => <p key={item}>{item}</p>)}
                 </Col>
               </Row>
           <br />

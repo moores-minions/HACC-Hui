@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card, Grid, Header, List } from 'semantic-ui-react';
+import { Card, Row, Col, Button } from 'react-bootstrap';
 import _ from 'lodash';
 import { Meteor } from 'meteor/meteor';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
@@ -15,7 +15,7 @@ import { LeavingTeams } from '../../../api/team/LeavingTeamCollection';
 import { defineMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
 
 class TeamCard extends React.Component {
-  buildTheTeam() {
+  buildTheTeam = () => {
     const { team } = this.props;
     const teamID = team._id;
     const tCs = TeamChallenges.find({ teamID }).fetch();
@@ -28,7 +28,7 @@ class TeamCard extends React.Component {
     return team;
   }
 
-  handleLeaveTeam(e, inst) {
+  handleLeaveTeam = (e, inst) => {
     console.log(e, inst);
     const { team } = inst;
     const pDoc = Participants.findDoc({ userID: Meteor.userId() });
@@ -57,39 +57,38 @@ class TeamCard extends React.Component {
     const team = this.buildTheTeam();
     const isOwner = team.owner === this.props.participantID;
     return (
-        <Card fluid>
-          <Card.Content>
-            <Card.Header>{team.name}</Card.Header>
-            <Card.Description>
-              <Grid container stackable columns={5}>
-                <Grid.Column>
-                  <Header size="tiny">Challenges</Header>
-                  {team.challenges.join(', ')}
-                </Grid.Column>
-                <Grid.Column>
-                  <Header size="tiny">Desired Skills</Header>
-                  <List bulleted>
+        <Card>
+          <Card.Body>
+            <Card.Title>{team.name}</Card.Title>
+            <Card.Text>
+              <Row>
+                <Col>
+                  <h6>Challenges</h6>
+                  {team.challenges.map((item) => <p key={item}>{ item }</p>)}
+                  {_.uniq(team.challenges).length === 0 ? (<p>N/A</p>) : ''}
+                </Col>
+                <Col>
+                  <h6>Desired Skills</h6>
                     {team.skills.map((item) => <SkillItem item={item} key={item._id} />)}
-                  </List>
-                </Grid.Column>
-                <Grid.Column>
-                  <Header size="tiny">Desired Tools</Header>
-                  <List bulleted>
+                    {_.uniq(team.skills).length === 0 ? (<p>N/A</p>) : ''}
+                </Col>
+                <Col>
+                  <h6>Desired Tools</h6>
                     {team.tools.map((item) => <ToolItem item={item} key={item._id} />)}
-                  </List>
-                </Grid.Column>
-                <Grid.Column>
-                  <Header size="tiny">Members</Header>
-                  <List>
-                    {team.members.map((member, index) => <List.Item key={`${index}${member}`}>{member}</List.Item>)}
-                  </List>
-                </Grid.Column>
-                <Grid.Column>
-                  <Button team={team} disabled={isOwner} color="red" onClick={this.handleLeaveTeam}>Leave team</Button>
-                </Grid.Column>
-              </Grid>
-            </Card.Description>
-          </Card.Content>
+                    {_.uniq(team.tools).length === 0 ? (<p>N/A</p>) : ''}
+                </Col>
+                <Col>
+                  <h6>Members</h6>
+                    {team.members.map((item) => <p key={item}>{ item }</p>)}
+                    {_.uniq(team.members).length === 0 ? (<p>No members listed</p>) : ''}
+                </Col>
+                <Col>
+                  <Button team={team} disabled={isOwner} variant="danger"
+                          onClick={this.handleLeaveTeam}>Leave team</Button>
+                </Col>
+              </Row>
+            </Card.Text>
+          </Card.Body>
         </Card>
     );
   }
