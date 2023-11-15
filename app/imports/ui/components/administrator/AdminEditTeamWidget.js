@@ -75,22 +75,20 @@ class AdminEditTeamWidget extends React.Component {
     });
     return (
         <Container>
-          <Card>
             <div style={{
               backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
               borderRadius: '2rem',
             }}>
-              <h2 textAlign="center">Edit Team</h2>
+              <h2 className='text-center'>Edit Team</h2>
             </div>
             <AutoForm schema={formSchema} onSubmit={data => this.submit(data)} model={this.props.team}
                       style={{
                         paddingBottom: '4rem',
                       }}>
-              <Card.Body style={{
+              <Card style={{
                 borderRadius: '1rem',
                 backgroundColor: '#E5F0FE',
               }} className={'teamCreate'}>
-                <Card container centered>
                   <Card.Body style={{ paddingLeft: '3rem', paddingRight: '3rem' }}>
                     <TextField name='name' disabled />
                     <LongTextField name='description' required/>
@@ -100,7 +98,6 @@ class AdminEditTeamWidget extends React.Component {
                     </ListGroup>
                     <TextField name='gitHubRepo' required/>
                   </Card.Body>
-                </Card>
                 <div align='center'>
                   <SubmitField value='Submit'
                                style={{
@@ -109,9 +106,8 @@ class AdminEditTeamWidget extends React.Component {
                                }}/>
                 </div>
                 <ErrorsField/>
-              </Card.Body>
+              </Card>
             </AutoForm>
-          </Card>
         </Container>
     );
   }
