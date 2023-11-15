@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Header, Message, Segment } from 'semantic-ui-react';
+import { Alert, Container, Form, Col, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Meteor } from 'meteor/meteor';
-import { AutoForm, SubmitField, TextField } from 'uniforms-semantic';
+import { AutoForm, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { ROUTES } from '../../../startup/client/route-constants';
 import { darkerBlueStyle } from '../../styles';
 import { Participants } from '../../../api/user/ParticipantCollection';
@@ -79,28 +79,32 @@ class UnderParticipationForm extends React.Component {
       return <Redirect to={from} />;
     }
     return (
-        <Segment style={darkerBlueStyle}>
-          <Header>HACC Registration</Header>
+        <Container style={darkerBlueStyle}>
+          <h2 className='text-center mt-3'>HACC Registration</h2>
           <AutoForm schema={formSchema} onSubmit={data => this.submit(data)}>
-            <Segment>
-              <Message>
+            <Alert className='text-center'>
+              <Alert.Heading>
                 Read the <a href="https://hacc.hawaii.gov/hacc-rules/">HACC Rules</a>.
                 <br />
                 Then agree to the terms.
-              </Message>
+              </Alert.Heading>
+            </Alert>
               <Form.Group widths="equal">
-                <TextField name='yourFirstName' />
-                <TextField name='yourLastName' />
+                <Row>
+                  <Col xs={6}><TextField name='yourFirstName' /></Col>
+                  <Col xs={6}><TextField name='yourLastName' /></Col>
+                </Row>
               </Form.Group>
               <Form.Group widths="equal">
-                <TextField name='parentFirstName' label="Parent/Guardian First Name" />
-                <TextField name='parentLastName' label="Parent/Guardian Last Name" />
-                <TextField name='parentEmail' label="Parent/Guardian Email" />
+                <Row>
+                  <Col xs={4}><TextField name='parentFirstName' label="Parent/Guardian First Name" /></Col>
+                  <Col xs={4}><TextField name='parentLastName' label="Parent/Guardian Last Name" /></Col>
+                  <Col xs={4}><TextField name='parentEmail' label="Parent/Guardian Email" /></Col>
+                </Row>
               </Form.Group>
               <SubmitField />
-            </Segment>
           </AutoForm>
-        </Segment>
+        </Container>
     );
   }
 }
