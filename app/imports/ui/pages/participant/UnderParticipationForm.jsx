@@ -23,7 +23,7 @@ const schema = new SimpleSchema({
 });
 
 /**
- * A simple static component to render some text for the landing page.
+ * A simple static component to render some text for the Under Participation form.
  * @memberOf ui/pages
  */
 const UnderParticipationForm = () => {
