@@ -1,10 +1,5 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-// import {
-//   Grid,
-//   Header,
-//   Item,
-// } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'lodash';
 import { withTracker } from 'meteor/react-meteor-data';
