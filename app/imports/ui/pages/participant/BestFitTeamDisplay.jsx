@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-// import { Dropdown } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
