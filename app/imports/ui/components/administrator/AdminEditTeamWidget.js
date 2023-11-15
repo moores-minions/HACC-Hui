@@ -101,7 +101,7 @@ class AdminEditTeamWidget extends React.Component {
                 <div align='center'>
                   <SubmitField value='Submit'
                                style={{
-                                 color: 'white', backgroundColor: '#dd000a',
+                                 color: 'white',
                                  margin: '2rem 0rem',
                                }}/>
                 </div>
