@@ -6,9 +6,9 @@ class ConfigureHACCPage {
     this.pageId = '#configurePage';
     this.pageSelector = Selector(this.pageId);
     // this.testId = Challenges.findOne({ title: 'test' })._id;
-    this.challengeId = 'Zcmy269MoDFCAzooX';
-    this.skillId = 'KCnEyPjjWLnygGzT5';
-    this.toolId = 'nzoPEFeqwaYSjPEX8';
+    this.challengeId = 'TuEdtCpGPLXmfDjwu';
+    this.skillId = 'MPyD4SZnvCJemYZRz';
+    this.toolId = 'w7TcFybX6QK2D2SSZ';
   }
 
   /** Asserts that this page is currently displayed. */
