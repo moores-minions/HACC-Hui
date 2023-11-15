@@ -48,7 +48,7 @@ class EditProfileWidget extends React.Component {
           </Segment>
           <Segment style={paleBlueStyle}>
             <Header as="h2" textAlign="center">Team Membership</Header>
-            <TeamMembershipWidget />
+            <TeamMembershipWidget id="team-card" />
           </Segment>
         </Container>
         </div>
