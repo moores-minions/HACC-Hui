@@ -2,9 +2,8 @@ import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { Button, Container, Header, Segment } from 'semantic-ui-react';
+import { Button, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 import { ParticipantChallenges } from '../../../api/user/ParticipantChallengeCollection';
@@ -17,46 +16,44 @@ import TeamMembershipWidget from './TeamMembershipWidget';
 import { Tools } from '../../../api/tool/ToolCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 
-class EditProfileWidget extends React.Component {
-
-  buildTheModel() {
-    const model = this.props.participant;
-    model.challenges = _.map(this.props.devChallenges, (challenge) => {
+const ProfileWidget = ({ participant, devChallenges, devSkills, devTools }) => {
+  const buildTheModel = () => {
+    const model = participant;
+    model.challenges = devChallenges.map((challenge) => {
       const c = Challenges.findDoc(challenge.challengeID);
       return c.title;
     });
-    model.skills = _.map(this.props.devSkills, (skill) => {
-      const s = Skills.findDoc(skill.skillID);
+    model.skills = devSkills.map((skills) => {
+      const s = Skills.findDoc(skills.skillID);
       return s.name;
     });
-    model.tools = _.map(this.props.devTools, (tool) => {
-      const t = Tools.findDoc(tool.toolID);
+    model.tools = devTools.map((tools) => {
+      const t = Tools.findDoc(tools.toolID);
       return t.name;
     });
     return model;
-  }
+  };
 
-  render() {
-    // console.log(this.props);
-    const model = this.buildTheModel();
-    return (
-        <div style={{ paddingBottom: '50px', paddingTop: '40px' }}><Container id="profile-page">
-          <Segment style={paleBlueStyle}>
-            <Header as="h2" textAlign="center">Your Profile</Header>
-            <ProfileCard model={model} />
-            <Button id="edit-profile-button" color="olive"><Link to={ROUTES.EDIT_PROFILE}>Edit Profile</Link></Button>
-          </Segment>
-          <Segment style={paleBlueStyle}>
-            <Header as="h2" textAlign="center">Team Membership</Header>
-            <TeamMembershipWidget id="team-card" />
-          </Segment>
+  const model = buildTheModel();
+  return (
+      <div style={{ paddingBottom: '50px', paddingTop: '40px' }}>
+        <Container id="profile-page" style={{ paleBlueStyle, textAlign: 'center' }}>
+          <h2>Your Profile</h2>
+          <ProfileCard model={model} />
+          <Button id="edit-profile-button" color="black" >
+            <Link to={ROUTES.EDIT_PROFILE}>Edit Profile</Link>
+          </Button>
         </Container>
-        </div>
-    );
-  }
-}
 
-EditProfileWidget.propTypes = {
+        <Container style={{ paleBlueStyle, textAlign: 'center' }}>
+          <h2>Team Membership</h2>
+          <TeamMembershipWidget id="team-card" />
+        </Container>
+      </div>
+  );
+};
+
+ProfileWidget.propTypes = {
   participant: PropTypes.object.isRequired,
   devChallenges: PropTypes.arrayOf(
       PropTypes.object,
@@ -69,7 +66,7 @@ EditProfileWidget.propTypes = {
   ),
 };
 
-const EditProfileWidgetCon = withTracker(() => {
+const ProfileWidgetCon = withTracker(() => {
   const participant = Participants.findDoc({ userID: Meteor.userId() });
   const participantID = participant._id;
   const devChallenges = ParticipantChallenges.find({ participantID }).fetch();
@@ -81,6 +78,6 @@ const EditProfileWidgetCon = withTracker(() => {
     devSkills,
     devTools,
   };
-})(EditProfileWidget);
+})(ProfileWidget);
 
-export default withRouter(EditProfileWidgetCon);
+export default withRouter(ProfileWidgetCon);
