@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Alert, Container, Form } from 'react-bootstrap';
+import { Alert, Container, Form, Row, Col } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { AutoForm, BoolField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
@@ -71,8 +71,10 @@ const ParticipationForm = () => {
                 </Alert.Heading>
               </Alert>
                 <Form.Group widths="equal">
-                  <TextField name="firstName" />
-                  <TextField name="lastName" />
+                  <Row>
+                    <Col xs={6}><TextField name="firstName" /></Col>
+                    <Col xs={6}><TextField name="lastName" /></Col>
+                  </Row>
                 </Form.Group>
                 <BoolField name="agree" label="I have read the rules and agree to the terms" />
                 <SubmitField />

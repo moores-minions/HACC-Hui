@@ -349,7 +349,7 @@ class Dprofile extends React.Component {
     return (
         <Grid container centered>
           <Grid.Column>
-            <Header>Hello {firstname}, this is your first time to login, so please fill out your profile</Header>
+            <Header>Hello {firstname}, this is your first time to login, so please fill out your profile.</Header>
 
             <AutoForm ref={ref => {
               fRef = ref;
