@@ -11,7 +11,7 @@ class InterestedParticipantPage {
 
   async isDisplayed(testController) {
     // change when interested participants show up
-    await testController.wait(5000).expect(this.emptySelector.exists).ok();
+    await testController.wait(2500).expect(this.emptySelector.exists).ok();
   }
 
   async removeInterested(testController) {

@@ -8,7 +8,7 @@ class AgePage {
 
   /** Asserts that this page is currently displayed. */
   async isDisplayed(testController) {
-    await testController.wait(10001).expect(this.pageSelector.exists).ok();
+    await testController.wait(2500).expect(this.pageSelector.exists).ok();
   }
 }
 

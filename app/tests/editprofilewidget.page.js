@@ -15,7 +15,7 @@ class EditProfileWidgetPage {
     async editProfile(testController, aboutme) {
         await this.isDisplayed(testController);
         await testController.typeText('#aboutme', aboutme);
-        await testController.wait(5001);
+        await testController.wait(2500);
 
         await testController.click('#edit-profile-submit');
   }

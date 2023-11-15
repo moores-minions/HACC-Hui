@@ -9,7 +9,7 @@ class ProfilePage {
   /** Asserts that this page is currently displayed. */
   async isDisplayed(testController) {
     // This is first test to be run. Wait 5 seconds to avoid timeouts with GitHub Actions.
-    await testController.wait(5001).expect(this.pageSelector.exists).ok();
+    await testController.wait(2500).expect(this.pageSelector.exists).ok();
   }
 
   async gotoEditProfilePage(testController) {

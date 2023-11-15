@@ -11,8 +11,8 @@ class ListsuggestionsPage {
   /** Asserts that this page is currently displayed. */
   async isDisplayed(testController) {
     // This is first test to be run. Wait 10 seconds to avoid timeouts with GitHub Actions.
-    await (testController.wait(10001).expect(this.pageSelector.exists).ok() ||
-      testController.wait(10001).expect(this.emptySelector.exists).ok());
+    await (testController.wait(2500).expect(this.pageSelector.exists).ok() ||
+      testController.wait(2500).expect(this.emptySelector.exists).ok());
   }
 }
 
