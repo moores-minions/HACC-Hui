@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { Grid, Header, Checkbox, Button, Table } from 'semantic-ui-react';
 import { Button, Container, Table, ToggleButton } from 'react-bootstrap';
 import _ from 'underscore';
 import swal from 'sweetalert';
