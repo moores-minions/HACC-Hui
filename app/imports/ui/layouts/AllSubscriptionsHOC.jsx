@@ -2,7 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { SubsManager } from 'meteor/meteorhacks:subs-manager';
-import { Loader } from 'semantic-ui-react';
+import { Spinner } from 'react-bootstrap';
 import { Challenges } from '../../api/challenge/ChallengeCollection';
 import { ChallengeInterests } from '../../api/challenge/ChallengeInterestCollection';
 import { Interests } from '../../api/interest/InterestCollection';
@@ -38,10 +38,16 @@ const allSubs = new SubsManager({ cacheLimit: 25, expireIn: 30 });
  * @memberOf ui/layouts
  */
 function withAllSubscriptions(WrappedComponent) {
-  const AllSubscriptionsHOC = (props) => ((props.loading) ? (
-              <Loader active>Getting data.</Loader>
-          ) :
-          <WrappedComponent {...props} />
+  const AllSubscriptionsHOC = ({ loading, ...props }) => (
+    loading ? (
+      <div className="d-flex justify-content-center align-items-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Getting data...</span>
+        </Spinner>
+      </div>
+    ) : (
+      <WrappedComponent {...props} />
+    )
   );
   AllSubscriptionsHOC.propTypes = {
     loading: PropTypes.bool,
