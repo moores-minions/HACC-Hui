@@ -201,7 +201,7 @@ test('Test that the Open Teams page shows up and works', async (testController) 
 
 test('Test that the Create Profile page shows up and works', async (testController) => {
   await navBar.gotoSigninPage(testController);
-  await signinPage.signin(testController, userCred.username, userCred.password);
+  await signinPage.signin(testController, 'kentung@foo.com', userCred.password);
   await createProfilePage.isDisplayed(testController);
   await createProfilePage.createProfile(testController, 'test');
 });
