@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Segment } from 'semantic-ui-react';
 import { Button, Container, Modal, Row, Col } from 'react-bootstrap';
 import { ZipZap } from 'meteor/udondan:zipzap';
 import moment from 'moment';
