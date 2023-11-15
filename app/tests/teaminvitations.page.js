@@ -9,7 +9,7 @@ class TeamInvitationsPage {
   }
 
   async isDisplayed(testController) {
-    await testController.wait(5000).expect(this.emptySelector().exists).ok();
+    await testController.wait(5000).expect(this.pageSelector.exists).ok();
   }
 }
 
