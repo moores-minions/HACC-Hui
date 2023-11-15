@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import _ from 'lodash';
 import { Meteor } from 'meteor/meteor';
+import swal from 'sweetalert';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 import { TeamSkills } from '../../../api/team/TeamSkillCollection';
@@ -29,7 +30,6 @@ class TeamCard extends React.Component {
   }
 
   handleLeaveTeam = (e, inst) => {
-    console.log(e, inst);
     const { team } = inst;
     const pDoc = Participants.findDoc({ userID: Meteor.userId() });
     let collectionName = LeavingTeams.getCollectionName();
@@ -39,16 +39,15 @@ class TeamCard extends React.Component {
     };
     defineMethod.call({ collectionName, definitionData }, (error) => {
       if (error) {
-        console.error('failed to define', error);
+        swal('Error', error.message, 'Problem defining collection');
       }
     });
     const teamPart = TeamParticipants.findDoc({ teamID: team._id, participantID: pDoc._id });
-    console.log(teamPart);
     collectionName = TeamParticipants.getCollectionName();
     const instance = teamPart._id;
-    removeItMethod.call({ collectionName, instance }, (err) => {
-      if (err) {
-        console.error('failed to remove from team', err);
+    removeItMethod.call({ collectionName, instance }, (error) => {
+      if (error) {
+        swal('Error', error.message, 'Problem defining collection');
       }
     });
   }
