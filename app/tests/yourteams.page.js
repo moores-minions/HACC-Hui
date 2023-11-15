@@ -4,7 +4,7 @@ class YourTeamsPage {
   constructor() {
     this.pageId = '#your-teams';
     this.pageSelector = Selector(this.pageId);
-    this.inviteId = '#inv-NoM5s2evYrCSjDxkr';
+    this.inviteId = '#inv-JhXPXRoTY7HQT24qm';
     this.interested = Selector('a').withText('See interested participants');
     this.edit = Selector('a').withText('Edit Team');
   }
