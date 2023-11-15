@@ -3,6 +3,7 @@ import { Alert, Container, Form, Col, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
+import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import { AutoForm, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { ROUTES } from '../../../startup/client/route-constants';
@@ -42,7 +43,7 @@ const UnderParticipationForm = () => {
     };
     defineMethod.call({ collectionName, definitionData }, (error) => {
       if (error) {
-        console.error('Problem defining MinorParticipant', error);
+        swal('Error', error.message, 'Problem defining MinorParticipant');
       }
     });
     const interactionData = {
@@ -52,7 +53,7 @@ const UnderParticipationForm = () => {
     };
     userInteractionDefineMethod.call(interactionData, (error) => {
       if (error) {
-        console.error('Could not define user interaction', error);
+        swal('Error', error.message, 'Could not define user interaction');
       }
     });
     collectionName = Participants.getCollectionName();
@@ -62,7 +63,7 @@ const UnderParticipationForm = () => {
     };
     updateMethod.call({ collectionName, updateData }, (error) => {
       if (error) {
-        console.error('Could not update minor status', error);
+        swal('Error', error.message, 'Could not update minor status');
       }
     });
     setRedirect(true);
