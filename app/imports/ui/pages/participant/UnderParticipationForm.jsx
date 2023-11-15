@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, Container, Form, Col, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
@@ -25,14 +25,11 @@ const schema = new SimpleSchema({
  * A simple static component to render some text for the landing page.
  * @memberOf ui/pages
  */
-class UnderParticipationForm extends React.Component {
+const UnderParticipationForm = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-  }
+  const [redirect, setRedirect] = useState(false);
 
-  submit(formData) {
+  const submit = (formData) => {
     const { firstName, lastName, parentFirstName, parentLastName, parentEmail } = formData;
     const dev = Participants.findDoc({ userID: Meteor.userId() });
     const username = dev.username;
@@ -53,7 +50,6 @@ class UnderParticipationForm extends React.Component {
       type: USER_INTERACTIONS.MINOR_SIGNED_CONSENT,
       typeData: [firstName, lastName, parentFirstName, parentLastName, parentEmail],
     };
-    console.log(interactionData);
     userInteractionDefineMethod.call(interactionData, (error) => {
       if (error) {
         console.error('Could not define user interaction', error);
@@ -69,19 +65,17 @@ class UnderParticipationForm extends React.Component {
         console.error('Could not update minor status', error);
       }
     });
-    this.setState({ redirectToReferer: true });
-  }
+    setRedirect(true);
+  };
 
-  render() {
-    const formSchema = new SimpleSchema2Bridge(schema);
-    if (this.state.redirectToReferer) {
-      const from = { pathname: ROUTES.CREATE_PROFILE };
-      return <Redirect to={from} />;
-    }
+  const formSchema = new SimpleSchema2Bridge(schema);
+  if (redirect) {
+    return <Redirect to={ROUTES.CREATE_PROFILE}/>;
+  }
     return (
         <Container style={darkerBlueStyle}>
           <h2 className='text-center mt-3'>HACC Registration</h2>
-          <AutoForm schema={formSchema} onSubmit={data => this.submit(data)}>
+          <AutoForm schema={formSchema} onSubmit={data => submit(data)}>
             <Alert className='text-center'>
               <Alert.Heading>
                 Read the <a href="https://hacc.hawaii.gov/hacc-rules/">HACC Rules</a>.
@@ -106,7 +100,6 @@ class UnderParticipationForm extends React.Component {
           </AutoForm>
         </Container>
     );
-  }
-}
+};
 
 export default UnderParticipationForm;
