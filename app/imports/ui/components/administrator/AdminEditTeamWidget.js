@@ -1,12 +1,12 @@
 import React from 'react';
-import { Grid, Segment, Header, List } from 'semantic-ui-react';
+import { Card, Container, ListGroup } from 'react-bootstrap';
 import {
   AutoForm,
   ErrorsField,
   SubmitField,
   TextField,
   LongTextField,
-} from 'uniforms-semantic';
+} from 'uniforms-bootstrap5';
 import _ from 'lodash';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import PropTypes from 'prop-types';
@@ -74,33 +74,33 @@ class AdminEditTeamWidget extends React.Component {
       return `${fullName}, (${gitHub})`;
     });
     return (
-        <Grid container centered>
-          <Grid.Column>
+        <Container>
+          <Card>
             <div style={{
               backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
               borderRadius: '2rem',
             }}>
-              <Header as="h2" textAlign="center">Edit Team</Header>
+              <h2 textAlign="center">Edit Team</h2>
             </div>
             <AutoForm schema={formSchema} onSubmit={data => this.submit(data)} model={this.props.team}
                       style={{
                         paddingBottom: '4rem',
                       }}>
-              <Segment style={{
+              <Card.Body style={{
                 borderRadius: '1rem',
                 backgroundColor: '#E5F0FE',
               }} className={'teamCreate'}>
-                <Grid container centered>
-                  <Grid.Column style={{ paddingLeft: '3rem', paddingRight: '3rem' }}>
+                <Card container centered>
+                  <Card.Body style={{ paddingLeft: '3rem', paddingRight: '3rem' }}>
                     <TextField name='name' disabled />
                     <LongTextField name='description' required/>
-                    <Header as="h4">Team Members:</Header>
-                    <List>
-                      {memberNamesAndGitHub.map((n) => <List.Item key={n}>{n}</List.Item>)}
-                    </List>
+                    <h4>Team Members:</h4>
+                    <ListGroup>
+                      {memberNamesAndGitHub.map((n) => <ListGroup.Item key={n}>{n}</ListGroup.Item>)}
+                    </ListGroup>
                     <TextField name='gitHubRepo' required/>
-                  </Grid.Column>
-                </Grid>
+                  </Card.Body>
+                </Card>
                 <div align='center'>
                   <SubmitField value='Submit'
                                style={{
@@ -109,10 +109,10 @@ class AdminEditTeamWidget extends React.Component {
                                }}/>
                 </div>
                 <ErrorsField/>
-              </Segment>
+              </Card.Body>
             </AutoForm>
-          </Grid.Column>
-        </Grid>
+          </Card>
+        </Container>
     );
   }
 }
