@@ -78,8 +78,4 @@ const SuggestToolSkillWidgetAdmin = () => {
     );
   };
 
-SuggestToolSkillWidgetAdmin.propTypes = {
-  admin: PropTypes.object.isRequired,
-};
-
 export default SuggestToolSkillWidgetAdmin;

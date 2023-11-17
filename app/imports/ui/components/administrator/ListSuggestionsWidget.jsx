@@ -10,19 +10,19 @@ import SuggestToolSkillWidgetAdmin from '../../components/administrator/SuggestT
 
 const ListSuggestionsWidget = () => {
 
-  const suggestions = useTracker(() => Suggestions.find({}).fetch());
+  const suggestions = useTracker(() => _.orderBy(Suggestions.find({}).fetch(), ['name'], ['asc']));
 
   const [search, setSearch] = useState('');
   const [type, setType] = useState([]);
-  const [result, setResult] = useState(_.orderBy(suggestions, ['name'], ['asc']));
+  const [result, setResult] = useState(suggestions);
 
   // eslint-disable-next-line no-unused-vars
-  function componentWillReceiveProps(nextProps) {
-    if ((_.orderBy(nextProps.suggestions, ['name'], ['asc'])) !== (_.orderBy(suggestions,
-      ['name'], ['asc']))) {
-      setResult(_.orderBy(nextProps.suggestions, ['name'], ['asc']));
-    }
-  }
+  // function componentWillReceiveProps(nextProps) {
+  //   if ((_.orderBy(nextProps.suggestions, ['name'], ['asc'])) !== (_.orderBy(suggestions,
+  //     ['name'], ['asc']))) {
+  //     setResult(_.orderBy(nextProps.suggestions, ['name'], ['asc']));
+  //   }
+  // }
 
     if (suggestions.length === 0) {
       return (

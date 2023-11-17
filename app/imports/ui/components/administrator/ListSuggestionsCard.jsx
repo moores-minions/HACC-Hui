@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
+import { Redirect } from 'react-router-dom';
 import { defineMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
 import { Suggestions } from '../../../api/suggestions/SuggestionCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
+import { ROUTES } from '../../../startup/client/route-constants';
 
 const ListSuggestionsCard = ({ type, username, name, description, suggestionObj }) => {
+
+  const [redirect, setRedirect] = useState(false);
 
   const removeItem = () => {
     swal({
@@ -25,6 +29,7 @@ const ListSuggestionsCard = ({ type, username, name, description, suggestionObj 
             }, (error) => (error ?
                 swal('Error', error.message, 'error') :
                 swal('Success', 'Suggestion removed', 'success')));
+            setRedirect(true);
           } else {
             swal('You canceled the deletion!');
           }
@@ -57,10 +62,15 @@ const ListSuggestionsCard = ({ type, username, name, description, suggestionObj 
             swal('Success', `${addType} added`, 'success');
           }
         });
+        setRedirect(true);
       }
     });
     return true;
   };
+
+  if (redirect) {
+    return <Redirect to={ ROUTES.LIST_SUGGESTIONS }/>;
+  }
 
   return (
     <Card id={`${type}-${name}`}
