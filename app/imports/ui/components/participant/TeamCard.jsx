@@ -93,7 +93,7 @@ const TeamCard = ({ team, participantID }) => {
                     {_.uniq(buildTeam.members).length === 0 ? (<p>No members listed</p>) : ''}
                 </Col>
                 <Col>
-                  <Button team={buildTeam} disabled={isOwner} variant="danger"
+                  <Button team={buildTeam} disabled={isOwner} variant="danger" id={`leave-${team._id}`}
                           onClick={handleLeaveTeam}>Leave team</Button>
                 </Col>
               </Row>
