@@ -16,9 +16,12 @@ class YourTeamsPage {
   }
 
   async invite(testController, invitee) {
-    await testController.click(this.inviteId);
+    // await testController.click(this.inviteId);
+    await testController.click(Selector('btn').withText('Invite Participants'));
     await testController.typeText('#email', invitee);
     await testController.click('#submit');
+    await testController.pressKey('esc');
+    await testController.pressKey('esc');
   }
 
   async seeInterested(testController) {

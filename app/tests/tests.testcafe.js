@@ -150,9 +150,9 @@ test('Test that a regular user can access the list participants page and its fea
 
 test('Test that the Your Teams page shows up and works', async (testController) => {
   await navBar.gotoSigninPage(testController);
-  await signinPage.signin(testController, 'gsummey@hotmail.com', userCred.password);
+  await signinPage.signin(testController, 'aung@foo.com', userCred.password);
   await navBar.gotoYourTeamsPage(testController);
-  await yourTeamsPage.invite(testController, userCred.username);
+  await yourTeamsPage.invite(testController, 'angeli@foo.com');
 });
 
 test('Test that the List Suggestions page shows up and works', async (testController) => {
@@ -215,9 +215,10 @@ test('Test that the Update Minor Participants Status page shows up and works', a
 
 test('Test that the participant Team Invitations shows up and works', async (testController) => {
   await navBar.gotoSigninPage(testController);
-  await signinPage.signin(testController, userCred.username, userCred.password);
+  await signinPage.signin(testController, 'angeli@foo.com', userCred.password);
   await navBar.gotoTeamInvitations(testController);
   await teamInvitationsPage.isDisplayed(testController);
+  await teamInvitationsPage.acceptInvitation(testController);
 });
 
 test('Test that the interested participant page shows up and works', async (testController) => {
@@ -228,10 +229,17 @@ test('Test that the interested participant page shows up and works', async (test
   await interestedParticipantPage.isDisplayed(testController);
 });
 
-test('Test that the edit team page shows up and works', async (testController) => {
+test('Test that the edit team page and team membership widget show up and work', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, 'aung@foo.com', userCred.password);
   await navBar.gotoYourTeamsPage(testController);
   await yourTeamsPage.gotoEditTeamPage(testController);
   await editTeamPage.editTeam(testController, 'beef');
+});
+
+test('Test that the Team Membership widget shows up and works', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, 'angeli@foo.com', userCred.password);
+  await navBar.gotoProfilePage(testController);
+  await profilePage.leaveTeam(testController);
 });

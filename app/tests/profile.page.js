@@ -4,6 +4,7 @@ class ProfilePage {
   constructor() {
     this.pageId = '#profile-page';
     this.pageSelector = Selector(this.pageId);
+    this.leaveSelector = Selector('.btn').withText('Leave team');
   }
 
   /** Asserts that this page is currently displayed. */
@@ -15,6 +16,13 @@ class ProfilePage {
   async gotoEditProfilePage(testController) {
     await testController.scroll(Selector('#edit-profile-button'), 'bottomLeft');
     await testController.click('#edit-profile-button');
+  }
+
+  async leaveTeam(testController) {
+    await testController.scroll(this.leaveSelector, 'bottomLeft');
+    await testController.click(this.leaveSelector);
+    await testController.pressKey('tab');
+    await testController.pressKey('enter');
   }
 
 }
