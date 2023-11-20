@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Col, Container } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import swal from 'sweetalert';
 import { Redirect } from 'react-router-dom';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
@@ -55,7 +55,9 @@ const AddChallenge = () => {
   return (
     <Container className='add-edit' fluid id='add-challenge-page'>
       <Col>
-        <h2 style={{ textAlign: 'center' }}>Add a Challenge</h2>
+        <Row className='text-center add-edit-header'>
+          <h2>Add a Challenge</h2>
+        </Row>
         <AutoForm ref={ref => {
           fRef = ref;
         }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
@@ -67,7 +69,11 @@ const AddChallenge = () => {
                 <TextField id='submission-detail' name='submissionDetail'/>
                 <TextField id='pitch' name='pitch'/>
                 <ErrorsField/>
-                <SubmitField id='add-challenge-submit' value='Submit'/>
+                <Row className='text-center'>
+                  <Col className='text-end'><SubmitField id='add-challenge-submit' value='Submit'/></Col>
+                  <Col className='text-start'><Button id='add-challenge-cancel' variant='danger'
+                                                      onClick={() => setRedirect(true)}>Cancel</Button></Col>
+                </Row>
               </Card.Body>
             </Card>
           </Container>

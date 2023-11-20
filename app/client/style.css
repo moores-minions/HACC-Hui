@@ -98,11 +98,9 @@ label {
   background-color: #2f3036;
 }
 
-.add-edit .row {
-  background-color: #E5F0FE;
-  padding: 1rem 0;
+.add-edit-header {
+  padding-top: 2rem;
   margin: 2rem 0;
-  border-radius: 2rem;
 }
 
 .add-edit form {
@@ -110,8 +108,7 @@ label {
 }
 
 .add-edit .card-body {
-  padding-left: 3rem;
-  padding-right: 3rem;
+  padding: 3rem;
 }
 
 .your-teams .team-buttons {
@@ -147,7 +144,7 @@ label {
   padding-bottom: 2rem;
   padding-top: 2rem;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
 }
 
 .card-pages h4 {

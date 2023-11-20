@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Col, Container } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import swal from 'sweetalert';
 import { Redirect } from 'react-router-dom';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
@@ -35,7 +35,6 @@ const AddTool = () => {
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
-          console.error(error.message);
         } else {
           swal('Success', 'Item added successfully', 'success');
           formRef.reset();
@@ -45,15 +44,17 @@ const AddTool = () => {
   };
 
   if (redirect) {
-    return <Redirect to={ROUTES.CONFIGURE_HACC} />;
+    return <Redirect to={ROUTES.CONFIGURE_HACC}/>;
   }
 
   let fRef = null;
   const formSchema = new SimpleSchema2Bridge(schema);
   return (
-    <Container fluid id='add-tool-page'>
+    <Container className='add-edit' fluid id='add-tool-page'>
       <Col>
-        <h2 style={{ textAlign: 'center' }}>Add a Tool</h2>
+        <Row className='text-center add-edit-header'>
+          <h2 style={{ textAlign: 'center' }}>Add a Tool</h2>
+        </Row>
         <AutoForm ref={ref => {
           fRef = ref;
         }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
@@ -62,8 +63,12 @@ const AddTool = () => {
               <Card.Body>
                 <TextField id='name' name='name'/>
                 <TextField id='description' name='description'/>
-                <SubmitField id='add-tool-submit' value='Submit'/>
                 <ErrorsField/>
+                <Row className='text-center'>
+                  <Col className='text-end'><SubmitField id='add-tool-submit' value='Submit'/></Col>
+                  <Col className='text-start'><Button id='add-tool-cancel' variant='danger'
+                                                      onClick={() => setRedirect(true)}>Cancel</Button></Col>
+                </Row>
               </Card.Body>
             </Card>
           </Container>

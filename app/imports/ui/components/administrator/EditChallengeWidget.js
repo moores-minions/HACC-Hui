@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import { useTracker } from 'meteor/react-meteor-data';
@@ -54,9 +54,9 @@ const EditChallengeWidget = () => {
 
   const formSchema = new SimpleSchema2Bridge(Challenges.getSchema());
   return (
-    <Container fluid className='add-edit' id='edit-challenge-page'>
+    <Container className='add-edit' id='edit-challenge-page'>
       <Col>
-        <Row className='text-center'>
+        <Row className='text-center add-edit-header'>
           <h2>Edit Challenge</h2>
         </Row>
         <AutoForm schema={formSchema} onSubmit={data => submit(data)} model={doc}>
@@ -67,7 +67,11 @@ const EditChallengeWidget = () => {
                 <TextField id='submission-detail' name='submissionDetail' />
                 <TextField id='pitch' name='pitch' />
                 <ErrorsField/>
-                <SubmitField id='edit-challenge-submit' value='Submit'/>
+                <Row className='text-center'>
+                  <Col className='text-end'><SubmitField id='edit-challenge-submit' value='Submit'/></Col>
+                  <Col className='text-start'><Button id='edit-challenge-cancel' variant='danger'
+                                                      onClick={() => setRedirect(true)}>Cancel</Button></Col>
+                </Row>
               </Card.Body>
             </Card>
           </Container>

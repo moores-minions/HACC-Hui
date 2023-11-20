@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Redirect } from 'react-router-dom';
@@ -45,17 +45,23 @@ const AddSkill = () => {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return (
-    <Container className="py-3" id="add-skill-page">
+    <Container className="add-edit" fluid id="add-skill-page">
       <Row className="justify-content-center">
         <Col xs={5}>
-          <Col className="text-center"><h2>Add a skill</h2></Col>
+          <Row className="text-center add-edit-header">
+            <h2>Add a skill</h2>
+          </Row>
           <AutoForm ref={ref => { fRef = ref; }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
                 <TextField name="name" id="name" />
                 <TextField name="description" id="description" />
-                <SubmitField value="Submit" id="add-skill-submit" />
                 <ErrorsField />
+                <Row className='text-center'>
+                  <Col className='text-end'><SubmitField id='add-skill-submit' value='Submit'/></Col>
+                  <Col className='text-start'><Button id='add-skill-cancel' variant='danger'
+                                                      onClick={() => setRedirect(true)}>Cancel</Button></Col>
+                </Row>
               </Card.Body>
             </Card>
           </AutoForm>
