@@ -83,6 +83,7 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
     const selfUser = Participants.findDoc({ userID: Meteor.userId() }).username;
     for (let i = 0; i < participantList.length; i++) {
       const participantDoc = Participants.findDoc({ username: participantList[i] });
+      console.log(participantDoc);
 
       if (selfUser === participantList[i]) {
         swal('Error',
@@ -92,7 +93,7 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
       }
       if (typeof TeamParticipants.findOne({
         teamID: teams._id,
-        developerID: participantDoc._id,
+        participantID: participantDoc._id,
       }) !== 'undefined') {
         swal('Error',
             `Sorry, participant ${participantList[i]} is already in ${teams.name}!`,
