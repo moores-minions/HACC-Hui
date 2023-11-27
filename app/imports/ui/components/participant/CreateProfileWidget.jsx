@@ -141,30 +141,30 @@ const CreateProfileWidget = () => {
                 onSubmit={data => submit(data)}>
         <Row>
           <Col><TextField name="username" disabled/></Col>
-          <Col xs={2}><BoolField name="isCompliant" disabled/></Col>
+          <Col xs={5} sm={3}><BoolField name="isCompliant" disabled/></Col>
         </Row>
         <Row>
-          <Col><TextField id='first-name' name="firstName"/></Col>
-          <Col><TextField id='last-name' name="lastName"/></Col>
-          <Col><SelectField id='demographic-level' name="demographicLevel"
+          <Col xs={12} sm={4}><TextField id='first-name' name="firstName"/></Col>
+          <Col xs={12} sm={4}><TextField id='last-name' name="lastName"/></Col>
+          <Col xs={12} sm={4}><SelectField id='demographic-level' name="demographicLevel"
                             options={demographicLevels.map((val) => ({ label: val, value: val }))}/></Col>
         </Row>
         <Row>
-          <Col><TextField id='linked-in' name="linkedIn"/></Col>
-          <Col><TextField id='github' name="gitHub"/></Col>
-          <Col><TextField id='slack-username' name="slackUsername"/></Col>
-          <Col><TextField id='website' name="website"/></Col>
+          <Col xs={6} sm={3}><TextField id='linked-in' name="linkedIn"/></Col>
+          <Col xs={6} sm={3}><TextField id='github' name="gitHub"/></Col>
+          <Col xs={6} sm={3}><TextField id='slack-username' name="slackUsername"/></Col>
+          <Col xs={6} sm={3}><TextField id='website' name="website"/></Col>
         </Row>
         <Row>
           <LongTextField id='about-me' name="aboutMe"/>
         </Row>
         <Row>
-          <Col><SelectField id='challenges' name="challenges" multiple
+          <Col xs={12} sm={4}><SelectField id='challenges' name="challenges" multiple
                             options={challengeNames.map((val) => ({ label: val, value: val }))}/>
           </Col>
-          <Col><SelectField id='skills' name="skills" multiple
+          <Col xs={12} sm={4}><SelectField id='skills' name="skills" multiple
                             options={skillNames.map((val) => ({ label: val, value: val }))}/></Col>
-          <Col><SelectField id='tools' name="tools" multiple
+          <Col xs={12} sm={4}><SelectField id='tools' name="tools" multiple
                             options={toolNames.map((val) => ({ label: val, value: val }))}/></Col>
         </Row>
         <ErrorsField />

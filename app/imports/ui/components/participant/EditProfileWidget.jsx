@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Form, Container, Row, Col, Card, Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import SimpleSchema from 'simpl-schema';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
@@ -13,7 +12,7 @@ import {
   LongTextField,
   SelectField,
   TextField,
-} from 'uniforms-semantic';
+} from 'uniforms-bootstrap5';
 import Swal from 'sweetalert';
 import { Redirect } from 'react-router-dom';
 import { Participants } from '../../../api/user/ParticipantCollection';
@@ -25,47 +24,41 @@ import { ParticipantSkills } from '../../../api/user/ParticipantSkillCollection'
 import { ParticipantTools } from '../../../api/user/ParticipantToolCollection';
 import { Slugs } from '../../../api/slug/SlugCollection';
 import { demographicLevels } from '../../../api/level/Levels';
-import MultiSelectField from '../form-fields/MultiSelectField';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { ROUTES } from '../../../startup/client/route-constants';
 
 const EditProfileWidget = () => {
 
-    const allChallenges = useTracker(() => Challenges.find({}).fetch());
-    const allSkills = useTracker(() => Skills.find({}).fetch());
-    const allTools = useTracker(() => Tools.find({}).fetch());
-    const participant = useTracker(() => Participants.findDoc({ userID: Meteor.userId() }));
-    const participantID = participant._id;
-    const devChallenges = useTracker(() => ParticipantChallenges.find({ participantID }).fetch());
-    const devSkills = useTracker(() => ParticipantSkills.find({ participantID }).fetch());
-    const devTools = useTracker(() => ParticipantTools.find({ participantID }).fetch());
+  const {
+    allChallenges, allSkills, allTools, participant,
+    devChallenges, devSkills, devTools,
+  } = useTracker(() => {
+    const getParticipant = Participants.findDoc({ userID: Meteor.userId() });
+    const participantID = getParticipant._id;
+    return {
+      allChallenges: Challenges.find({}).fetch(),
+      allSkills: Skills.find({}).fetch(),
+      allTools: Tools.find({}).fetch(),
+      participant: getParticipant,
+      devChallenges: ParticipantChallenges.find({ participantID }).fetch(),
+      devSkills: ParticipantSkills.find({ participantID }).fetch(),
+      devTools: ParticipantTools.find({ participantID }).fetch(),
+    };
+  });
 
   const [redirectToReferer, setRedirectToReferer] = useState(false);
-  // const newSkillRef = React.createRef();
-  // const newSkillLevelRef = React.createRef();
-  // const newToolRef = React.createRef();
-  // const newToolLevelRef = React.createRef();
 
-    // constructor(props) {
-    // super(props);
-    // this.state = { redirectToReferer: false };
-    // this.newSkillRef = React.createRef();
-    // this.newSkillLevelRef = React.createRef();
-    // this.newToolRef = React.createRef();
-    // this.newToolLevelRef = React.createRef();
-  // }
-
+  const challengeNames = _.map(allChallenges, (c) => c.title);
+  const skillNames = _.map(allSkills, (s) => s.name);
+  const toolNames = _.map(allTools, (t) => t.name);
   const buildTheFormSchema = () => {
-    const challengeNames = _.map(allChallenges, (c) => c.title);
-    const skillNames = _.map(allSkills, (s) => s.name);
-    const toolNames = _.map(allTools, (t) => t.name);
     const schema = new SimpleSchema({
       firstName: String,
       lastName: String,
       username: String,
-      demographicLevel: { type: String, allowedValues: demographicLevels, optional: true },
-      linkedIn: { type: String, optional: true },
-      gitHub: { type: String, optional: true },
+      demographicLevel: { type: String, optional: true },
+      linkedIn: { type: String, label: 'LinkedIn', optional: true },
+      gitHub: { type: String, label: 'GitHub', optional: true },
       slackUsername: { type: String, optional: true },
       website: { type: String, optional: true },
       aboutMe: { type: String, optional: true },
@@ -73,11 +66,11 @@ const EditProfileWidget = () => {
       lookingForTeam: { type: Boolean, optional: true },
       isCompliant: { type: Boolean, optional: true },
       challenges: { type: Array, optional: true },
-      'challenges.$': { type: String, allowedValues: challengeNames },
+      'challenges.$': { type: String },
       skills: { type: Array, optional: true },
-      'skills.$': { type: String, allowedValues: skillNames },
+      'skills.$': { type: String },
       tools: { type: Array, optional: true },
-      'tools.$': { type: String, allowedValues: toolNames },
+      'tools.$': { type: String },
     });
     return schema;
   };
@@ -145,7 +138,6 @@ const EditProfileWidget = () => {
     updateData.editedProfile = true;
     updateMethod.call({ collectionName, updateData }, (error) => {
       if (error) {
-        console.error(error);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -161,86 +153,76 @@ const EditProfileWidget = () => {
     setRedirectToReferer(true);
   };
 
-    if (redirectToReferer) {
-      const from = { pathname: ROUTES.YOUR_PROFILE };
-      return <Redirect to={from} />;
-    }
-    const model = buildTheModel();
-    const schema = buildTheFormSchema();
-    const formSchema = new SimpleSchema2Bridge(schema);
-    return (
-      <Container id='editprofile-page' style={{ paddingBottom: '50px' }}>
-        <Row className="justify-content-center">
-          <Col>
-            <Card className="text-center" style={{
-              backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
-              borderRadius: '2rem',
-            }}>
-              <Card.Header as="h2">Edit Profile</Card.Header>
-              <Card.Body>
-                <AutoForm schema={formSchema} model={model} onSubmit={data => {
-                  submitData(data);
-                }}>
-                  <Form.Group as={Row}>
-                    <Col>
-                      <TextField name="username" disabled className="form-control" />
-                    </Col>
-                    <Col>
-                      <BoolField name="isCompliant" disabled className="form-control" />
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row}>
-                    <Col><TextField id='first-name' name="firstName" className="form-control" /></Col>
-                    <Col><TextField id='last-name' name="lastName" className="form-control" /></Col>
-                    <Col><SelectField name="demographicLevel" className="form-control" /></Col>
-                  </Form.Group>
-                  <Form.Group as={Row}>
-                    <Col><TextField name="linkedIn" className="form-control" /></Col>
-                    <Col><TextField name="gitHub" className="form-control" /></Col>
-                    <Col><TextField name="slackUsername" className="form-control" /></Col>
-                  </Form.Group>
-                  <Form.Group as={Row}>
-                    <Col><TextField name="website" className="form-control" /></Col>
-                    <Col><LongTextField id='aboutme' name="aboutMe" className="form-control" /></Col>
-                  </Form.Group>
-                  <Form.Group as={Row}>
-                    <Col><MultiSelectField name="challenges" /></Col>
-                    <Col><MultiSelectField name="skills" /></Col>
-                    <Col><MultiSelectField name="tools" /></Col>
-                  </Form.Group>
-                  <Button id="edit-profile-submit" type="submit" style={{
-                    color: 'white', backgroundColor: '#DB2828',
-                    margin: '2rem 0rem',
-                  }}>Submit</Button>
-                  <ErrorsField />
-                </AutoForm>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    );
-  };
-
-EditProfileWidget.propTypes = {
-  allChallenges: PropTypes.arrayOf(
-      PropTypes.object,
-  ).isRequired,
-  allSkills: PropTypes.arrayOf(
-      PropTypes.object,
-  ).isRequired,
-  allTools: PropTypes.arrayOf(
-      PropTypes.object,
-  ).isRequired,
-  participant: PropTypes.object.isRequired,
-  devChallenges: PropTypes.arrayOf(
-      PropTypes.object,
-  ),
-  devSkills: PropTypes.arrayOf(
-      PropTypes.object,
-  ),
-  devTools: PropTypes.arrayOf(
-      PropTypes.object,
-  ),
+  if (redirectToReferer) {
+    const from = { pathname: ROUTES.YOUR_PROFILE };
+    return <Redirect to={from}/>;
+  }
+  const model = buildTheModel();
+  const schema = buildTheFormSchema();
+  const formSchema = new SimpleSchema2Bridge(schema);
+  return (
+    <Container id='editprofile-page' style={{ paddingBottom: '50px' }}>
+      <Row className="justify-content-center">
+        <Col>
+          <Card className="text-center" style={{
+            backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
+            borderRadius: '2rem',
+          }}>
+            <Card.Header as="h2">Edit Profile</Card.Header>
+            <Card.Body>
+              <AutoForm schema={formSchema} model={model} onSubmit={data => {
+                submitData(data);
+              }}>
+                <Form.Group as={Row}>
+                  <Col>
+                    <TextField name="username" disabled className="form-control"/>
+                  </Col>
+                  <Col xs={5} sm={3}>
+                    <BoolField name="isCompliant" disabled className="form-control"/>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row}>
+                  <Col xs={12} sm={4}>
+                    <TextField id='first-name' name="firstName" className="form-control"/>
+                  </Col>
+                  <Col xs={12} sm={4}>
+                    <TextField id='last-name' name="lastName" className="form-control"/>
+                  </Col>
+                  <Col xs={12} sm={4}>
+                    <SelectField id='demographic-level' name="demographicLevel" className="form-control"
+                                    options={demographicLevels.map((val) => ({ label: val, value: val }))}/>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row}>
+                  <Col xs={6} sm={3}><TextField id='linked-in' name="linkedIn" className="form-control"/></Col>
+                  <Col xs={6} sm={3}><TextField id='github' name="gitHub" className="form-control"/></Col>
+                  <Col xs={6} sm={3}><TextField id='slack-username' name="slackUsername"
+                                                className="form-control"/></Col>
+                  <Col xs={6} sm={3}><TextField id='website' name="website" className="form-control"/></Col>
+                </Form.Group>
+                <Form.Group as={Row}>
+                  <LongTextField id='about-me' name="aboutMe" className="form-control"/>
+                </Form.Group>
+                <Form.Group as={Row}>
+                  <Col xs={12} sm={4}><SelectField id='challenges' name="challenges" multiple
+                                    options={challengeNames.map((val) => ({ label: val, value: val }))}/></Col>
+                  <Col xs={12} sm={4}><SelectField id='skills' name="skills" multiple
+                                    options={skillNames.map((val) => ({ label: val, value: val }))}/></Col>
+                  <Col xs={12} sm={4}><SelectField id='tools' name="tools" multiple
+                                    options={toolNames.map((val) => ({ label: val, value: val }))}/></Col>
+                </Form.Group>
+                <ErrorsField/>
+                <Button id="edit-profile-submit" type="submit" style={{
+                  color: 'white', backgroundColor: '#DB2828',
+                  margin: '2rem 0rem',
+                }}>Submit</Button>
+              </AutoForm>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
+
 export default EditProfileWidget;
