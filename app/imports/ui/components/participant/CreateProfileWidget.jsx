@@ -144,9 +144,9 @@ const CreateProfileWidget = () => {
           <Col xs={5} sm={3}><BoolField name="isCompliant" disabled/></Col>
         </Row>
         <Row>
-          <Col xs={12} sm={4}><TextField id='first-name' name="firstName"/></Col>
-          <Col xs={12} sm={4}><TextField id='last-name' name="lastName"/></Col>
-          <Col xs={12} sm={4}><SelectField id='demographic-level' name="demographicLevel"
+          <Col sm={4}><TextField id='first-name' name="firstName"/></Col>
+          <Col sm={4}><TextField id='last-name' name="lastName"/></Col>
+          <Col sm={4}><SelectField id='demographic-level' name="demographicLevel"
                             options={demographicLevels.map((val) => ({ label: val, value: val }))}/></Col>
         </Row>
         <Row>
@@ -159,12 +159,12 @@ const CreateProfileWidget = () => {
           <LongTextField id='about-me' name="aboutMe"/>
         </Row>
         <Row>
-          <Col xs={12} sm={4}><SelectField id='challenges' name="challenges" multiple
+          <Col sm={4}><SelectField id='challenges' name="challenges" multiple
                             options={challengeNames.map((val) => ({ label: val, value: val }))}/>
           </Col>
-          <Col xs={12} sm={4}><SelectField id='skills' name="skills" multiple
+          <Col sm={4}><SelectField id='skills' name="skills" multiple
                             options={skillNames.map((val) => ({ label: val, value: val }))}/></Col>
-          <Col xs={12} sm={4}><SelectField id='tools' name="tools" multiple
+          <Col sm={4}><SelectField id='tools' name="tools" multiple
                             options={toolNames.map((val) => ({ label: val, value: val }))}/></Col>
         </Row>
         <ErrorsField />

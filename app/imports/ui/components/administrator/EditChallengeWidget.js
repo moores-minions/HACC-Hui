@@ -55,7 +55,7 @@ const EditChallengeWidget = () => {
   const formSchema = new SimpleSchema2Bridge(Challenges.getSchema());
   return (
     <Container className='add-edit' id='edit-challenge-page'>
-      <Col>
+      <Row className='justify-content-center'><Col md={7} lg={5}>
         <Row className='text-center add-edit-header'>
           <h2>Edit Challenge</h2>
         </Row>
@@ -64,8 +64,8 @@ const EditChallengeWidget = () => {
             <Card>
               <Card.Body>
                 <LongTextField id='description' name='description'/>
-                <TextField id='submission-detail' name='submissionDetail' />
-                <TextField id='pitch' name='pitch' />
+                <TextField id='submission-detail' name='submissionDetail'/>
+                <TextField id='pitch' name='pitch'/>
                 <ErrorsField/>
                 <Row className='text-center'>
                   <Col className='text-end'><SubmitField id='edit-challenge-submit' value='Submit'/></Col>
@@ -76,7 +76,7 @@ const EditChallengeWidget = () => {
             </Card>
           </Container>
         </AutoForm>
-      </Col>
+      </Col></Row>
     </Container>
   );
 };

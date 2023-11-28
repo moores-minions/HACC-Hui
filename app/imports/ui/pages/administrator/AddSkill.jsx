@@ -47,7 +47,7 @@ const AddSkill = () => {
   return (
     <Container className="add-edit" fluid id="add-skill-page">
       <Row className="justify-content-center">
-        <Col xs={5}>
+        <Col md={5}>
           <Row className="text-center add-edit-header">
             <h2>Add a skill</h2>
           </Row>
