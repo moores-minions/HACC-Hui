@@ -1,19 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Header, Item, List, Button, Modal, Icon } from 'semantic-ui-react';
-import _ from 'lodash';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
 import { Participants } from '../../../api/user/ParticipantCollection';
-import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
+// import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 
 const ViewTeam = ({ isCompliant, team, teamMembers }) => {
-  const { participants, teamChallenges } =
-  const allParticipants = participants;
-  const captain = allParticipants.filter(p => team.owner === p._id)[0];
-  const challenge = teamChallenges[0];
+  const { participants: allParticipants, teamChallenges: allteamChallenges } = useTracker(() => {
+    const participants = Participants.find({}).fetch();
+    const teamChallenges = TeamChallenges.find({ teamID: team._id })
+      .fetch().map(tc => Challenges.findDoc(tc.challengeID));
+
+    return {
+      participants, teamChallenges,
+    };
+  }, [team._id]);
+
+  const captain = allParticipants.find(p => team.owner === p._id);
+  const challenge = allteamChallenges[0];
 
   const changeBackground = e => {
     e.currentTarget.style.backgroundColor = '#fafafa';
@@ -24,6 +31,7 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
     e.currentTarget.style.backgroundColor = 'transparent';
   };
 
+  // console.log(team, captain, teamChallenges);
   return (
     <Item onMouseEnter={changeBackground} onMouseLeave={onLeave}
           style={{ padding: '1.0rem 1.5rem 1.0rem 1.5rem' }}>
@@ -45,7 +53,7 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
             <Grid.Column width={4}>
               <Header>{team.name}</Header>
               <List>
-                {teamChallenges.map((c) => <List.Item key={c._id}>{c.title}</List.Item>)}
+                {allteamChallenges.map((c) => <List.Item key={c._id}>{c.title}</List.Item>)}
               </List>
               <Header as="h4">Captain</Header>
               {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}` : ''}
@@ -88,15 +96,4 @@ ViewTeam.propTypes = {
   isCompliant: PropTypes.bool.isRequired,
 };
 
-export default withTracker((props) => {
-  // console.log(props);
-  const participants = Participants.find({}).fetch();
-  const teamChallenges = _.map(TeamChallenges.find({ teamID: props.team._id }).fetch(),
-    (tc) => Challenges.findDoc(tc.challengeID));
-  const teamParticipants = TeamParticipants.find({}).fetch();
-  return {
-    participants,
-    teamChallenges,
-    teamParticipants,
-  };
-})(ViewTeam);
+export default ViewTeam;
