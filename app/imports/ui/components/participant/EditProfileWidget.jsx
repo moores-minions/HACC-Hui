@@ -182,13 +182,13 @@ const EditProfileWidget = () => {
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row}>
-                  <Col xs={12} sm={4}>
+                  <Col sm={4}>
                     <TextField id='first-name' name="firstName" className="form-control"/>
                   </Col>
-                  <Col xs={12} sm={4}>
+                  <Col sm={4}>
                     <TextField id='last-name' name="lastName" className="form-control"/>
                   </Col>
-                  <Col xs={12} sm={4}>
+                  <Col sm={4}>
                     <SelectField id='demographic-level' name="demographicLevel" className="form-control"
                                     options={demographicLevels.map((val) => ({ label: val, value: val }))}/>
                   </Col>
@@ -204,11 +204,11 @@ const EditProfileWidget = () => {
                   <LongTextField id='about-me' name="aboutMe" className="form-control"/>
                 </Form.Group>
                 <Form.Group as={Row}>
-                  <Col xs={12} sm={4}><SelectField id='challenges' name="challenges" multiple
+                  <Col sm={4}><SelectField id='challenges' name="challenges" multiple
                                     options={challengeNames.map((val) => ({ label: val, value: val }))}/></Col>
-                  <Col xs={12} sm={4}><SelectField id='skills' name="skills" multiple
+                  <Col sm={4}><SelectField id='skills' name="skills" multiple
                                     options={skillNames.map((val) => ({ label: val, value: val }))}/></Col>
-                  <Col xs={12} sm={4}><SelectField id='tools' name="tools" multiple
+                  <Col sm={4}><SelectField id='tools' name="tools" multiple
                                     options={toolNames.map((val) => ({ label: val, value: val }))}/></Col>
                 </Form.Group>
                 <ErrorsField/>

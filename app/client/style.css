@@ -150,3 +150,7 @@ label {
 .card-pages h4 {
   padding-bottom: 1rem;
 }
+
+#list-participants-admin .dropdown-menu {
+  overflow-y: scroll;
+}
