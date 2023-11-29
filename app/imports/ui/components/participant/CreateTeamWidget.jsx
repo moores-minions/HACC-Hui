@@ -48,8 +48,28 @@ class CreateTeamWidget extends React.Component {
       errorModal: false,
       isRegistered: [],
       notRegistered: [],
+      selectedSkills: [],
+      selectedTools: [],
     };
   }
+
+  handleSkillsChange = (event) => {
+    this.setState({
+      selectedSkills: Array.from(
+        event.target.selectedOptions,
+        (option) => option.value,
+      ),
+    });
+  };
+
+  handleToolsChange = (event) => {
+    this.setState({
+      selectedTools: Array.from(
+        event.target.selectedOptions,
+        (option) => option.value,
+      ),
+    });
+  };
 
   buildTheModel() {
     return {
@@ -281,7 +301,7 @@ class CreateTeamWidget extends React.Component {
                   </Col>
                   <Col sm={4}>
                     <div className="mb-3">
-                      <Form.Label >
+                      <Form.Label>
                         Availability <span style={{ color: 'red' }}>*</span>
                       </Form.Label>
                       <div key={'inline-radio'} className="mb-3">
@@ -310,10 +330,47 @@ class CreateTeamWidget extends React.Component {
 
                 <LongTextField name="description" />
                 <SelectField name="challenge" />
+                {/* <Row> */}
+                {/* <Col><MultiSelectField name="skills" /></Col> */}
+                {/* <Col><MultiSelectField name="tools" /></Col> */}
+                {/* </Row> */}
                 <Row>
-                  {/* <Col><MultiSelectField name="skills" /></Col> */}
-                  {/* <Col><MultiSelectField name="tools" /></Col> */}
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Skills</Form.Label>
+                      <Form.Control
+                        as="select"
+                        multiple
+                        value={this.state.selectedSkills}
+                        onChange={this.handleSkillsChange}
+                      >
+                        {this.props.skills.map((skill) => (
+                          <option key={skill._id} value={skill._id}>
+                            {skill.name}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Toolsets</Form.Label>
+                      <Form.Control
+                        as="select"
+                        multiple
+                        value={this.state.selectedTools}
+                        onChange={this.handleToolsChange}
+                      >
+                        {this.props.tools.map((tool) => (
+                          <option key={tool._id} value={tool._id}>
+                            {tool.name}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
                 </Row>
+
                 <TextField name="devpostPage" />
                 <TextField name="affiliation" />
 
@@ -322,11 +379,7 @@ class CreateTeamWidget extends React.Component {
                   label={"Enter each participant's email"}
                 >
                   <ListItemField name="$" className="list-item">
-                    <TextField
-                      showInlineError
-                      name="email"
-                      label={'Email'}
-                    />
+                    <TextField showInlineError name="email" label={'Email'} />
                   </ListItemField>
                 </ListField>
 
