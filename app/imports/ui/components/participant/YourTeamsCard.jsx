@@ -113,28 +113,6 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
       }
     }
 
-    // IF WE WANT TO ISSUE DIRECT INVITE (THEY DON'T HAVE TO ACCEPT IT)
-
-    // const teamDoc = Teams.findDoc(this.props.teams._id);
-    // const team = teamDoc._id;
-    // const developerDoc = Developers.findDoc({ username: participantList[i] });
-    // const developer = developerDoc._id;
-    // console.log(definitionData);
-    // const addToTeam = TeamDevelopers.getCollectionName();
-    //
-    // defineMethod.call({ collectionName: addToTeam, definitionData: definitionData },
-    //     (error) => {
-    //       if (error) {
-    //         swal('Error', error.message, 'error');
-    //       } else {
-    //         swal('Success',
-    //             `You've successfully added participant(s):\n\n ${participantList.join(', ')}
-    //           to ${this.props.teams.name}`,
-    //             'success');
-    //       }
-    //     });
-
-    // if there are no errors, we can then add everyone
     for (let i = 0; i < participantList.length; i++) {
       // const collectionName = WantsToJoin.getCollectionName();
       const teamDoc = Teams.findDoc(teams._id);
@@ -164,7 +142,6 @@ const YourTeamsCard = ({ teams, teamParticipants, teamInvitation }) => {
 
   let fRef = null;
   const formSchema = new SimpleSchema2Bridge(schema);
-  // console.log(this.props);
   return (
       <Container className = 'team-card'>
         <Row>
