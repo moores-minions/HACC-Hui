@@ -3,14 +3,10 @@ import { Container } from 'react-bootstrap';
 import withAllSubscriptions from '../../layouts/AllSubscriptionsHOC';
 import AllTeamInvitationsWidget from '../../components/administrator/AllTeamInvitationsWidget';
 
-class AllTeamInvitationsPage extends React.Component {
-  render() {
-    return (
-      <Container id="all-teams-invitation-page">
-        <AllTeamInvitationsWidget />
-      </Container>
-    );
-  }
-}
+const AllTeamInvitationsPage = () => (
+    <Container id="all-teams-invitation-page">
+      <AllTeamInvitationsWidget />
+    </Container>
+);
 
 export default withAllSubscriptions(AllTeamInvitationsPage);
