@@ -321,10 +321,9 @@ class CreateTeamWidget extends React.Component {
                   name="participants"
                   label={"Enter each participant's email"}
                 >
-                  <ListItemField name="$">
+                  <ListItemField name="$" className="list-item">
                     <TextField
                       showInlineError
-                      // Replace iconLeft with equivalent from React-Bootstrap
                       name="email"
                       label={'Email'}
                     />
