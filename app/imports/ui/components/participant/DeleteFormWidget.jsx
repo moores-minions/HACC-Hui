@@ -8,7 +8,7 @@ import {
   ErrorsField,
   LongTextField,
   SelectField,
-} from 'uniforms-semantic';
+} from 'uniforms-bootstrap5';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -24,9 +24,9 @@ import { USER_INTERACTIONS } from '../../../startup/client/user-interaction-cons
 import { Teams } from '../../../api/team/TeamCollection';
 import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 
-class DeleteFormWidget extends React.Component {
-  submit(data) {
-    const username = this.props.participant.username;
+const DeleteFormWidget = (props) => {
+  const submit = (data) => {
+    const username = props.participant.username;
     const type = USER_INTERACTIONS.DELETE_ACCOUNT;
     const typeData = [data.feedback, data.other];
     const userInteraction = {
@@ -42,7 +42,7 @@ class DeleteFormWidget extends React.Component {
               window.location = '/';
             },
           )));
-    const selector = { owner: this.props.participant._id };
+    const selector = { owner: props.participant._id };
     const ownedTeams = Teams.find(selector).fetch();
     _.forEach(ownedTeams, (team) => {
       const selector2 = { teamID: team._id };
@@ -53,25 +53,43 @@ class DeleteFormWidget extends React.Component {
         removeItMethod.call({ collectionName, instance });
       } else {
         let newOwner = teamParticipants[0].participantID;
-        if (newOwner === this.props.participant._id) {
+        if (newOwner === props.participant._id) {
           newOwner = teamParticipants[1].participantID;
         }
         Teams.update(team._id, { newOwner });
       }
     });
     const collectionName = Participants.getCollectionName();
-    const instance = this.props.participant._id;
+    const instance = props.participant._id;
     removeItMethod.call({ collectionName, instance });
     deleteAccountMethod.call();
-  }
+  };
 
-  render() {
     const reasons = [
-      'No challenge was interesting for me',
-      'The challenges were too hard',
-      "Couldn't find a team I liked being on",
-      'My schedule conflicts with the HACC',
-      'Other',
+      {
+        label: 'No challenge was interesting for me',
+        value: 'No challenge was interesting for me',
+      },
+
+      {
+        label: 'The challenges were too hard',
+        value: 'The challenges were too hard',
+      },
+
+      {
+        label: "Couldn't find a team I liked being on",
+        value: "Couldn't find a team I liked being on",
+      },
+
+      {
+        label: 'My schedule conflicts with the HACC',
+        value: 'My schedule conflicts with the HACC',
+      },
+
+      {
+        label: 'Other',
+        value: 'Other',
+      },
     ];
     const schema = new SimpleSchema({
       feedback: {
@@ -99,7 +117,7 @@ class DeleteFormWidget extends React.Component {
                 })
                     .then((willDelete) => {
                       if (willDelete) {
-                        this.submit(data);
+                        submit(data);
                       } else {
                         swal('Canceled deleting your account');
                       }
@@ -115,7 +133,7 @@ class DeleteFormWidget extends React.Component {
                 </h4>
                 <Row>
                   <Col>
-                    <SelectField name="feedback" />
+                    <SelectField name="feedback" options={reasons} />
                   </Col>
                   <Col>
                     <LongTextField name="other" />
@@ -131,8 +149,7 @@ class DeleteFormWidget extends React.Component {
         </Row>
       </Container>
     );
-  }
-}
+  };
 
 DeleteFormWidget.propTypes = {
   participant: PropTypes.object.isRequired,
