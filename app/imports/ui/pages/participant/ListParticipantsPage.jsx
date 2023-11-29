@@ -1,13 +1,9 @@
 import React from 'react';
 import withAllSubscriptions from '../../layouts/AllSubscriptionsHOC';
-import ListDevelopersWidget from '../../components/participant/ListParticipantsWidget';
+import ListParticipantsWidget from '../../components/participant/ListParticipantsWidget';
 
-class ListParticipantsPage extends React.Component {
-  render() {
-    return (
-        <ListDevelopersWidget />
-    );
-  }
-}
+const ListParticipantsPage = () => (
+    <ListParticipantsWidget />
+);
 
 export default withAllSubscriptions(ListParticipantsPage);
