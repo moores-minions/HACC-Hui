@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Container, ListGroup } from 'react-bootstrap';
 import {
   AutoForm,
@@ -14,10 +14,12 @@ import { withTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
 import SimpleSchema from 'simpl-schema';
 import { withRouter } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { Teams } from '../../../api/team/TeamCollection';
 import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
+import { ROUTES } from '../../../startup/client/route-constants';
 
 /**
  * Renders the Page for adding stuff. **deprecated**
@@ -30,49 +32,51 @@ const schema = new SimpleSchema({
   gitHubRepo: String,
 });
 
-class AdminEditTeamWidget extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-  }
+const AdminEditTeamWidget = (props) => {
+  const [redirect, setRedirect] = useState(false);
 
   /** On submit, insert the data.
    * @param data {Object} the results from the form.
    * @param formRef {FormRef} reference to the form.
    */
-  submit(data) {
+  const submit = (data) => {
 
     const {
-      name, description, gitHubRepo,
+      name, description, gitHubRepo, _id,
     } = data;
 
-    const updateData = {};
-    updateData.id = data._id;
-    updateData.name = name;
-    updateData.description = description;
-    updateData.gitHubRepo = gitHubRepo;
+    const updateData = {
+      id: _id,
+      name,
+      description,
+      gitHubRepo,
+    };
 
     const collectionName = Teams.getCollectionName();
-    console.log(updateData);
-    console.log(collectionName);
     updateMethod.call({ collectionName, updateData },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');
           } else {
             swal('Success', 'Item edited successfully', 'success');
+            setRedirect(true);
+
           }
         });
-  }
+  };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
-  render() {
+
     const formSchema = new SimpleSchema2Bridge(schema);
-    const memberNamesAndGitHub = _.map(this.props.members, (p) => {
+    const memberNamesAndGitHub = _.map(props.members, (p) => {
       const fullName = Participants.getFullName(p._id);
       const gitHub = p.gitHub;
       return `${fullName}, (${gitHub})`;
     });
+  if (redirect) {
+    return <Redirect to={ROUTES.VIEW_TEAMS}/>;
+  }
+
     return (
         <Container>
             <div style={{
@@ -81,7 +85,7 @@ class AdminEditTeamWidget extends React.Component {
             }}>
               <h2 className='text-center'>Edit Team</h2>
             </div>
-            <AutoForm schema={formSchema} onSubmit={data => this.submit(data)} model={this.props.team}
+            <AutoForm schema={formSchema} onSubmit={data => submit(data)} model={props.team}
                       style={{
                         paddingBottom: '4rem',
                       }}>
@@ -110,8 +114,7 @@ class AdminEditTeamWidget extends React.Component {
             </AutoForm>
         </Container>
     );
-  }
-}
+};
 
 AdminEditTeamWidget.propTypes = {
   team: PropTypes.object,
