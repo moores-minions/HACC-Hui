@@ -285,11 +285,37 @@ class CreateTeamWidget extends React.Component {
                 onSubmit={(data) => this.submit(data, fRef)}
                 style={{ paddingBottom: '40px' }}
               >
-                <Form.Group style={{ paddingTop: '20px' }}>
-                  <TextField name="name" />
-                  {/* Replace RadioField with equivalent from React-Bootstrap */}
-                  {/* <RadioField name="open" inline /> */}
+                <Form.Group as={Row} className="align-items-center">
+                  <Col sm={8}>
+                    <TextField name="name" required />
+                  </Col>
+                  <Col sm={4}>
+                    <div className="mb-3">
+                      <Form.Label className="required">
+                        Availability <span style={{ color: 'red' }}>*</span>
+                      </Form.Label>
+                      <div key={'inline-radio'} className="mb-3">
+                        <Form.Check
+                          inline
+                          label="Open"
+                          name="open"
+                          type="radio"
+                          id={'inline-radio-1'}
+                          required
+                        />
+                        <Form.Check
+                          inline
+                          label="Close"
+                          name="open"
+                          type="radio"
+                          id={'inline-radio-2'}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </Col>
                 </Form.Group>
+
                 <LongTextField name="description" />
                 <SelectField name="challenge" />
                 <Row>
