@@ -13,10 +13,11 @@ import { Suggestions } from '../../api/suggestions/SuggestionCollection';
 import { CanCreateTeams } from '../../api/team/CanCreateTeamCollection';
 
 const NavBar = () => {
+
   const { currentUser, canCreateTeams } = useTracker(() => ({
     currentUser: Meteor.user() ? Meteor.user().username : '',
     canCreateTeams: CanCreateTeams.findOne().canCreateTeams,
-  }), []);
+  }));
 
   let isCompliant = canCreateTeams;
   const isAdmin = currentUser && Roles.userIsInRole(Meteor.userId(), ROLE.ADMIN);
@@ -162,11 +163,6 @@ const NavBar = () => {
         </Navbar.Collapse>
       </Navbar>
   );
-};
-
-NavBar.propTypes = {
-  currentUser: PropTypes.string,
-  canCreateTeams: PropTypes.bool,
 };
 
 export default withRouter(NavBar);
