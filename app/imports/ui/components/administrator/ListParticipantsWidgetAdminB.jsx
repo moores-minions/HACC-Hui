@@ -306,22 +306,18 @@ class ListParticipantsWidgetAdmin extends React.Component {
 
                   <h5>Teams</h5>
                   <Dropdown onSelect={getTeam}>
-                    {/* Add Dropdown Items dynamically based on your team data */}
                   </Dropdown>
 
                   <h5>Challenges</h5>
                   <Dropdown onSelect={getChallenge}>
-                    {/* Add Dropdown Items dynamically based on your challenges data */}
                   </Dropdown>
 
                   <h5>Skills</h5>
                   <Dropdown onSelect={getSkills}>
-                    {/* Add Dropdown Items dynamically based on your skills data */}
                   </Dropdown>
 
                   <h5>Tools</h5>
                   <Dropdown onSelect={getTools}>
-                    {/* Add Dropdown Items dynamically based on your tools data */}
                   </Dropdown>
                 </Card.Body>
               </Card>

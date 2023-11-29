@@ -116,27 +116,11 @@ const ListParticipantsWidgetAdmin = () => {
   };
 
   const getChallenge = (value) => {
-    // use if filtering by single challenge
     setChallenges([value]);
-
-    // Use if filtering by multiple challenges
-    // if (challenges.includes(value)) {
-    //   setChallenges(challenges.filter((item) => item !== value));
-    // } else {
-    //   setChallenges([...challenges, value]);
-    // }
   };
 
   const getTeam = (value) => {
-    // Use if filtering by single team
     setTeams([value]);
-
-    // Use if filtering by multiple teams
-    // if (teams.includes(value)) {
-    //   setTeams(teams.filter((item) => item !== value));
-    // } else {
-    //   setTeams([...teams, value]);
-    // }
   };
 
   const universalSkills = allSkills;

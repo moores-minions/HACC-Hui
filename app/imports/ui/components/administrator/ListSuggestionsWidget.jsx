@@ -16,14 +16,6 @@ const ListSuggestionsWidget = () => {
   const [type, setType] = useState([]);
   const [result, setResult] = useState(suggestions);
 
-  // eslint-disable-next-line no-unused-vars
-  // function componentWillReceiveProps(nextProps) {
-  //   if ((_.orderBy(nextProps.suggestions, ['name'], ['asc'])) !== (_.orderBy(suggestions,
-  //     ['name'], ['asc']))) {
-  //     setResult(_.orderBy(nextProps.suggestions, ['name'], ['asc']));
-  //   }
-  // }
-
     if (suggestions.length === 0) {
       return (
           <Container id='no-suggestions' fluid>
@@ -39,18 +31,8 @@ const ListSuggestionsWidget = () => {
       );
     }
 
-    // eslint-disable-next-line no-unused-vars
-    const sortBy = [
-      { key: 'teams', text: 'teams', value: 'teams' },
-      { key: 'challenges', text: 'challenges', value: 'challenges' },
-      { key: 'skills', text: 'skills', value: 'skills' },
-      { key: 'tools', text: 'tools', value: 'tools' },
-    ];
-
     const sticky = {
       position: '-webkit-sticky',
-      // eslint-disable-next-line no-dupe-keys
-      position: 'sticky',
       top: '6.5rem',
     };
 
@@ -65,7 +47,6 @@ const ListSuggestionsWidget = () => {
 
     useEffect(setFilters, [search, type]);
 
-    // useEffect(() => setResult(suggestions), [result]);
     const handleSearchChange = (event) => {
       setSearch(event.target.value);
     };
