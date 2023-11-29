@@ -31,11 +31,10 @@ Here are all the checklist items in one place for easy reference:
 * RE-02: No state updates in loops
 * RE-03: Do not rename default exports
 * RE-04: Destructure props in component parameter
-* RE-06: Define constants in withTracker()
-* RE-07: Don't retrieve collection data inside render
-* RE-08: Imported component names and file names should match
-* RE-09: Prefer functions vs. classes
-* RE-10: Avoid Widget and Card in names
+* RE-05: Don't retrieve collection data inside render
+* RE-06: Imported component names and file names should match
+* RE-07: Prefer functions vs. classes
+* RE-08: Avoid Widget and Card in names
 
 * TU-01: Each Collection has unit tests
 * TI-01: Each Meteor Method has integration tests

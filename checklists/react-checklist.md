@@ -18,36 +18,7 @@ When importing a component that is exported "by default", do not rename the comp
 
 Consider [destructuring props](https://medium.com/@lcriswell/destructuring-props-in-react-b1c295005ce0). This makes the code clearer by identifying exactly which properties are of interest in the function signature.
 
-### RE-06: Define constants in withTracker().
-
-When using withTracker, define a const to compute each property, then put the properties in the return using object shorthand notation. For example:
-
-```js
-const StudentHomeIcePageContainer = withTracker(() => {
-  const { username } = useParams();
-  const studentID = Users.getProfile(username).userID;
-  const earnedICE = StudentProfiles.getEarnedICE(username);
-  const projectedICE = StudentProfiles.getProjectedICE(username);
-  const helpMessages = HelpMessages.findNonRetired({});
-  const favoriteInterests = FavoriteInterests.findNonRetired({
-    userID: studentID,
-  });
-  const courseInstances = CourseInstances.findNonRetired({ studentID });
-  const opportunityInstances = OpportunityInstances.findNonRetired({
-    studentID,
-  });
-  return {
-    helpMessages,
-    earnedICE,
-    projectedICE,
-    favoriteInterests,
-    courseInstances,
-    opportunityInstances,
-  };
-})(StudentIcePage);
-```
-
-### RE-07: Don't retrieve collection data inside render()
+### RE-05: Don't retrieve collection data inside render()
 
 Some of our components get data from collections in the render method. This is not reactive. For example:
 
@@ -69,7 +40,7 @@ const AdvisorPageMenuWidget = () => {
 
 `numMod` and `numRequests` are not reactive.
 
-### RE-08: Imported component names and file names should match
+### RE-06: Imported component names and file names should match
 
 Many React components are exported "by default", which gives the importing client the ability to rename them in the file that they are used in.
 
@@ -97,7 +68,7 @@ import AdminAnalyticsNewsletterWidget from "../../components/admin/analytics/new
 
 In other words, we name the imported component using the name associated with the file, and not the "containerized" name.
 
-### RE-09: Prefer functions vs. classes for stateless components.
+### RE-07: Prefer functions vs. classes for stateless components.
 
 ```jsx
 class AdminHomeBanner extends React.Component {
@@ -157,6 +128,6 @@ const AdminHomeBanner = () => {
 };
 ```
 
-### RE-10: Avoid Widget and Card in names.
+### RE-08: Avoid Widget and Card in names.
 
 Many React components are named with "Widget". In most (all?) cases, adding "Widget" just increases the length of the name without adding value.
