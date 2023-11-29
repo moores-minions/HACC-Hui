@@ -42,8 +42,7 @@ const getTeamMembers = (team) => {
   return memberNames;
 };
 
-class ListTeamsWidget extends React.Component {
-  render() {
+const ListTeamsWidget = (props) => {
     const closed = Teams.find({ open: false }).count();
     return (
       <Container>
@@ -70,7 +69,7 @@ class ListTeamsWidget extends React.Component {
             <h4>Join?</h4>
           </Col>
         </Row>
-        {this.props.teams.map((team) => (
+        {props.teams.map((team) => (
           <ListTeamExampleWidget key={team._id}
                                  team={getTeam(team._id)}
                                  teamChallenges={getTeamChallenges(team)}
@@ -88,8 +87,7 @@ class ListTeamsWidget extends React.Component {
         </Row>
       </Container>
     );
-  }
-}
+  };
 
 ListTeamsWidget.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.object),
