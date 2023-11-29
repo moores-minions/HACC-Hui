@@ -6,23 +6,19 @@ import _ from 'lodash';
 import * as Icon from 'react-bootstrap-icons';
 import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
 
-class ListParticipantCardAdmin extends React.Component {
+const ListParticipantCardAdmin = () => {
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-  render() {
-    // console.log(this.props.teams);
 
-    function changeBackground(e) {
+    const changeBackground = (e) => {
       e.currentTarget.style.backgroundColor = '#fafafa';
       e.currentTarget.style.cursor = 'pointer';
-    }
+    };
 
-    function onLeave(e) {
+    const onLeave = (e) => {
       e.currentTarget.style.backgroundColor = 'transparent';
-    }
-    // console.log(this.props);
+    };
     const isMinor = this.props.participants.minor;
-    // console.log(isMinor);
     return (
       // Start of what is shown on List Participants
       <>
@@ -151,8 +147,7 @@ class ListParticipantCardAdmin extends React.Component {
       </Card>
     </>
     );
-  }
-}
+  };
 
 ListParticipantCardAdmin.propTypes = {
   participantID: PropTypes.string.isRequired,
