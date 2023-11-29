@@ -14,6 +14,7 @@ import swal from 'sweetalert';
 import { useParams, withRouter } from 'react-router';
 import SimpleSchema from 'simpl-schema';
 import { Redirect } from 'react-router-dom';
+import { withTracker } from 'meteor/react-meteor-data';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { Teams } from '../../../api/team/TeamCollection';
 import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
