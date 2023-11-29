@@ -59,7 +59,7 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
           <Container>
             <Row>
               <Col xs={4}>
-                <h4>Challenges</h4>
+                <h5>Challenges</h5>
                 <ListGroup>
                   {allteamChallenges.map(c => <ListGroup.Item key={c._id}>{c.title}</ListGroup.Item>)}
                 </ListGroup>
@@ -67,7 +67,7 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
                 {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}` : 'None'}
               </Col>
               <Col xs={5}>
-                <h4>Members</h4>
+                <h5><p>Members</p></h5>
                 <ListGroup>
                   {teamMembers.map(t => <ListGroup.Item key={t}>{t}</ListGroup.Item>)}
                 </ListGroup>
@@ -81,7 +81,8 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button><Link to={`/admin-edit-team/${team._id}`} style={{ color: 'rgba(0, 0, 0, 0.6)' }}>Edit</Link></Button>
+          <Button variant="success"><Link to={`/admin-edit-team/${team._id}`}
+                                          style={{ color: 'white' }}>Edit</Link></Button>
         </Modal.Footer>
       </Modal>
     </>
