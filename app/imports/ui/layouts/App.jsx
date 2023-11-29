@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
@@ -75,68 +79,130 @@ class App extends React.Component {
   }
 
   render() {
-
     const isDesktop = this.state.isDesktop;
 
     const routes = () => (
-        <Switch>
-          <Route exact path={ROUTES.LANDING} component={Landing} />
-          <Route path={ROUTES.SIGN_IN} component={Signin} />
-          <Route path={ROUTES.HELP_PAGE} component={HelpPage} />
-          <ProtectedRoute path={ROUTES.SIGN_OUT} component={SignoutB} />
-          <ProtectedRoute path={ROUTES.AGE_CONSENT} component={AgePage} />
-          <ProtectedRoute path={ROUTES.PARTICIPATION} component={ParticipationForm} />
-          <ProtectedRoute path={ROUTES.UNDERAGE_PARTICIPATION} component={UnderParticipationForm} />
-          <ProtectedRoute path={ROUTES.CREATE_PROFILE} component={CreateProfilePage} />
-          <ProtectedRoute path={ROUTES.YOUR_PROFILE} component={ProfilePage} />
-          <ProtectedRoute path={ROUTES.EDIT_PROFILE} component={EditProfilePage} />
-          <ProtectedRoute path={ROUTES.CREATE_TEAM} component={CreateTeamPage} />
-          <ProtectedRoute path={ROUTES.EDIT_TEAM} component={EditTeamPage} />
-          <ProtectedRoute path={ROUTES.LIST_TEAMS} component={ListTeamsPage} />
-          <ProtectedRoute path={ROUTES.BEST_FIT} component={BestFitTeamDisplay} />
-          <ProtectedRoute path={ROUTES.DELETE_ACCOUNT} component={DeleteForm} />
-          <ProtectedRoute path={ROUTES.YOUR_TEAMS} component={YourTeams} />
-          <ProtectedRoute path={ROUTES.LIST_PARTICIPANTS} component={ListParticipantsPage} />
-          <ProtectedRoute path={ROUTES.TEAM_INVITATIONS} component={TeamInvitationsPage}/>
-          <ProtectedRoute path={ROUTES.SUGGEST_TOOL_SKILL} component={SuggestToolSkillPage} />
-          <ProtectedRoute path={ROUTES.INTERESTED_PARTICIPANTS} component={InterestedParticipantPage} />
-          <AdminProtectedRoute path={ROUTES.CONFIGURE_HACC} component={ConfigureHaccPage} />
-          <AdminProtectedRoute path={ROUTES.ADD_CHALLENGE} component={AddChallenge} />
-          <AdminProtectedRoute path={ROUTES.UPDATE_MP} component={UpdateMinorParticipantsCompliant} />
-          <AdminProtectedRoute path={ROUTES.SHOW_MINOR} component={ShowMinorPage} />
-          <AdminProtectedRoute path={ROUTES.ADD_SKILL} component={AddSkill} />
-          <AdminProtectedRoute path={ROUTES.ADD_SKILL} component={AddSkill} />
-          <AdminProtectedRoute path={ROUTES.ADD_TOOL} component={AddTool} />
-          <AdminProtectedRoute path={ROUTES.EDIT_CHALLENGE} component={EditChallengePage}/>
-          <AdminProtectedRoute path={ROUTES.EDIT_TOOL} component={EditToolPage}/>
-          <AdminProtectedRoute path={ROUTES.EDIT_SKILL} component={EditSkillPage}/>
-          <AdminProtectedRoute path={ROUTES.LIST_SUGGESTIONS} component={ListSuggestions}/>
-          <ProtectedRoute path={ROUTES.LIST_PARTICIPANTS_ADMIN} component={ListParticipantsPageAdmin} />
-          <AdminProtectedRoute path={ROUTES.DUMP_DATABASE} component={DumpDatabase} />
-          <AdminProtectedRoute path={ROUTES.ADMIN_EDIT_TEAM} component={AdminEditTeamPage} />
-          <AdminProtectedRoute path={ROUTES.VIEW_TEAMS} component={ViewTeamsPage} />
-          <AdminProtectedRoute path={ROUTES.ALL_TEAM_INVITATIONS} component={AllTeamInvitationsPage} />
-          <Route component={NotFound} />
-        </Switch>
+      <Switch>
+        <Route exact path={ROUTES.LANDING} component={Landing} />
+        <Route path={ROUTES.SIGN_IN} component={Signin} />
+        <Route path={ROUTES.HELP_PAGE} component={HelpPage} />
+        <ProtectedRoute path={ROUTES.SIGN_OUT} component={SignoutB} />
+        <ProtectedRoute path={ROUTES.AGE_CONSENT} component={AgePage} />
+        <ProtectedRoute
+          path={ROUTES.PARTICIPATION}
+          component={ParticipationForm}
+        />
+        <ProtectedRoute
+          path={ROUTES.UNDERAGE_PARTICIPATION}
+          component={UnderParticipationForm}
+        />
+        <ProtectedRoute
+          path={ROUTES.CREATE_PROFILE}
+          component={CreateProfilePage}
+        />
+        <ProtectedRoute path={ROUTES.YOUR_PROFILE} component={ProfilePage} />
+        <ProtectedRoute
+          path={ROUTES.EDIT_PROFILE}
+          component={EditProfilePage}
+        />
+        <ProtectedRoute path={ROUTES.CREATE_TEAM} component={CreateTeamPage} />
+        <ProtectedRoute path={ROUTES.EDIT_TEAM} component={EditTeamPage} />
+        <ProtectedRoute path={ROUTES.LIST_TEAMS} component={ListTeamsPage} />
+        <ProtectedRoute path={ROUTES.BEST_FIT} component={BestFitTeamDisplay} />
+        <ProtectedRoute path={ROUTES.DELETE_ACCOUNT} component={DeleteForm} />
+        <ProtectedRoute path={ROUTES.YOUR_TEAMS} component={YourTeams} />
+        <ProtectedRoute
+          path={ROUTES.LIST_PARTICIPANTS}
+          component={ListParticipantsPage}
+        />
+        <ProtectedRoute
+          path={ROUTES.TEAM_INVITATIONS}
+          component={TeamInvitationsPage}
+        />
+        <ProtectedRoute
+          path={ROUTES.SUGGEST_TOOL_SKILL}
+          component={SuggestToolSkillPage}
+        />
+        <ProtectedRoute
+          path={ROUTES.INTERESTED_PARTICIPANTS}
+          component={InterestedParticipantPage}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.CONFIGURE_HACC}
+          component={ConfigureHaccPage}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.ADD_CHALLENGE}
+          component={AddChallenge}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.UPDATE_MP}
+          component={UpdateMinorParticipantsCompliant}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.SHOW_MINOR}
+          component={ShowMinorPage}
+        />
+        <AdminProtectedRoute path={ROUTES.ADD_SKILL} component={AddSkill} />
+        <AdminProtectedRoute path={ROUTES.ADD_SKILL} component={AddSkill} />
+        <AdminProtectedRoute path={ROUTES.ADD_TOOL} component={AddTool} />
+        <AdminProtectedRoute
+          path={ROUTES.EDIT_CHALLENGE}
+          component={EditChallengePage}
+        />
+        <AdminProtectedRoute path={ROUTES.EDIT_TOOL} component={EditToolPage} />
+        <AdminProtectedRoute
+          path={ROUTES.EDIT_SKILL}
+          component={EditSkillPage}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.LIST_SUGGESTIONS}
+          component={ListSuggestions}
+        />
+        <ProtectedRoute
+          path={ROUTES.LIST_PARTICIPANTS_ADMIN}
+          component={ListParticipantsPageAdmin}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.DUMP_DATABASE}
+          component={DumpDatabase}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.ADMIN_EDIT_TEAM}
+          component={AdminEditTeamPage}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.VIEW_TEAMS}
+          component={ViewTeamsPage}
+        />
+        <AdminProtectedRoute
+          path={ROUTES.ALL_TEAM_INVITATIONS}
+          component={AllTeamInvitationsPage}
+        />
+        <Route component={NotFound} />
+      </Switch>
     );
 
     return (
       <Router>
-          {isDesktop ? (
-            <>
-              <NavBar/>
+        {isDesktop ? (
+          <>
+            <NavBar />
+            <div className="pageWrapper">{routes()}</div>
+            <Footer />
+          </>
+        ) : (
+          <div style={{ display: 'flex', padding: `${10}px` }}>
+            <meta
+              name="viewport"
+              content="width=device-width, maximum-scale=1.5"
+            />
+            <SideBar visible={this.state.visible}>
               <div className="pageWrapper">{routes()}</div>
-              <Footer/>
-            </>
-          ) : (
-            <div style={{ display: 'flex', padding: `${10}px` }}>
-              <meta name="viewport" content="width=device-width, maximum-scale=1.5"/>
-              <SideBar visible={this.state.visible}>
-                <div className="pageWrapper">{routes()}</div>
-                <Footer/>
-              </SideBar>
-            </div>
-          )}
+              <Footer />
+            </SideBar>
+          </div>
+        )}
       </Router>
     );
   }
@@ -151,16 +217,19 @@ class App extends React.Component {
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const WrappedComponent = withAllSubscriptions(Component);
   return (
-      <Route
-          {...rest}
-          render={(props) => {
-            const isLogged = Meteor.userId() !== null;
-            return isLogged ?
-                (<WrappedComponent {...props} />) :
-                (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
-                );
-          }}
-      />
+    <Route
+      {...rest}
+      render={(props) => {
+        const isLogged = Meteor.userId() !== null;
+        return isLogged ? (
+          <WrappedComponent {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: '/signin', state: { from: props.location } }}
+          />
+        );
+      }}
+    />
   );
 };
 
@@ -173,17 +242,20 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 const AdminProtectedRoute = ({ component: Component, ...rest }) => {
   const WrappedComponent = withAllSubscriptions(Component);
   return (
-      <Route
-          {...rest}
-          render={(props) => {
-            const isLogged = Meteor.userId() !== null;
-            const isAdmin = Roles.userIsInRole(Meteor.userId(), ROLE.ADMIN);
-            return (isLogged && isAdmin) ?
-                (<WrappedComponent {...props} />) :
-                (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
-                );
-          }}
-      />
+    <Route
+      {...rest}
+      render={(props) => {
+        const isLogged = Meteor.userId() !== null;
+        const isAdmin = Roles.userIsInRole(Meteor.userId(), ROLE.ADMIN);
+        return isLogged && isAdmin ? (
+          <WrappedComponent {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: '/signin', state: { from: props.location } }}
+          />
+        );
+      }}
+    />
   );
 };
 
