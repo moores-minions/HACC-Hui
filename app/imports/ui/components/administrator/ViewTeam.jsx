@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Header, Item, List, Button, Modal, Icon } from 'semantic-ui-react';
+import { Button, Card, Col, Row, ListGroup, Modal, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
 import { Participants } from '../../../api/user/ParticipantCollection';
@@ -22,6 +22,8 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
   const captain = allParticipants.find(p => team.owner === p._id);
   const challenge = allteamChallenges[0];
 
+  const [modal, setModal] = useState(false);
+
   const changeBackground = e => {
     e.currentTarget.style.backgroundColor = '#fafafa';
     e.currentTarget.style.cursor = 'pointer';
@@ -31,59 +33,108 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
     e.currentTarget.style.backgroundColor = 'transparent';
   };
 
-  // console.log(team, captain, teamChallenges);
   return (
-    <Item onMouseEnter={changeBackground} onMouseLeave={onLeave}
-          style={{ padding: '1.0rem 1.5rem 1.0rem 1.5rem' }}>
-      <Modal closeIcon trigger={
-        <Item.Content>
-          <Item.Header>
-            {team.name} {isCompliant ? <Icon className="green check"/> : <Icon name="exclamation circle"
-                                                                               color="red"/> }
-          </Item.Header>
-          <Item.Description>
-            <strong>Captain:</strong> {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}   `
-            : '   '},
-            <strong>Challenge:</strong> {challenge ? challenge.title : 'None yet.'}
-          </Item.Description>
-        </Item.Content>
-      }>
-        <Grid padded>
-          <Grid.Row>
-            <Grid.Column width={4}>
-              <Header>{team.name}</Header>
-              <List>
-                {allteamChallenges.map((c) => <List.Item key={c._id}>{c.title}</List.Item>)}
-              </List>
-              <Header as="h4">Captain</Header>
-              {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}` : ''}
-            </Grid.Column>
-            <Grid.Column width={5}>
-              <Header>Members</Header>
-              <List bulleted>
-                {teamMembers.map((t) => <List.Item key={t}>{t}</List.Item>)}
-              </List>
-            </Grid.Column>
-            <Grid.Column width={5}>
-              {isCompliant ? <Header>Team is Compliant</Header> : <Header>
-                <mark>Team is not Compliant</mark>
-              </Header>}
-              <Header>Devpost Page</Header>
-              {team.devPostPage}
-              <Header>Github Repo</Header>
-              {team.gitHubRepo}
-            </Grid.Column>
-            <Grid.Column width={2}>
-              {/* eslint-disable-next-line max-len */}
-              <Button><Link to={`/admin-edit-team/${team._id}`}
-                            style={{ color: 'rgba(0, 0, 0, 0.6)' }}>Edit</Link></Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+    <>
+      <Card onMouseEnter={changeBackground} onMouseLeave={onLeave}
+            style={{ padding: '1.0rem 1.5rem 1.0rem 1.5rem' }} onClick={() => setModal(true)}>
+        <Card.Body>
+          <Card.Title>
+            {team.name}
+          </Card.Title>
+          <Card.Text>
+            <strong>Captain:</strong> {captain ? `${captain.firstName} 
+            ${captain.lastName}: ${captain.username}` : 'None'},
+            <strong>Challenge:</strong> {challenge ? challenge.title : 'None yet'}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+
+      <Modal show={modal} onHide={() => setModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{team.name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <Row>
+              <Col xs={4}>
+                <h4>Challenges</h4>
+                <ListGroup>
+                  {allteamChallenges.map(c => <ListGroup.Item key={c._id}>{c.title}</ListGroup.Item>)}
+                </ListGroup>
+                <h5>Captain</h5>
+                {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}` : 'None'}
+              </Col>
+              <Col xs={5}>
+                <h4>Members</h4>
+                <ListGroup>
+                  {teamMembers.map(t => <ListGroup.Item key={t}>{t}</ListGroup.Item>)}
+                </ListGroup>
+              </Col>
+              <Col xs={5}>
+                <h5>{isCompliant ? 'Team is Compliant' : 'Team is not Compliant'}</h5>
+                <p>Devpost Page: {team.devPostPage}</p>
+                <p>Github Repo: {team.gitHubRepo}</p>
+              </Col>
+            </Row>
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button><Link to={`/admin-edit-team/${team._id}`} style={{ color: 'rgba(0, 0, 0, 0.6)' }}>Edit</Link></Button>
+        </Modal.Footer>
       </Modal>
-    </Item>
+    </>
   );
 };
+
+  // return (
+  //   <>
+  //     <Card style={{ padding: '1.0rem 1.5rem 1.0rem 1.5rem' }}>
+  //       <Card.Body closeIcon trigger={
+  //         <Card.Title>
+// eslint-disable-next-line max-len
+  //           {team.name} {isCompliant ? <Icon className="green check"/> : <Icon name="exclamation circle" color="red"/> }
+  //         </Card.Title>
+  //         // <Card.Text>
+  //         // <strong>Captain:</strong> {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}   `
+  //         // : '   '},
+  //         // <strong>Challenge:</strong> {challenge ? challenge.title : 'None yet.'}
+  //         // </Card.Text>
+  //         </Card.Body>
+  //         </Card>
+  //   </>
+
+        // <Grid padded>
+        //   <Grid.Row>
+        //     <Grid.Column width={4}>
+        //       <Header>{team.name}</Header>
+        //       <List>
+        //         {allteamChallenges.map((c) => <List.Item key={c._id}>{c.title}</List.Item>)}
+        //       </List>
+        //       <Header as="h4">Captain</Header>
+        //       {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}` : ''}
+        //     </Grid.Column>
+        //     <Grid.Column width={5}>
+        //       <Header>Members</Header>
+        //       <List bulleted>
+        //         {teamMembers.map((t) => <List.Item key={t}>{t}</List.Item>)}
+        //       </List>
+        //     </Grid.Column>
+        //     <Grid.Column width={5}>
+        //       {isCompliant ? <Header>Team is Compliant</Header> : <Header>
+        //         <mark>Team is not Compliant</mark>
+        //       </Header>}
+        //       <Header>Devpost Page</Header>
+        //       {team.devPostPage}
+        //       <Header>Github Repo</Header>
+        //       {team.gitHubRepo}
+        //     </Grid.Column>
+        //     <Grid.Column width={2}>
+        //       {/* eslint-disable-next-line max-len */}
+        //       <Button><Link to={`/admin-edit-team/${team._id}`}
+        //                     style={{ color: 'rgba(0, 0, 0, 0.6)' }}>Edit</Link></Button>
+        //     </Grid.Column>
+        //   </Grid.Row>
+        // </Grid>
 
 ViewTeam.propTypes = {
   team: PropTypes.object.isRequired,
