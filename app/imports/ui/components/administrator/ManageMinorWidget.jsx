@@ -10,10 +10,7 @@ import { Participants } from '../../../api/user/ParticipantCollection';
  * Renders the Page for Managing HACC. **deprecated**
  * @memberOf ui/pages
  */
-class ManageMinorWidget extends React.Component {
-  render() {
-    // console.log('ManageMinorWidget');
-    return (
+const ManageMinorWidget = () => (
       <div style={{ backgroundColor: '#C4C4C4', paddingBottom: '50px' }}>
         <Container>
           <Row className="justify-content-center">
@@ -58,8 +55,6 @@ class ManageMinorWidget extends React.Component {
         </Container>
       </div>
     );
-  }
-}
 
 ManageMinorWidget.propTypes = {
   minorParticipants: PropTypes.array.isRequired,
