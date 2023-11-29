@@ -6,6 +6,8 @@ import moment from 'moment';
 import swal from 'sweetalert';
 import { dumpDatabaseMethod, dumpTeamCSVMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
 import { Participants } from '../../../api/user/ParticipantCollection';
+import { Teams } from '../../../api/team/TeamCollection';
+import { Challenges } from '../../../api/challenge/ChallengeCollection';
 
 export const databaseFileDateFormat = 'YYYY-MM-DD-HH-mm-ss';
 
@@ -17,7 +19,12 @@ export const databaseFileDateFormat = 'YYYY-MM-DD-HH-mm-ss';
  */
 const DumpDatabase = () => {
 
-  const participants = useTracker(() => Participants.find({}).fetch());
+  const { participants, teams, challenges } = useTracker(() => ({
+    participants: Participants.find({}).fetch(),
+    teams: Teams.find({}).fetch(),
+    challenges: Challenges.find({}).fetch(),
+  }));
+
   const handleClick = () => {
     dumpDatabaseMethod.call((error, result) => {
       if (error) {
@@ -72,6 +79,32 @@ const DumpDatabase = () => {
     });
   };
 
+  const removeTeams = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'This will remove all teams from HACC-Hui and cannot be undone',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        teams.forEach((team) => {
+          removeItMethod.call({
+            collectionName: Teams.getCollectionName(),
+            instance: team._id,
+          }, (err) => {
+            if (err) {
+              swal('Error', err.message, 'error');
+            }
+          });
+        });
+        if (Teams.find().fetch().length === 0) {
+          swal('Success', 'Removed all participants', 'success');
+        }
+      }
+    });
+  };
+
   return (
     <Container id="dump-page"
                fluid style={{ paddingLeft: 250, paddingRight: 250, paddingTop: 30, paddingBottom: 30 }}>
@@ -107,12 +140,18 @@ const DumpDatabase = () => {
       <div
         style={{ display: 'block', position: 'initial' }}
       >
-            <Row className='text-center'>
-              <Col>
-                <Button variant='danger' id='remove-participants'
-                        onClick={removeParticipants}>Remove participants</Button>
-              </Col>
-            </Row>
+        <Row className='text-center'>
+          <Col>
+            <Button variant='danger' id='remove-participants'
+                    onClick={removeParticipants}>Remove participants</Button>
+          </Col>
+        </Row>
+        <Row className='text-center'>
+          <Col>
+            <Button variant='danger' id='remove-teams'
+                    onClick={removeTeams}>Remove teams</Button>
+          </Col>
+        </Row>
       </div>
     </Container>
   );
