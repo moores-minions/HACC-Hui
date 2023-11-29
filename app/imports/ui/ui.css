@@ -38,3 +38,16 @@
 .hacc-button {
   margin: 2rem 0;
 }
+
+/* Target the button by its ID */
+#uniforms-0001-0006 {
+  background-color: #007bff; /* Bootstrap primary color for example */
+  color: white; /* White color for the plus icon */
+  border-radius: 50%; /* Make it round */
+  padding: 0.25em 0.25em; /* Reduce padding to make it smaller and round */
+  border: none; /* Remove border */
+  width: 2.5em; /* Set width to make it round */
+  height: 2.5em; /* Set height to make it round */
+  background-position: center;
+  background-image: url("https://img.icons8.com/ios/50/ffffff/plus-math.png");
+}
