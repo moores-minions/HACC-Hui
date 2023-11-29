@@ -1,12 +1,14 @@
 import React from 'react';
 import { Card, Accordion, Container, Row, Col, Modal } from 'react-bootstrap';
-import { withTracker } from 'meteor/react-meteor-data';
+// import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as Icon from 'react-bootstrap-icons';
-import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
+// import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
 
 const ListParticipantCardAdmin = (props) => {
+
+  // const teamInvitations = useTracker(() => TeamInvitations.find({}).fetch());
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
 
@@ -156,12 +158,5 @@ ListParticipantCardAdmin.propTypes = {
   challenges: PropTypes.array.isRequired,
   participants: PropTypes.object.isRequired,
   teams: PropTypes.array.isRequired,
-  teamInvitations: PropTypes.array,
 };
-export default withTracker(() => {
-  const teamInvitations = TeamInvitations.find({}).fetch();
-  // console.log(minors);
-  return {
-    teamInvitations,
-  };
-})(ListParticipantCardAdmin);
+export default ListParticipantCardAdmin;

@@ -9,11 +9,10 @@ import {
 } from 'uniforms-bootstrap5';
 import _ from 'lodash';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
-import PropTypes from 'prop-types';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
+import { useParams, withRouter } from 'react-router';
 import SimpleSchema from 'simpl-schema';
-import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { Teams } from '../../../api/team/TeamCollection';
@@ -32,7 +31,20 @@ const schema = new SimpleSchema({
   gitHubRepo: String,
 });
 
-const AdminEditTeamWidget = (props) => {
+const AdminEditTeamWidget = () => {
+
+  const documentId = useParams()._id;
+  const { team, members } = useTracker(() => {
+    // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
+    const getTeam = Teams.findDoc(documentId);
+    const getMembers = _.map(TeamParticipants.find({ teamID: getTeam._id }).fetch(),
+      (tp) => Participants.findDoc(tp.participantID));
+    return {
+      team: getTeam,
+      members: getMembers,
+    };
+  });
+
   const [redirect, setRedirect] = useState(false);
 
   /** On submit, insert the data.
@@ -68,7 +80,7 @@ const AdminEditTeamWidget = (props) => {
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
 
     const formSchema = new SimpleSchema2Bridge(schema);
-    const memberNamesAndGitHub = _.map(props.members, (p) => {
+    const memberNamesAndGitHub = _.map(members, (p) => {
       const fullName = Participants.getFullName(p._id);
       const gitHub = p.gitHub;
       return `${fullName}, (${gitHub})`;
@@ -85,7 +97,7 @@ const AdminEditTeamWidget = (props) => {
             }}>
               <h2 className='text-center'>Edit Team</h2>
             </div>
-            <AutoForm schema={formSchema} onSubmit={data => submit(data)} model={props.team}
+            <AutoForm schema={formSchema} onSubmit={data => submit(data)} model={team}
                       style={{
                         paddingBottom: '4rem',
                       }}>
@@ -116,24 +128,4 @@ const AdminEditTeamWidget = (props) => {
     );
 };
 
-AdminEditTeamWidget.propTypes = {
-  team: PropTypes.object,
-  members: PropTypes.arrayOf(
-      PropTypes.object,
-  ).isRequired,
-  model: PropTypes.object,
-};
-
-const AdminEditTeamCon = withTracker(({ match }) => {
-  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
-  const documentId = match.params._id;
-  const team = Teams.findDoc(documentId);
-  const members = _.map(TeamParticipants.find({ teamID: team._id }).fetch(),
-      (tp) => Participants.findDoc(tp.participantID));
-  return {
-    team,
-    members,
-  };
-})(AdminEditTeamWidget);
-
-export default withRouter(AdminEditTeamCon);
+export default withRouter(AdminEditTeamWidget);

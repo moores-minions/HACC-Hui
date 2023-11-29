@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Roles } from 'meteor/alanning:roles';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
@@ -12,7 +12,13 @@ import { Teams } from '../../api/team/TeamCollection';
 import { Suggestions } from '../../api/suggestions/SuggestionCollection';
 import { CanCreateTeams } from '../../api/team/CanCreateTeamCollection';
 
-const NavBar = ({ currentUser, canCreateTeams }) => {
+const NavBar = () => {
+
+  const { currentUser, canCreateTeams } = useTracker(() => ({
+    currentUser: Meteor.user() ? Meteor.user().username : '',
+    canCreateTeams: CanCreateTeams.findOne().canCreateTeams,
+  }));
+
   let isCompliant = canCreateTeams;
   const isAdmin = currentUser && Roles.userIsInRole(Meteor.userId(), ROLE.ADMIN);
   const isParticipant = currentUser && Roles.userIsInRole(Meteor.userId(), ROLE.PARTICIPANT);
@@ -159,14 +165,4 @@ const NavBar = ({ currentUser, canCreateTeams }) => {
   );
 };
 
-NavBar.propTypes = {
-  currentUser: PropTypes.string,
-  canCreateTeams: PropTypes.bool,
-};
-
-const NavBarContainer = withTracker(() => ({
-  currentUser: Meteor.user() ? Meteor.user().username : '',
-  canCreateTeams: CanCreateTeams.findOne().canCreateTeams,
-}))(NavBar);
-
-export default withRouter(NavBarContainer);
+export default withRouter(NavBar);
