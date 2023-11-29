@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Button, Card, Col, Row, ListGroup, Modal, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
+import { CheckCircleFill, ExclamationCircleFill } from 'react-bootstrap-icons';
 import { Participants } from '../../../api/user/ParticipantCollection';
-// import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 
@@ -39,7 +39,7 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
             style={{ padding: '1.0rem 1.5rem 1.0rem 1.5rem' }} onClick={() => setModal(true)}>
         <Card.Body>
           <Card.Title>
-            {team.name}
+            {team.name} {isCompliant ? <CheckCircleFill/> : <ExclamationCircleFill/> }
           </Card.Title>
           <Card.Text>
             <strong>Captain:</strong> {captain ? `${captain.firstName} 
@@ -51,7 +51,7 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
 
       <Modal show={modal} onHide={() => setModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{team.name}</Modal.Title>
+          <Modal.Title>{team.name} {isCompliant ? <CheckCircleFill/> : <ExclamationCircleFill/> }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container>
