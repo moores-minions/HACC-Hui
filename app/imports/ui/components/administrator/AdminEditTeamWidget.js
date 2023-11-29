@@ -75,10 +75,7 @@ class AdminEditTeamWidget extends React.Component {
     });
     return (
         <Container>
-            <div style={{
-              backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
-              borderRadius: '2rem',
-            }}>
+            <div className='container-style'>
               <h2 className='text-center'>Edit Team</h2>
             </div>
             <AutoForm schema={formSchema} onSubmit={data => this.submit(data)} model={this.props.team}

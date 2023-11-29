@@ -93,10 +93,7 @@ const UpdateMinorParticipantsWidget = ({ MinorParticipantsID }) => {
   }
   return (
     <Container id='minor-participant-list' style={{ paddingBottom: '50px' }}>
-      <div className='text-center' style={{
-        backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
-        borderRadius: '2rem',
-      }}>
+      <div className='text-center container-style'>
         <h4 className='text-center'>Minor Participants List ({MinorParticipantsID.length})</h4>
         <Button variant='success' onClick={() => download()}>Download minor participants</Button>
       </div>

@@ -82,10 +82,7 @@ const ManageHaccWidget = ({ challenges, skills, tools }) => {
           <Container>
             <Row className="justify-content-center">
               <Col>
-                <div style={{
-                  backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
-                  borderRadius: '2rem',
-                }}>
+                <div className='container-style'>
                   <h3 className="text-center">Manage HACC</h3>
 
                   <Container>

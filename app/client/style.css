@@ -151,6 +151,13 @@ label {
   padding-bottom: 1rem;
 }
 
+.container-style {
+  backgroundColor: #E5F0FE;
+  padding: 1rem 0rem;
+  margin: 2rem 0rem;
+  borderRadius: 2rem;
+}
+
 #list-participants-admin .dropdown-menu {
   overflow-y: scroll;
 }

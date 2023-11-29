@@ -260,10 +260,7 @@ const ListParticipantsWidgetAdmin = () => {
     <Container id='list-participants-admin' fluid style={{ paddingBottom: '50px' }}>
       <Row className="justify-content-center">
         <Col xs={16}>
-          <div style={{
-            backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
-            borderRadius: '2rem',
-          }}>
+          <div className='container-style'>
             <h2 className="text-center">
               All Participants
             </h2>

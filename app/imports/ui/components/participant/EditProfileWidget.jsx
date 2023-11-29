@@ -164,10 +164,7 @@ const EditProfileWidget = () => {
     <Container id='editprofile-page' style={{ paddingBottom: '50px' }}>
       <Row className="justify-content-center">
         <Col>
-          <Card className="text-center" style={{
-            backgroundColor: '#E5F0FE', padding: '1rem 0rem', margin: '2rem 0rem',
-            borderRadius: '2rem',
-          }}>
+          <Card className="text-center container-style">
             <Card.Header as="h2">Edit Profile</Card.Header>
             <Card.Body>
               <AutoForm schema={formSchema} model={model} onSubmit={data => {
