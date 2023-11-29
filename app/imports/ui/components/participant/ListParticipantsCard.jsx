@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Accordion, Container, Row, Col, Modal } from 'react-bootstrap';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as Icon from 'react-bootstrap-icons';
@@ -143,10 +143,11 @@ ListParticipantCard.propTypes = {
   challenges: PropTypes.array.isRequired,
   participants: PropTypes.object.isRequired,
 };
-export default withTracker(() => {
-  const teamInvitations = TeamInvitations.find({}).fetch();
-  // console.log(minors);
-  return {
-    teamInvitations,
-  };
-})(ListParticipantCard);
+const ListParticipantCardContainer = () => {
+  const { teamInvitations } = useTracker(() => ({
+    teamInvitations: TeamInvitations.find({}).fetch(),
+  }), []);
+  return <ListParticipantCard teamInvitations={teamInvitations}/>;
+};
+
+export default ListParticipantCardContainer;

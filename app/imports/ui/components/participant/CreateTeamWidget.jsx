@@ -23,7 +23,7 @@ import swal from 'sweetalert';
 import PropTypes from 'prop-types';
 import { _ } from 'lodash';
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Teams } from '../../../api/team/TeamCollection';
@@ -384,10 +384,26 @@ CreateTeamWidget.propTypes = {
   canCreateTeams: PropTypes.bool,
 };
 
-export default withTracker(() => ({
-  participant: Participants.findDoc({ userID: Meteor.userId() }),
-  challenges: Challenges.find({}).fetch(),
-  skills: Skills.find({}).fetch(),
-  tools: Tools.find({}).fetch(),
-  canCreateTeams: CanCreateTeams.findOne().canCreateTeams,
-}))(CreateTeamWidget);
+const CreateTeamWidgetContainer = () => {
+  const data = useTracker(() => {
+    const userId = Meteor.userId();
+    return {
+      participant: Participants.findDoc({ userID: userId }),
+      challenges: Challenges.find({}).fetch(),
+      skills: Skills.find({}).fetch(),
+      tools: Tools.find({}).fetch(),
+      canCreateTeams: CanCreateTeams.findOne().canCreateTeams,
+    };
+  }, []);
+
+  return (
+      <CreateTeamWidget
+          participant={data.participant}
+          challenges={data.challenges}
+          skills={data.skills}
+          tools={data.tools}
+          canCreateTeams={data.canCreateTeams}
+      />
+  );
+};
+export default CreateTeamWidgetContainer;

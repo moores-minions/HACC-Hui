@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Card, Row, Col } from 'react-bootstrap';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker } from 'meteor/react-meteor-data';
 import {
   AutoForm,
   SelectField,
@@ -95,10 +95,12 @@ class SuggestToolSkillWidget extends React.Component {
 SuggestToolSkillWidget.propTypes = {
   participant: PropTypes.object.isRequired,
 };
+const SuggestToolSkillWidgetContainer = () => {
+  const { participant } = useTracker(() => ({
+    participant: Participants.findDoc({ userID: Meteor.userId }),
+  }), []);
 
-export default withTracker(() => {
-  const participant = Participants.findDoc({ userID: Meteor.userId() });
-  return {
-    participant,
-  };
-})(SuggestToolSkillWidget);
+  // Your component rendering logic here, using the retrieved data
+  return <SuggestToolSkillWidget participant={participant}/>;
+};
+export default SuggestToolSkillWidgetContainer;
