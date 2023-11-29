@@ -141,7 +141,7 @@ const TeamInvitationsWidget = () => {
     };
 
     return (
-        <Container id='team-invitations' className='card-pages'>
+        <Container id='team-invitations' className='py-3 card-pages'>
             <Card style={paleBlueStyle} >
               <Card.Body>
                 <h4 className="text-center">

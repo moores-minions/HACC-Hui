@@ -65,7 +65,8 @@ const TeamInvitationCard = ({ teams, skills, tools, challenges, participants }) 
   };
 
   return (
-    <Card onMouseEnter={changeBackground} onMouseLeave={onLeave}
+    <Card onMouseOver={changeBackground} onPointerOver={changeBackground} onMouseOut={onLeave}
+          onPointerOut={onLeave} onMouseUp={onLeave} onTouchExit={onLeave}
           style={{ backgroundColor: 'transparent', padding: '0rem 2rem 0rem 2rem' }}>
       <Card.Body>
         <Container onClick={handleShow}>

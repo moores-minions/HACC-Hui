@@ -4,7 +4,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 
 const ProfileCard = ({ model }) => (
-        <Card fluid>
+        <Card>
           <Card.Body>
             <Card.Title><h2>{model.firstName} {model.lastName}</h2></Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
