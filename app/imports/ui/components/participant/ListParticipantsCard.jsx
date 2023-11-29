@@ -6,59 +6,55 @@ import _ from 'lodash';
 import * as Icon from 'react-bootstrap-icons';
 import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
 
-class ListParticipantCard extends React.Component {
+const ListParticipantCard = (props) => {
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-  render() {
-    // console.log(this.props.teams);
-
-    function changeBackground(e) {
+    const changeBackground = (e) => {
       e.currentTarget.style.backgroundColor = '#fafafa';
       e.currentTarget.style.cursor = 'pointer';
-    }
+    };
 
-    function onLeave(e) {
+    const onLeave = (e) => {
       e.currentTarget.style.backgroundColor = 'transparent';
-    }
-    // console.log(this.props);
+    };
     return (
       // Start of what is shown on List Participants
       <>
         <Card id="part-card-page" onMouseEnter={changeBackground} onMouseLeave={onLeave}>
           <Card.Body>
-            <Card.Title>{this.props.participants.firstName} {this.props.participants.lastName}</Card.Title>
+            <Card.Title>{props.participants.firstName} {props.participants.lastName}</Card.Title>
             <Card.Text>
               <Container>
                 <Row>
                   <Col>
                     <Card.Subtitle>Challenges</Card.Subtitle>
-                    {this.props.challenges.slice(0, 3).map((challenge, i) => <p
+                    {props.challenges.slice(0, 3).map((challenge, i) => <p
                       style={{ color: 'rgb(89, 119, 199)' }}
                       key={challenge + i}>
                       {challenge}</p>)}
-                    {_.uniq(this.props.challenges).length === 0 ? (<Card.Subtitle>N/A</Card.Subtitle>) : ''}
+                    {_.uniq(props.challenges).length === 0 ? (<Card.Subtitle>N/A</Card.Subtitle>) : ''}
                   </Col>
                   <Col>
                     <Card.Subtitle>Skills</Card.Subtitle>
-                    {this.props.skills.slice(0, 3).map((skill, i) => <p key={skill + i}>
+                    {props.skills.slice(0, 3).map((skill, i) => <p key={skill + i}>
                       {skill.name}</p>)}
-                    {_.uniq(this.props.skills).length === 0 ? (<p>N/A</p>) : ''}
+                    {_.uniq(props.skills).length === 0 ? (<p>N/A</p>) : ''}
                   </Col>
                   <Col>
                     <Card.Subtitle>Tools</Card.Subtitle>
-                    {this.props.tools.slice(0, 3).map((tool, i) => <p key={tool + i}>
+                    {props.tools.slice(0, 3).map((tool, i) => <p key={tool + i}>
                       {tool.name}</p>)}
-                    {_.uniq(this.props.tools).length === 0 ? (<p>N/A</p>) : ''}
+                    {_.uniq(props.tools).length === 0 ? (<p>N/A</p>) : ''}
                   </Col>
                   <Col>
                     <Card.Subtitle>Slack Username</Card.Subtitle>
-                    {this.props.participants.username}
-                    {this.props.participants.username.length === 0 ? (<p>Username not in database</p>) : ''}
+                    {props.participants.username}
+                    {props.participants.username.length === 0 ? (<p>Username not in database</p>) : ''}
                   </Col>
                   <Col>
                     <Card.Subtitle>GitHub</Card.Subtitle>
-                    {this.props.participants.gitHub}
-                    {_.uniq(this.props.participants.gitHub).length === 0 ? (<p>GitHub not in database</p>) : ''}
+                    {props.participants.gitHub}
+                    {_.uniq(props.participants.gitHub).length === 0 ? (<p>GitHub not in database</p>) : ''}
                   </Col>
                 </Row>
               </Container>
@@ -69,58 +65,58 @@ class ListParticipantCard extends React.Component {
                     <Modal.Dialog size="lg">
                       <Modal.Header>
                         <Modal.Title>
-                          <Row>{this.props.participants.firstName} {this.props.participants.lastName}</Row>
-                          <Row>{this.props.participants.demographicLevel}</Row>
+                          <Row>{props.participants.firstName} {props.participants.lastName}</Row>
+                          <Row>{props.participants.demographicLevel}</Row>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Row>
                           <Col>
                             <Icon.Github/> GitHub:
-                            <a href={this.props.participants.gitHub}>{this.props.participants.gitHub}</a>
-                            {_.uniq(this.props.participants.gitHub).length === 0 ? (<p>GitHub not in database</p>) : ''}
+                            <a href={props.participants.gitHub}>{props.participants.gitHub}</a>
+                            {_.uniq(props.participants.gitHub).length === 0 ? (<p>GitHub not in database</p>) : ''}
                           </Col>
                           <Col>
                             <Icon.Linkedin/> LinkedIn:
-                            <a href={this.props.participants.linkedIn}>{this.props.participants.linkedIn}</a>
-                            {_.uniq(this.props.participants.linkedIn).length === 0 ?
+                            <a href={props.participants.linkedIn}>{props.participants.linkedIn}</a>
+                            {_.uniq(props.participants.linkedIn).length === 0 ?
                               (<p>LinkedIn not in database</p>) : ''}
                           </Col>
                         </Row>
                         <Row>
                           <Col>
                             <Icon.Server/> Website:
-                            <a href={this.props.participants.website}>{this.props.participants.website}</a>
-                            {_.uniq(this.props.participants.website).length === 0 ? (<p>Website not listed</p>) : ''}
+                            <a href={props.participants.website}>{props.participants.website}</a>
+                            {_.uniq(props.participants.website).length === 0 ? (<p>Website not listed</p>) : ''}
                           </Col>
                           <Col>
                             <Icon.Slack/> Slack Username:
-                            <a href={this.props.participants.username}> {this.props.participants.username}</a>
-                            {_.uniq(this.props.participants.username).length === 0 ?
+                            <a href={props.participants.username}> {props.participants.username}</a>
+                            {_.uniq(props.participants.username).length === 0 ?
                               (<p>Username not in database</p>) : ''}
                           </Col>
                         </Row>
                         <Row>
                           <Col>
                             Challenges<hr style={ { marginTop: 1, marginBottom: 1 } }/>
-                            {this.props.challenges.map((challenge, i) => (
+                            {props.challenges.map((challenge, i) => (
                               <p key={challenge + i}>- {challenge}</p>
                             ))}
-                            {_.uniq(this.props.challenges).length === 0 ? (<Card.Subtitle>N/A</Card.Subtitle>) : ''}
+                            {_.uniq(props.challenges).length === 0 ? (<Card.Subtitle>N/A</Card.Subtitle>) : ''}
                           </Col>
                         </Row>
                         <Row>
                           <Col>
                             Skills<hr style={ { marginTop: 1, marginBottom: 1 } }/>
-                            {this.props.skills.map((skill, i) => <p key={skill + i}>- {skill.name}</p>)}
-                            {_.uniq(this.props.skills).length === 0 ? (<p>N/A</p>) : ''}
+                            {props.skills.map((skill, i) => <p key={skill + i}>- {skill.name}</p>)}
+                            {_.uniq(props.skills).length === 0 ? (<p>N/A</p>) : ''}
                           </Col>
                         </Row>
                         <Row>
                           <Col>
                             Tools<hr style={ { marginTop: 1, marginBottom: 1 } }/>
-                            {this.props.tools.map((tool, i) => <p key={tool + i}>- {tool.name}</p>)}
-                            {_.uniq(this.props.tools).length === 0 ? (<p>N/A</p>) : ''}
+                            {props.tools.map((tool, i) => <p key={tool + i}>- {tool.name}</p>)}
+                            {_.uniq(props.tools).length === 0 ? (<p>N/A</p>) : ''}
                           </Col>
                         </Row>
                       </Modal.Body>
@@ -133,8 +129,7 @@ class ListParticipantCard extends React.Component {
         </Card>
       </>
     );
-  }
-}
+};
 
 ListParticipantCard.propTypes = {
   participantID: PropTypes.string.isRequired,
