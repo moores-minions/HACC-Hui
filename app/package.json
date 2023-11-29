@@ -36,7 +36,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "better-docs": "^2.3.2",
     "chai": "^4.3.4",
     "docdash": "^1.2.0",
     "enzyme": "^3.11.0",
