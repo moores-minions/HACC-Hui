@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Header } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { _ } from 'lodash';
@@ -14,23 +14,19 @@ import { Participants } from '../../../api/user/ParticipantCollection';
 import ListParticipantsCard from './ListParticipantsCard';
 import ListParticipantsFilter from './ListParticipantsFilter';
 
-class ListParticipantsWidget extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: '',
-      challenges: [],
-      teams: [],
-      tools: [],
-      skills: [],
-      result: _.orderBy(this.props.participants, ['name'], ['asc']),
-    };
-  }
+const ListParticipantsWidget = (props) => {
+  const [search, setSearch] = useState('');
+  const [schallenges, setChallenges] = useState([]);
+  const [teams, setTeams] = useState([]);
+  const [stools, setTools] = useState([]);
+  const [sskills, setSkills] = useState([]);
+  const [result, setResult] = useState(
+    _.orderBy(props.participants, ['name'], ['asc']),
+  );
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
 
-  render() {
-    if (this.props.participants.length === 0) {
+    if (props.participants.length === 0) {
       return (
         <div style="text-align: center;">
           <Header as="h2" icon>
@@ -51,94 +47,58 @@ class ListParticipantsWidget extends React.Component {
 
     const setFilters = () => {
       const searchResults = filters.filterBySearch(
-        this.props.participants,
-        this.state.search,
+        props.participants,
+        search,
       );
       const skillResults = filters.filterBySkills(
-        this.state.skills,
-        this.props.skills,
-        this.props.participantSkills,
+        sskills,
+        props.skills,
+        props.participantSkills,
         searchResults,
       );
       const toolResults = filters.filterByTools(
-        this.state.tools,
-        this.props.tools,
-        this.props.participantTools,
+        stools,
+        props.tools,
+        props.participantTools,
         skillResults,
       );
       const challengeResults = filters.filterByChallenge(
-        this.state.challenges,
-        this.props.challenges,
-        this.props.participantChallenges,
+        schallenges,
+        props.challenges,
+        props.participantChallenges,
         toolResults,
       );
       const sorted = filters.sortBy(challengeResults, 'participants');
-      this.setState(
-        {
-          result: sorted,
-        },
-        () => {},
-      );
+      setResult(sorted);
     };
 
+  useEffect(() => {
+    setFilters();
+  }, [search, schallenges, teams, stools, sskills, props]);
+
     const handleSearchChange = (event) => {
-      this.setState(
-        {
-          search: event.target.value,
-        },
-        () => {
-          setFilters();
-        },
-      );
+     setSearch(event.target.value);
     };
 
     const getSkills = (event, { value }) => {
-      this.setState(
-        {
-          skills: value,
-        },
-        () => {
-          setFilters();
-        },
-      );
+      setSkills(value);
     };
 
     const getTools = (event, { value }) => {
-      this.setState(
-        {
-          tools: value,
-        },
-        () => {
-          setFilters();
-        },
-      );
+      setTools(value);
     };
 
     const getChallenge = (event, { value }) => {
-      this.setState(
-        {
-          challenges: value,
-        },
-        () => {
-          setFilters();
-        },
-      );
+      setChallenges(value);
     };
 
     const getTeam = (event, { value }) => {
-      this.setState(
-        {
-          teams: value,
-        },
-        () => {
-          setFilters();
-        },
-      );
+      setTeams(value);
     };
 
-    const universalSkills = this.props.skills;
+    const universalSkills = props.skills;
 
-    function getParticipantSkills(participantID, participantSkills) {
+    const getParticipantSkills = (participantID, participantSkills) => {
       const data = [];
       const skills = _.filter(participantSkills, {
         participantID: participantID,
@@ -152,11 +112,11 @@ class ListParticipantsWidget extends React.Component {
       }
       // console.log(data);
       return data;
-    }
+    };
 
-    const universalTools = this.props.tools;
+    const universalTools = props.tools;
 
-    function getParticipantTools(participantID, participantTools) {
+    const getParticipantTools = (participantID, participantTools) => {
       const data = [];
       const tools = _.filter(participantTools, {
         participantID: participantID,
@@ -169,11 +129,11 @@ class ListParticipantsWidget extends React.Component {
         }
       }
       return data;
-    }
+    };
 
-    const universalChallenges = this.props.challenges;
+    const universalChallenges = props.challenges;
 
-    function getParticipantChallenges(participantID, participantChallenges) {
+    const getParticipantChallenges = (participantID, participantChallenges) => {
       const data = [];
       const challenges = _.filter(participantChallenges, {
         participantID: participantID,
@@ -186,7 +146,7 @@ class ListParticipantsWidget extends React.Component {
         }
       }
       return data;
-    }
+    };
 
     return (
       <div style={{ paddingBottom: '50px' }}>
@@ -220,7 +180,7 @@ class ListParticipantsWidget extends React.Component {
                 <Card.Body>
                   <div style={{ paddingTop: '2rem' }}>
                     <Card.Title>
-                      Total Participants: {this.state.result.length}
+                      Total Participants: {result.length}
                     </Card.Title>
                   </div>
                   <div style={{ paddingTop: '2rem' }}>
@@ -234,7 +194,7 @@ class ListParticipantsWidget extends React.Component {
                       {/* Example Dropdown. Update as needed */}
                       <Form.Select onChange={getTeam}>
                         {filters
-                          .dropdownValues(this.props.teams, 'name')
+                          .dropdownValues(props.teams, 'name')
                           .map((option) => (
                             <option key={option.value} value={option.value}>
                               {option.text}
@@ -268,23 +228,23 @@ class ListParticipantsWidget extends React.Component {
             </Col>
             <Col xs={8}>
               <div>
-                {this.state.result.map((participants) => (
+                {result.map((participants) => (
                   <ListParticipantsCard
                     key={participants._id}
                     participantID={participants._id}
                     participants={participants}
                     skills={getParticipantSkills(
                       participants._id,
-                      this.props.participantSkills,
+                      props.participantSkills,
                     )}
                     tools={getParticipantTools(
                       participants._id,
-                      this.props.participantTools,
+                      props.participantTools,
                     )}
                     // eslint-disable-next-line max-len
                     challenges={getParticipantChallenges(
                       participants._id,
-                      this.props.participantChallenges,
+                      props.participantChallenges,
                     )}
                   />
                 ))}
@@ -294,8 +254,7 @@ class ListParticipantsWidget extends React.Component {
         </Container>
       </div>
     );
-  }
-}
+  };
 
 ListParticipantsWidget.propTypes = {
   participantChallenges: PropTypes.array.isRequired,
