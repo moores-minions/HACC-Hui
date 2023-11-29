@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
@@ -56,30 +56,22 @@ import ShowMinorPage from '../pages/administrator/ShowMinorPage';
  * Top-level layout component for this application. Called in imports/startup/client/startup.jsx.
  * @memberOf ui/layouts
  */
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isDesktop: false,
+const App = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+
+    const updatePredicate = () => {
+      setIsDesktop(window.innerWidth > 750);
     };
-    this.updatePredicate = this.updatePredicate.bind(this);
-  }
+    updatePredicate();
+    window.addEventListener('resize', updatePredicate);
 
-  componentDidMount() {
-    this.updatePredicate();
-    window.addEventListener('resize', this.updatePredicate);
-  }
+    return () => {
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updatePredicate);
-  }
-
-  updatePredicate() {
-    this.setState({ isDesktop: window.innerWidth > 750 });
-  }
-
-  render() {
-    const isDesktop = this.state.isDesktop;
+      window.removeEventListener('resize', updatePredicate);
+    };
+  }, []);
 
     const routes = () => (
       <Switch>
@@ -197,7 +189,7 @@ class App extends React.Component {
               name="viewport"
               content="width=device-width, maximum-scale=1.5"
             />
-            <SideBar visible={this.state.visible}>
+            <SideBar visible={isDesktop}>
               <div className="pageWrapper">{routes()}</div>
               <Footer />
             </SideBar>
@@ -205,8 +197,7 @@ class App extends React.Component {
         )}
       </Router>
     );
-  }
-}
+};
 
 /**
  * ProtectedRoute (see React Router v4 sample)
