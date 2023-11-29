@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Meteor } from 'meteor/meteor';
-import { Challenges } from '../challenge/ChallengeCollection';
+import { Challenge } from '../challenge/ChallengeCollection';
 import { ChallengeInterests } from '../challenge/ChallengeInterestCollection';
 import { Interests } from '../interest/InterestCollection';
 import { Skills } from '../skill/SkillCollection';
@@ -37,7 +37,7 @@ class HACCHuiClass {
     /** Holds all the collections. */
     this.collections = [
       Administrators,
-      Challenges,
+      Challenge,
       ChallengeInterests,
       Participants,
       ParticipantChallenges,
@@ -68,7 +68,7 @@ class HACCHuiClass {
       Interests,
       Skills,
       Tools,
-      Challenges,
+      Challenge,
       Participants,
       Teams,
       SlackUsers,

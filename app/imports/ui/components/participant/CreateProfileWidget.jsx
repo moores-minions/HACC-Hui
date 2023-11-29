@@ -14,7 +14,7 @@ import _ from 'lodash';
 import Swal from 'sweetalert2';
 import { Redirect } from 'react-router-dom';
 import { Skills } from '../../../api/skill/SkillCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
 import { demographicLevels } from '../../../api/level/Levels';
@@ -28,7 +28,7 @@ const CreateProfileWidget = () => {
 
   const { participant, challenges, skills, tools } = useTracker(() => {
       const getParticipant = Participants.findDoc({ userID: Meteor.userId() });
-      const getChallenges = Challenges.find({}).fetch();
+      const getChallenges = Challenge.find({}).fetch();
       const getSkills = Skills.find({}).fetch();
       const getTools = Tools.find({}).fetch();
       return {
@@ -75,7 +75,7 @@ const CreateProfileWidget = () => {
     if (data.challenges) {
       // build an array of challenge slugs
       updateData.challenges = data.challenges.map((title) => {
-        const doc = Challenges.findDoc({ title });
+        const doc = Challenge.findDoc({ title });
         return Slugs.getNameFromID(doc.slugID);
       });
     }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Button, Container } from 'react-bootstrap';
 import { Participants } from '../../../api/user/ParticipantCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { ParticipantChallenges } from '../../../api/user/ParticipantChallengeCollection';
 import { ParticipantSkills } from '../../../api/user/ParticipantSkillCollection';
 import { ParticipantTools } from '../../../api/user/ParticipantToolCollection';
@@ -34,7 +34,7 @@ const ProfileWidget = () => {
   const buildTheModel = () => {
     const model = participant;
     model.challenges = devChallenges.map((challenge) => {
-      const c = Challenges.findDoc(challenge.challengeID);
+      const c = Challenge.findDoc(challenge.challengeID);
       return c.title;
     });
     model.skills = devSkills.map((skills) => {

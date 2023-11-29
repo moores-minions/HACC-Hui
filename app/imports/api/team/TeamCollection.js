@@ -6,7 +6,7 @@ import { TeamChallenges } from './TeamChallengeCollection';
 import { TeamSkills } from './TeamSkillCollection';
 import { TeamTools } from './TeamToolCollection';
 import { TeamParticipants } from './TeamParticipantCollection';
-import { Challenges } from '../challenge/ChallengeCollection';
+import { Challenge } from '../challenge/ChallengeCollection';
 import { Participants } from '../user/ParticipantCollection';
 import { Skills } from '../skill/SkillCollection';
 import { Tools } from '../tool/ToolCollection';
@@ -192,7 +192,7 @@ class TeamCollection extends BaseSlugCollection {
     const { _id, name, description, owner, open, affiliation } = this.findDoc(docID);
     const selector = { teamID: _id };
     const teamChallenges = TeamChallenges.find(selector).fetch();
-    const challenges = _.map(teamChallenges, (tC) => Challenges.findSlugByID(tC.challengeID));
+    const challenges = _.map(teamChallenges, (tC) => Challenge.findSlugByID(tC.challengeID));
     const teamParticipants = TeamParticipants.find(selector).fetch();
     const participants = _.map(teamParticipants, (tD) => Participants.findSlugByID(tD.participantID));
     const ownerSlug = Participants.findSlugByID(owner);

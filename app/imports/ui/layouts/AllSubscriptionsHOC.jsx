@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { SubsManager } from 'meteor/meteorhacks:subs-manager';
 import { Spinner } from 'react-bootstrap';
-import { Challenges } from '../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../api/challenge/ChallengeCollection';
 import { ChallengeInterests } from '../../api/challenge/ChallengeInterestCollection';
 import { Interests } from '../../api/interest/InterestCollection';
 import { Skills } from '../../api/skill/SkillCollection';
@@ -56,7 +56,7 @@ function withAllSubscriptions(WrappedComponent) {
   return withTracker(() => {
     const handles = [
       allSubs.subscribe(Administrators.getCollectionName()),
-      allSubs.subscribe(Challenges.getCollectionName()),
+      allSubs.subscribe(Challenge.getCollectionName()),
       allSubs.subscribe(ChallengeInterests.getCollectionName()),
       allSubs.subscribe(ParticipantChallenges.getCollectionName()),
       allSubs.subscribe(ParticipantInterests.getCollectionName()),

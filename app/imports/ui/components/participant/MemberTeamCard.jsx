@@ -4,7 +4,7 @@ import * as Icon from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 import { _ } from 'lodash';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { TeamSkills } from '../../../api/team/TeamSkillCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { TeamTools } from '../../../api/team/TeamToolCollection';
@@ -13,7 +13,7 @@ import { Tools } from '../../../api/tool/ToolCollection';
 const MemberTeamCard = ({ team, teamParticipants }) => {
   const teamID = team._id;
   const teamChallenges = _.map(TeamChallenges.find({ teamID }).fetch(),
-  (tc) => Challenges.findDoc(tc.challengeID).title);
+  (tc) => Challenge.findDoc(tc.challengeID).title);
   const teamSkills = _.map(TeamSkills.find({ teamID }).fetch(), (ts) => Skills.findDoc(ts.skillID).name);
   const teamTools = _.map(TeamTools.find({ teamID }).fetch(), (tt) => Tools.findDoc(tt.toolID).name);
   return (

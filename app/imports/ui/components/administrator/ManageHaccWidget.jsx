@@ -3,7 +3,7 @@ import { Table, Button, Container, Row, Col, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
 import { ROUTES } from '../../../startup/client/route-constants';
@@ -193,7 +193,7 @@ ManageHaccWidget.propTypes = {
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
 export default withTracker(() => (
   {
-    challenges: Challenges.find({}).fetch(),
+    challenges: Challenge.find({}).fetch(),
     skills: Skills.find({}).fetch(),
     tools: Tools.find({}).fetch(),
   }

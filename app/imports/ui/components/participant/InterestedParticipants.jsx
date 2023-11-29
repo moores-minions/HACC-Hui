@@ -10,7 +10,7 @@ import { ParticipantSkills } from '../../../api/user/ParticipantSkillCollection'
 import { ParticipantTools } from '../../../api/user/ParticipantToolCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { WantsToJoin } from '../../../api/team/WantToJoinCollection';
 import InterestedParticipantCard from './InterestedParticipantCard';
@@ -35,7 +35,7 @@ const InterestedParticipants = () => {
       interestedDevs: WantsToJoin.find({ teamID: documentId }).fetch(),
       teams: Teams.find({ _id: documentId }).fetch(),
       skills: Skills.find({}).fetch(),
-      challenges: Challenges.find({}).fetch(),
+      challenges: Challenge.find({}).fetch(),
       tools: Tools.find({}).fetch(),
     }));
 

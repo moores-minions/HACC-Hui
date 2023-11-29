@@ -5,7 +5,7 @@ import fc from 'fast-check';
 import { faker } from '@faker-js/faker';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
 import { makeSampleInterestSlugArray } from '../interest/SampleInterests';
-import { Challenges } from './ChallengeCollection';
+import { Challenge } from './ChallengeCollection';
 /* eslint prefer-arrow-callback: "off", no-unused-expressions: "off" */
 /* eslint-env mocha */
 
@@ -28,12 +28,12 @@ if (Meteor.isServer) {
               (fcTitle, description, submissionDetail, pitch) => {
                 const title = `${fcTitle}${moment().format('YYYYMMDDHHmmssSSS')}`;
                 const interests = makeSampleInterestSlugArray(3);
-                const docID = Challenges.define({ title, description, pitch, interests, submissionDetail });
-                expect(Challenges.isDefined(docID)).to.be.true;
-                const doc = Challenges.findDoc(docID);
+                const docID = Challenge.define({ title, description, pitch, interests, submissionDetail });
+                expect(Challenge.isDefined(docID)).to.be.true;
+                const doc = Challenge.findDoc(docID);
                 expect(doc.interests).to.have.lengthOf(3);
-                Challenges.removeIt(docID);
-                expect(Challenges.isDefined(docID)).to.be.false;
+                Challenge.removeIt(docID);
+                expect(Challenge.isDefined(docID)).to.be.false;
               }),
       );
       done();
@@ -44,10 +44,10 @@ if (Meteor.isServer) {
       const pitch = faker.lorem.words();
       const submissionDetail = faker.lorem.words();
       const interests = makeSampleInterestSlugArray(2);
-      const docID1 = Challenges.define({ title, description, interests, pitch, submissionDetail });
-      const docID2 = Challenges.define({ title, description, interests, pitch, submissionDetail });
+      const docID1 = Challenge.define({ title, description, interests, pitch, submissionDetail });
+      const docID2 = Challenge.define({ title, description, interests, pitch, submissionDetail });
       expect(docID1).to.equal(docID2);
-      expect(Challenges.isDefined(docID1)).to.be.true;
+      expect(Challenge.isDefined(docID1)).to.be.true;
     });
   });
 }

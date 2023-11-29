@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
 import { removeItMethod } from '../../../api/base/BaseCollection.methods';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 
 /** Renders a single row in the table. See pages/Listmenuitemss.jsx. */
 const ChallengesAdminWidget = ({ challenges }) => {
@@ -19,8 +19,8 @@ const ChallengesAdminWidget = ({ challenges }) => {
         .then((willDelete) => {
           if (willDelete) {
             removeItMethod.call({
-              collectionName: Challenges.getCollectionName(),
-              instance: Challenges.getID(docID),
+              collectionName: Challenge.getCollectionName(),
+              instance: Challenge.getID(docID),
             }, (error) => (error ?
                 swal('Error', error.message, 'error') :
                 swal('Success', 'Challenge removed', 'success')));

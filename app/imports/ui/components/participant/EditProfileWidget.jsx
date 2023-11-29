@@ -18,7 +18,7 @@ import { Redirect } from 'react-router-dom';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { ParticipantChallenges } from '../../../api/user/ParticipantChallengeCollection';
 import { ParticipantSkills } from '../../../api/user/ParticipantSkillCollection';
 import { ParticipantTools } from '../../../api/user/ParticipantToolCollection';
@@ -36,7 +36,7 @@ const EditProfileWidget = () => {
     const getParticipant = Participants.findDoc({ userID: Meteor.userId() });
     const participantID = getParticipant._id;
     return {
-      allChallenges: Challenges.find({}).fetch(),
+      allChallenges: Challenge.find({}).fetch(),
       allSkills: Skills.find({}).fetch(),
       allTools: Tools.find({}).fetch(),
       participant: getParticipant,
@@ -78,7 +78,7 @@ const EditProfileWidget = () => {
   const buildTheModel = () => {
     const model = participant;
     model.challenges = _.map(devChallenges, (challenge) => {
-      const c = Challenges.findDoc(challenge.challengeID);
+      const c = Challenge.findDoc(challenge.challengeID);
       return c.title;
     });
     model.skills = _.map(devSkills, (skill) => {
@@ -104,7 +104,7 @@ const EditProfileWidget = () => {
     if (data.challenges) {
       // build an array of challenge slugs
       updateData.challenges = data.challenges.map((title) => {
-        const doc = Challenges.findDoc({ title });
+        const doc = Challenge.findDoc({ title });
         return Slugs.getNameFromID(doc.slugID);
       });
     }

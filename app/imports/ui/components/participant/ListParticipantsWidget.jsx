@@ -9,7 +9,7 @@ import { ParticipantSkills } from '../../../api/user/ParticipantSkillCollection'
 import { ParticipantTools } from '../../../api/user/ParticipantToolCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import ListParticipantsCard from './ListParticipantsCard';
 import ListParticipantsFilter from './ListParticipantsFilter';
@@ -32,7 +32,7 @@ class ListParticipantsWidget extends React.Component {
   render() {
     if (this.props.participants.length === 0) {
       return (
-        <div align={'center'}>
+        <div style="text-align: center;">
           <Header as="h2" icon>
             There are no participants at the moment.
             <Header.Subheader>Please check back later.</Header.Subheader>
@@ -314,7 +314,7 @@ export default withTracker(() => ({
   participantTools: ParticipantTools.find({}).fetch(),
   teams: Teams.find({ open: true }).fetch(),
   skills: Skills.find({}).fetch(),
-  challenges: Challenges.find({}).fetch(),
+  challenges: Challenge.find({}).fetch(),
   tools: Tools.find({}).fetch(),
   participants: Participants.find({}).fetch(),
 }))(ListParticipantsWidget);

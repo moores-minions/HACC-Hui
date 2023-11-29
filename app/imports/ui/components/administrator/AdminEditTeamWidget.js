@@ -102,7 +102,7 @@ const AdminEditTeamWidget = (props) => {
                     </ListGroup>
                     <TextField name='gitHubRepo' required/>
                   </Card.Body>
-                <div align='center'>
+                <div style="text-align: center;">
                   <SubmitField value='Submit'
                                style={{
                                  color: 'white',

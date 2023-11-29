@@ -10,7 +10,7 @@ import { TeamTools } from '../../../api/team/TeamToolCollection';
 import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import AllTeamInvitationCard from '../administrator/AllTeamInvitationCard';
 import { TeamInvitations } from '../../../api/team/TeamInvitationCollection';
@@ -32,7 +32,7 @@ const AllTeamInvitationsWidget = () => {
     teamTools: TeamTools.find({}).fetch(),
     allTeams: Teams.find({}).fetch(),
     allSkills: Skills.find({}).fetch(),
-    allChallenges: Challenges.find({}).fetch(),
+    allChallenges: Challenge.find({}).fetch(),
     allTools: Tools.find({}).fetch(),
     allParticipants: Participants.find({}).fetch(),
     teamParticipants: TeamParticipants.find({}).fetch(),

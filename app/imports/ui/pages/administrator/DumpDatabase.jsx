@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 import { dumpDatabaseMethod, dumpTeamCSVMethod, removeItMethod } from '../../../api/base/BaseCollection.methods';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { Teams } from '../../../api/team/TeamCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 
 export const databaseFileDateFormat = 'YYYY-MM-DD-HH-mm-ss';
 
@@ -22,7 +22,7 @@ const DumpDatabase = () => {
   const { participants, teams, challenges } = useTracker(() => ({
     participants: Participants.find({}).fetch(),
     teams: Teams.find({}).fetch(),
-    challenges: Challenges.find({}).fetch(),
+    challenges: Challenge.find({}).fetch(),
   }));
 
   const handleClick = () => {
@@ -105,6 +105,32 @@ const DumpDatabase = () => {
     });
   };
 
+  const removeChallenges = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'This will remove all challenges from HACC-Hui and cannot be undone',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        challenges.forEach((challenge) => {
+          removeItMethod.call({
+            collectionName: Challenge.getCollectionName(),
+            instance: challenge._id,
+          }, (err) => {
+            if (err) {
+              swal('Error', err.message, 'error');
+            }
+          });
+        });
+        if (Teams.find().fetch().length === 0) {
+          swal('Success', 'Removed all challenges', 'success');
+        }
+      }
+    });
+  };
+
   return (
     <Container id="dump-page"
                fluid style={{ paddingLeft: 250, paddingRight: 250, paddingTop: 30, paddingBottom: 30 }}>
@@ -140,16 +166,22 @@ const DumpDatabase = () => {
       <div
         style={{ display: 'block', position: 'initial' }}
       >
-        <Row className='text-center'>
+        <Row className='text-center mb-3'>
           <Col>
             <Button variant='danger' id='remove-participants'
                     onClick={removeParticipants}>Remove participants</Button>
           </Col>
         </Row>
-        <Row className='text-center'>
+        <Row className='text-center mb-3'>
           <Col>
             <Button variant='danger' id='remove-teams'
                     onClick={removeTeams}>Remove teams</Button>
+          </Col>
+        </Row>
+        <Row className='text-center mb-3'>
+          <Col>
+            <Button variant='danger' id='remove-challenges'
+                    onClick={removeChallenges}>Remove challenges</Button>
           </Col>
         </Row>
       </div>

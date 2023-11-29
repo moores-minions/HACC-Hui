@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Row, Col, Card, Spinner, Form } from 'react-bootstrap';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
@@ -189,7 +189,7 @@ BestTeam.propTypes = {
 };
 
 export default withTracker(() => {
-  const subscriptionChallenges = Challenges.subscribe();
+  const subscriptionChallenges = Challenge.subscribe();
   const subscriptionSkills = Skills.subscribe();
   const subscriptionTools = Tools.subscribe();
   const subscriptionDevelopers = Participants.subscribe();
@@ -203,7 +203,7 @@ export default withTracker(() => {
   const subscriptionWantToJoin = WantsToJoin.subscribe();
 
   return {
-    challenges: Challenges.find({}).fetch(),
+    challenges: Challenge.find({}).fetch(),
     skills: Skills.find({}).fetch(),
     tools: Tools.find({}).fetch(),
     developers: Participants.find({}).fetch(),

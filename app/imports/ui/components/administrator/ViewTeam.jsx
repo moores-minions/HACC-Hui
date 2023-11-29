@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 import { CheckCircleFill, ExclamationCircleFill } from 'react-bootstrap-icons';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 
 const ViewTeam = ({ isCompliant, team, teamMembers }) => {
   const { participants: allParticipants, teamChallenges: allteamChallenges } = useTracker(() => {
     const participants = Participants.find({}).fetch();
     const teamChallenges = TeamChallenges.find({ teamID: team._id })
-      .fetch().map(tc => Challenges.findDoc(tc.challengeID));
+      .fetch().map(tc => Challenge.findDoc(tc.challengeID));
 
     return {
       participants, teamChallenges,

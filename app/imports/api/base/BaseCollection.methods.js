@@ -7,7 +7,7 @@ import { HACCHui } from '../hacc-hui/HACCHui';
 import { ROLE } from '../role/Role';
 import { Teams } from '../team/TeamCollection';
 import { TeamChallenges } from '../team/TeamChallengeCollection';
-import { Challenges } from '../challenge/ChallengeCollection';
+import { Challenge } from '../challenge/ChallengeCollection';
 import { TeamParticipants } from '../team/TeamParticipantCollection';
 import { Participants } from '../user/ParticipantCollection';
 import { MinorParticipants } from '../user/MinorParticipantCollection';
@@ -64,7 +64,7 @@ export const dumpTeamCSVMethod = new ValidatedMethod({
         const teamID = team._id;
         const row = [team.name];
         const tcs = TeamChallenges.find({ teamID }).fetch();
-        const challenges = tcs.map((tc) => Challenges.findDoc(tc.challengeID).title);
+        const challenges = tcs.map((tc) => Challenge.findDoc(tc.challengeID).title);
         row.push(challenges.join(', '));
         const tps = TeamParticipants.find({ teamID }).fetch();
         const members = tps.map((tp) => {

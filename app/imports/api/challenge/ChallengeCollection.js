@@ -87,4 +87,4 @@ class ChallengeCollection extends BaseSlugCollection {
  * @type {api/challenge.ChallengeCollection}
  * @memberOf api/challenge
  */
-export const Challenges = new ChallengeCollection();
+export const Challenge = new ChallengeCollection();

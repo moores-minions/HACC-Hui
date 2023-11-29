@@ -22,7 +22,7 @@ import { ParticipantSkills } from '../../../api/user/ParticipantSkillCollection'
 import { ParticipantTools } from '../../../api/user/ParticipantToolCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import ListParticipantCardAdmin from './ListParticipantsCardAdmin';
 import ListParticipantsFilterAdmin from './ListParticipantsFilterAdmin';
@@ -41,7 +41,7 @@ const ListParticipantsWidgetAdmin = () => {
     allTeams: Teams.find({}).fetch(),
     teamParticipants: TeamParticipants.find({}).fetch(),
     allSkills: Skills.find({}).fetch(),
-    allChallenges: Challenges.find({}).fetch(),
+    allChallenges: Challenge.find({}).fetch(),
     allTools: Tools.find({}).fetch(),
     allParticipants: Participants.find({}, { sort: { lastName: 1, firstName: 1 } }).fetch(),
   }));

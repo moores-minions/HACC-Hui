@@ -27,7 +27,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Teams } from '../../../api/team/TeamCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
@@ -186,7 +186,7 @@ class CreateTeamWidget extends React.Component {
     });
     const challengesArr = [];
     if (challenge) {
-      const challengeDoc = Challenges.findDoc({ title: challenge });
+      const challengeDoc = Challenge.findDoc({ title: challenge });
       const challengeSlug = Slugs.getNameFromID(challengeDoc.slugID);
       challengesArr.push(challengeSlug);
     }
@@ -439,7 +439,7 @@ CreateTeamWidget.propTypes = {
 
 export default withTracker(() => ({
   participant: Participants.findDoc({ userID: Meteor.userId() }),
-  challenges: Challenges.find({}).fetch(),
+  challenges: Challenge.find({}).fetch(),
   skills: Skills.find({}).fetch(),
   tools: Tools.find({}).fetch(),
   canCreateTeams: CanCreateTeams.findOne().canCreateTeams,

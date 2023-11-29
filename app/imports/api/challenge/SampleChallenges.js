@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import _ from 'lodash';
 import { makeSampleInterestSlugArray } from '../interest/SampleInterests';
-import { Challenges } from './ChallengeCollection';
+import { Challenge } from './ChallengeCollection';
 
 /**
  * Creates a sample challenge for testing purposes.
@@ -14,7 +14,7 @@ export const makeSampleChallenge = () => {
   const submissionDetail = faker.internet.url();
   const interests = makeSampleInterestSlugArray(2);
   const pitch = faker.internet.url();
-  return Challenges.define({ title, description, interests, submissionDetail, pitch });
+  return Challenge.define({ title, description, interests, submissionDetail, pitch });
 };
 
 /**
@@ -39,5 +39,5 @@ export const makeSampleChallengeArray = (num = 1) => {
  */
 export const makeSampleChallengeSlugArray = (num = 1) => {
   const ids = makeSampleChallengeArray(num);
-  return _.map(ids, (id) => Challenges.findSlugByID(id));
+  return _.map(ids, (id) => Challenge.findSlugByID(id));
 };

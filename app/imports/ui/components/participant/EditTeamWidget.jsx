@@ -18,7 +18,7 @@ import { Redirect } from 'react-router-dom';
 import { Teams } from '../../../api/team/TeamCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Slugs } from '../../../api/slug/SlugCollection';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
 import { TeamSkills } from '../../../api/team/TeamSkillCollection';
@@ -39,7 +39,7 @@ const EditTeamWidget = () => {
   } = useTracker(() => {
     const getTeam = Teams.findDoc(teamID);
     const challengeIDs = TeamChallenges.find({ teamID }).fetch();
-    const getChallenges = _.map(challengeIDs, (doc) => Challenges.findDoc(doc.challengeID));
+    const getChallenges = _.map(challengeIDs, (doc) => Challenge.findDoc(doc.challengeID));
     const skillIDs = TeamSkills.find({ teamID }).fetch();
     const getSkills = _.map(skillIDs, (id) => Skills.findDoc(id.skillID));
     const toolIDs = TeamTools.find({ teamID }).fetch();
@@ -47,7 +47,7 @@ const EditTeamWidget = () => {
     const memberIDs = TeamParticipants.find({ teamID }).fetch();
     const getMembers = _.map(memberIDs, (id) => Participants.findDoc(id.participantID));
     const getParticipants = Participants.find({}).fetch();
-    const getAllChallenges = Challenges.find({}).fetch();
+    const getAllChallenges = Challenge.find({}).fetch();
     const getAllSkills = Skills.find({}).fetch();
     const getAllTools = Tools.find({}).fetch();
     const getCanChangeChallenges = CanChangeChallenges.findOne().canChangeChallenges;
@@ -118,7 +118,7 @@ const EditTeamWidget = () => {
     if (data.challenge) {
       // build an array of challenge slugs
       updateData.challenges = [];
-      const doc = Challenges.findDoc({ title: data.challenge });
+      const doc = Challenge.findDoc({ title: data.challenge });
       updateData.challenges.push(Slugs.getNameFromID(doc.slugID));
     }
     if (data.skills) {

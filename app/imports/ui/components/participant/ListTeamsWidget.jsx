@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 import ListTeamExampleWidget from './ListTeamExampleWidget';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { TeamSkills } from '../../../api/team/TeamSkillCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { TeamTools } from '../../../api/team/TeamToolCollection';
@@ -18,7 +18,7 @@ const getTeamChallenges = team => {
   const teamID = team._id;
   const teamChallengeDocs = TeamChallenges.find({ teamID }).fetch();
   const challengeTitles = teamChallengeDocs.map(
-    tc => Challenges.findDoc(tc.challengeID).title,
+    tc => Challenge.findDoc(tc.challengeID).title,
   );
   return challengeTitles;
 };

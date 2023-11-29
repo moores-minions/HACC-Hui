@@ -1,6 +1,6 @@
 import SimpleSchema from 'simpl-schema';
 import BaseCollection from '../base/BaseCollection';
-import { Challenges } from './ChallengeCollection';
+import { Challenge } from './ChallengeCollection';
 import { Interests } from '../interest/InterestCollection';
 
 /**
@@ -26,7 +26,7 @@ class ChallengeInterestCollection extends BaseCollection {
    * @return {string} The id of the record.
    */
   define({ challenge, interest }) {
-    const challengeID = Challenges.getID(challenge);
+    const challengeID = Challenge.getID(challenge);
     const interestID = Interests.findIdBySlug(interest);
     const docID = this._collection.insert({ challengeID, interestID });
     return docID;
@@ -42,7 +42,7 @@ class ChallengeInterestCollection extends BaseCollection {
     this.assertDefined(docID);
     const updateData = {};
     if (challenge) {
-      updateData.challengeID = Challenges.getID(challenge);
+      updateData.challengeID = Challenge.getID(challenge);
     }
     if (interest) {
       updateData.interestID = Interests.getID(interest);
@@ -64,7 +64,7 @@ class ChallengeInterestCollection extends BaseCollection {
    * @param challenge {string} the challenge slug or ID.
    */
   removeChallenge(challenge) {
-    const challengeID = Challenges.getID(challenge);
+    const challengeID = Challenge.getID(challenge);
     this._collection.remove({ challengeID });
   }
 

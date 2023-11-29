@@ -6,7 +6,7 @@ import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { ROUTES } from '../../../startup/client/route-constants';
 
 /**
@@ -32,7 +32,7 @@ const AddChallenge = () => {
   const submit = (data, formRef) => {
     const { title, description, submissionDetail, pitch } = data;
     const definitionData = { title, description, submissionDetail, pitch };
-    const collectionName = Challenges.getCollectionName();
+    const collectionName = Challenge.getCollectionName();
     defineMethod.call({ collectionName: collectionName, definitionData: definitionData },
       (error) => {
         if (error) {

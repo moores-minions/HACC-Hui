@@ -10,7 +10,7 @@ import { ParticipantChallenges } from './ParticipantChallengeCollection';
 import { ParticipantInterests } from './ParticipantInterestCollection';
 import { ParticipantSkills } from './ParticipantSkillCollection';
 import { ParticipantTools } from './ParticipantToolCollection';
-import { Challenges } from '../challenge/ChallengeCollection';
+import { Challenge } from '../challenge/ChallengeCollection';
 import { Interests } from '../interest/InterestCollection';
 import { Skills } from '../skill/SkillCollection';
 import { Tools } from '../tool/ToolCollection';
@@ -213,7 +213,7 @@ class ParticipantCollection extends BaseSlugCollection {
     } = this.findDoc(docID);
     const selector = { participantID: _id };
     const devChallenges = ParticipantChallenges.find(selector).fetch();
-    const challenges = _.map(devChallenges, (dC) => Challenges.findSlugByID(dC.challengeID));
+    const challenges = _.map(devChallenges, (dC) => Challenge.findSlugByID(dC.challengeID));
     const devInterests = ParticipantInterests.find(selector).fetch();
     const interests = _.map(devInterests, (dI) => Interests.findSlugByID(dI.interestID));
     const devSkills = ParticipantSkills.find(selector).fetch();

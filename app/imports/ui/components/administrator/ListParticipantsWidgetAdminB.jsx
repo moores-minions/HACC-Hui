@@ -23,7 +23,7 @@ import { ParticipantSkills } from '../../../api/user/ParticipantSkillCollection'
 import { ParticipantTools } from '../../../api/user/ParticipantToolCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
 import { Tools } from '../../../api/tool/ToolCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import ListParticipantCardAdmin from './ListParticipantsCardAdmin';
 import ListParticipantsFilterAdmin from './ListParticipantsFilterAdmin';
@@ -53,7 +53,7 @@ class ListParticipantsWidgetAdmin extends React.Component {
     // console.log(this.state.result);
     if (this.props.participants.length === 0) {
       return (
-        <div align={'center'}>
+        <div style="text-align: center;">
           <Header as='h2' icon>
             There are no participants at the moment.
             <Header.Subheader>
@@ -361,7 +361,7 @@ export default withTracker(() => {
   const teams = Teams.find({}).fetch();
   const teamParticipants = TeamParticipants.find({}).fetch();
   const skills = Skills.find({}).fetch();
-  const challenges = Challenges.find({}).fetch();
+  const challenges = Challenge.find({}).fetch();
   const tools = Tools.find({}).fetch();
   const participants = Participants.find({}, { sort: { lastName: 1, firstName: 1 } }).fetch();
   // console.log(participants);

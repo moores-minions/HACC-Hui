@@ -4,7 +4,7 @@ Best practices for the React UI framework.
 
 ### RE-01: Components should be simple.
 
-Components should do one thing.  If they are doing many things, then consider breaking them up into subcomponents.
+Components should do one thing. If they are doing many things, then consider breaking them up into subcomponents.
 
 ### RE-02: No state updates in loops.
 
@@ -12,7 +12,7 @@ Are there state updates in loops?
 
 ### RE-03: Do not rename default exports.
 
-When importing a component that is exported "by default", do not rename the component.  The code is more understandable if every component is always referenced by its original name.
+When importing a component that is exported "by default", do not rename the component. The code is more understandable if every component is always referenced by its original name.
 
 ### RE-04: Destructure props in component parameter.
 
@@ -29,9 +29,13 @@ const StudentHomeIcePageContainer = withTracker(() => {
   const earnedICE = StudentProfiles.getEarnedICE(username);
   const projectedICE = StudentProfiles.getProjectedICE(username);
   const helpMessages = HelpMessages.findNonRetired({});
-  const favoriteInterests = FavoriteInterests.findNonRetired({ userID: studentID });
+  const favoriteInterests = FavoriteInterests.findNonRetired({
+    userID: studentID,
+  });
   const courseInstances = CourseInstances.findNonRetired({ studentID });
-  const opportunityInstances = OpportunityInstances.findNonRetired({ studentID });
+  const opportunityInstances = OpportunityInstances.findNonRetired({
+    studentID,
+  });
   return {
     helpMessages,
     earnedICE,
@@ -63,7 +67,7 @@ const AdvisorPageMenuWidget = () => {
   numRequests += VerificationRequests.findNonRetired({ status: 'Open' }).length;
 ```
 
-```numMod``` and ```numRequests``` are not reactive.
+`numMod` and `numRequests` are not reactive.
 
 ### RE-08: Imported component names and file names should match
 
@@ -88,7 +92,7 @@ In this case, we have a component (AdminAnalyticsNewsletterWidget), defined in a
 Our convention is to import this component in the following way:
 
 ```js
-import AdminAnalyticsNewsletterWidget from '../../components/admin/analytics/newsletter/AdminAnalyticsNewsletterWidget';
+import AdminAnalyticsNewsletterWidget from "../../components/admin/analytics/newsletter/AdminAnalyticsNewsletterWidget";
 ```
 
 In other words, we name the imported component using the name associated with the file, and not the "containerized" name.
@@ -98,20 +102,27 @@ In other words, we name the imported component using the name associated with th
 ```jsx
 class AdminHomeBanner extends React.Component {
   render() {
-    const gridStyle = { height: '500px' };
+    const gridStyle = { height: "500px" };
     return (
-        <div className="adminhome-banner">
-          <Grid container verticalAlign="middle" textAlign="center" style={gridStyle}>
-            <Grid.Row>
-              <Grid.Column>
-                <div className="welcome-text"><p>Hello there</p></div>
-                <Header as="h1" inverted>
-                  Manage your site
-                </Header>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </div>
+      <div className="adminhome-banner">
+        <Grid
+          container
+          verticalAlign="middle"
+          textAlign="center"
+          style={gridStyle}
+        >
+          <Grid.Row>
+            <Grid.Column>
+              <div className="welcome-text">
+                <p>Hello there</p>
+              </div>
+              <Header as="h1" inverted>
+                Manage your site
+              </Header>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
     );
   }
 }
@@ -121,26 +132,31 @@ Should be
 
 ```jsx
 const AdminHomeBanner = () => {
-  const gridStyle = { height: '500px' };
+  const gridStyle = { height: "500px" };
   return (
-      <div className="adminhome-banner">
-        <Grid container verticalAlign="middle" textAlign="center" style={gridStyle}>
-          <Grid.Row>
-            <Grid.Column>
-              <div className="welcome-text"><p>Hello there</p></div>
-              <Header as="h1" inverted>
-                Manage your site
-              </Header>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
+    <div className="adminhome-banner">
+      <Grid
+        container
+        verticalAlign="middle"
+        textAlign="center"
+        style={gridStyle}
+      >
+        <Grid.Row>
+          <Grid.Column>
+            <div className="welcome-text">
+              <p>Hello there</p>
+            </div>
+            <Header as="h1" inverted>
+              Manage your site
+            </Header>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </div>
   );
-}
+};
 ```
 
 ### RE-10: Avoid Widget and Card in names.
 
 Many React components are named with "Widget". In most (all?) cases, adding "Widget" just increases the length of the name without adding value.
-
-In addition, many component names contain the word "Card". Only use "Card" in a class name when it literally returns a single Semantic UI Card.

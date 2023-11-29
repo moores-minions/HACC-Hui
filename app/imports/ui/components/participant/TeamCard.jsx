@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Meteor } from 'meteor/meteor';
 import swal from 'sweetalert';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { TeamSkills } from '../../../api/team/TeamSkillCollection';
 import { TeamTools } from '../../../api/team/TeamToolCollection';
 import SkillItem from './SkillItem';
@@ -20,7 +20,7 @@ const TeamCard = ({ team, participantID }) => {
     const getTeam = team;
     const teamID = getTeam._id;
     const tCs = TeamChallenges.find({ teamID }).fetch();
-    const challengeTitles = _.map(tCs, (tc) => Challenges.findDoc(tc.challengeID).title);
+    const challengeTitles = _.map(tCs, (tc) => Challenge.findDoc(tc.challengeID).title);
     getTeam.challenges = challengeTitles;
     getTeam.skills = TeamSkills.find({ teamID }).fetch();
     getTeam.tools = TeamTools.find({ teamID }).fetch();

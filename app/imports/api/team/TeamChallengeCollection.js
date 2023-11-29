@@ -1,6 +1,6 @@
 import SimpleSchema from 'simpl-schema';
 import BaseCollection from '../base/BaseCollection';
-import { Challenges } from '../challenge/ChallengeCollection';
+import { Challenge } from '../challenge/ChallengeCollection';
 import { Teams } from './TeamCollection';
 import { ROLE } from '../role/Role';
 
@@ -26,7 +26,7 @@ class TeamChallengeCollection extends BaseCollection {
   define({ team, challenge }) {
     // console.log('TeamChallenge.define', team, challenge);
     const teamID = Teams.findIdBySlug(team);
-    const challengeID = Challenges.findIdBySlug(challenge);
+    const challengeID = Challenge.findIdBySlug(challenge);
     // console.log(teamID, challengeID);
     return this._collection.insert({ teamID, challengeID });
   }
@@ -42,7 +42,7 @@ class TeamChallengeCollection extends BaseCollection {
     this.assertDefined(docID);
     const updateData = {};
     if (challenge) {
-      updateData.challengeID = Challenges.getID(challenge);
+      updateData.challengeID = Challenge.getID(challenge);
     }
     if (team) {
       updateData.teamID = Teams.getID(team);
@@ -63,7 +63,7 @@ class TeamChallengeCollection extends BaseCollection {
    * @param challenge {String} challenge slug or ID.
    */
   removeChallenge(challenge) {
-    const challengeID = Challenges.getID(challenge);
+    const challengeID = Challenge.getID(challenge);
     this._collection.remove({ challengeID });
   }
 

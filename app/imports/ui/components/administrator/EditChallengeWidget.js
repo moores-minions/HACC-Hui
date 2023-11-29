@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 import { useParams } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { updateMethod } from '../../../api/base/BaseCollection.methods';
-import { Challenges } from '../../../api/challenge/ChallengeCollection';
+import { Challenge } from '../../../api/challenge/ChallengeCollection';
 import { ROUTES } from '../../../startup/client/route-constants';
 
 const EditChallengeWidget = () => {
@@ -17,7 +17,7 @@ const EditChallengeWidget = () => {
   // Document ID object of form { _id: "..." }
   const documentId = useParams();
   const { doc } = useTracker(() => {
-    const document = Challenges.findOne(documentId);
+    const document = Challenge.findOne(documentId);
     return {
       doc: document,
     };
@@ -36,7 +36,7 @@ const EditChallengeWidget = () => {
     const updateData = {
       id, description, submissionDetail, pitch,
     };
-    const collectionName = Challenges.getCollectionName();
+    const collectionName = Challenge.getCollectionName();
     updateMethod.call({ collectionName: collectionName, updateData: updateData },
       (error) => {
         if (error) {
@@ -52,7 +52,7 @@ const EditChallengeWidget = () => {
     return <Redirect to={ ROUTES.CONFIGURE_HACC } />;
   }
 
-  const formSchema = new SimpleSchema2Bridge(Challenges.getSchema());
+  const formSchema = new SimpleSchema2Bridge(Challenge.getSchema());
   return (
     <Container className='add-edit' id='edit-challenge-page'>
       <Row className='justify-content-center'><Col md={7} lg={5}>

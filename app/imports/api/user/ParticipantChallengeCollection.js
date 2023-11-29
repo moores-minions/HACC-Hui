@@ -1,6 +1,6 @@
 import SimpleSchema from 'simpl-schema';
 import BaseCollection from '../base/BaseCollection';
-import { Challenges } from '../challenge/ChallengeCollection';
+import { Challenge } from '../challenge/ChallengeCollection';
 import { Participants } from './ParticipantCollection';
 import { ROLE } from '../role/Role';
 
@@ -24,7 +24,7 @@ class ParticipantChallengeCollection extends BaseCollection {
    * @return {String} the ID of the pair.
    */
   define({ challenge, participant }) {
-    const challengeID = Challenges.getID(challenge);
+    const challengeID = Challenge.getID(challenge);
     const participantID = Participants.getID(participant);
     return this._collection.insert({ challengeID, participantID });
   }
@@ -42,7 +42,7 @@ class ParticipantChallengeCollection extends BaseCollection {
       updateData.participantID = Participants.getID(participant);
     }
     if (challenge) {
-      updateData.challengeID = Challenges.getID(challenge);
+      updateData.challengeID = Challenge.getID(challenge);
     }
     this._collection.update(docID, { $set: updateData });
   }
@@ -62,7 +62,7 @@ class ParticipantChallengeCollection extends BaseCollection {
    * @throws {Meteor.Error} if challenge is not defined.
    */
   removeChallenge(challenge) {
-    const challengeID = Challenges.getID(challenge);
+    const challengeID = Challenge.getID(challenge);
     this._collection.remove({ challengeID });
   }
 
