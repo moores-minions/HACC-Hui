@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Card, Row, Col } from 'react-bootstrap';
 import { withTracker } from 'meteor/react-meteor-data';
 import {
@@ -12,18 +12,18 @@ import PropTypes from 'prop-types';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import swal from 'sweetalert';
+import { Redirect } from 'react-router-dom';
 import { Participants } from '../../../api/user/ParticipantCollection';
 import { defineMethod } from '../../../api/base/BaseCollection.methods';
 import { Suggestions } from '../../../api/suggestions/SuggestionCollection';
 import { paleBlueStyle } from '../../styles';
+import { ROUTES } from '../../../startup/client/route-constants';
 
-class SuggestToolSkillWidget extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferer: false };
-  }
+const SuggestToolSkillWidget = (props) => {
 
-  buildTheFormSchema() {
+  const [redirect, setRedirect] = useState(false);
+
+  const buildTheFormSchema = () => {
     const schema = new SimpleSchema({
       type: {
         type: String,
@@ -33,18 +33,16 @@ class SuggestToolSkillWidget extends React.Component {
       description: String,
     });
     return schema;
-  }
+  };
 
-  submit(data, formRef) {
-    // console.log('CreateProfileWidget.submit', data);
+  const submit = (data, formRef) => {
     const collectionName = Suggestions.getCollectionName();
     const newData = {};
-    const model = this.props.participant;
+    const model = props.participant;
     newData.username = model.username;
     newData.name = data.name;
     newData.type = data.type;
     newData.description = data.description;
-    console.log(newData);
 
     defineMethod.call({ collectionName: collectionName, definitionData: newData },
       (error) => {
@@ -52,20 +50,22 @@ class SuggestToolSkillWidget extends React.Component {
           swal('Error', error.message, 'error');
         } else {
           swal('Success', 'Thank you for your suggestion', 'success');
+          setRedirect(true);
           formRef.reset();
         }
       });
+  };
+
+  if (redirect) {
+    return <Redirect to={ROUTES.SUGGEST_TOOL_SKILL}/>;
   }
 
-  render() {
     let fRef = null;
-    const model = this.props.participant;
-    const schema = this.buildTheFormSchema();
+    const model = props.participant;
+    const schema = buildTheFormSchema();
     const formSchema = new SimpleSchema2Bridge(schema);
-    console.log(schema);
 
     const firstname = model.firstName;
-    console.log(formSchema);
     return (
       <Container id="suggest-tool-skill" style={{ paddingBottom: '50px', paddingTop: '40px' }}>
         <Card style = { paleBlueStyle }>
@@ -75,7 +75,7 @@ class SuggestToolSkillWidget extends React.Component {
           <Card.Body>
             <AutoForm ref={ref => {
               fRef = ref;
-            }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
+            }} schema={formSchema} onSubmit={data => submit(data, fRef)}>
               <Row>
                 <Col><SelectField name="type"
                                   options={[{ label: 'Tool', value: 'Tool' },
@@ -89,8 +89,7 @@ class SuggestToolSkillWidget extends React.Component {
         </Card>
       </Container>
     );
-  }
-}
+};
 
 SuggestToolSkillWidget.propTypes = {
   participant: PropTypes.object.isRequired,
