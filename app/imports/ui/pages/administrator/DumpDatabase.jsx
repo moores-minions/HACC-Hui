@@ -124,7 +124,7 @@ const DumpDatabase = () => {
             }
           });
         });
-        if (Teams.find().fetch().length === 0) {
+        if (Challenge.find().fetch().length === 0) {
           swal('Success', 'Removed all challenges', 'success');
         }
       }
