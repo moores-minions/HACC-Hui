@@ -40,20 +40,20 @@ const TeamInvitationsWidget = () => {
     }));
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-    if (teamInvitations.length === 0) {
-      return (
-          <Container id='no-invitations' align={'center'}>
-            <h4 className='text-center'>
-              <Icon.PeopleFill/>
-              {' '}
-              You have no invitations at the moment.
-              <h5>
-                Please check back later.
-              </h5>
-            </h4>
-          </Container>
-      );
-    }
+  if (teamInvitations.length === 0) {
+    return (
+      <Container id='no-invitations' align={'center'}>
+        <h4 className='text-center'>
+          <Icon.PeopleFill/>
+          {' '}
+          You have no invitations at the moment.
+          <h5>
+            Please check back later.
+          </h5>
+        </h4>
+      </Container>
+    );
+  }
 
     // eslint-disable-next-line no-unused-vars
     const sortBy = [

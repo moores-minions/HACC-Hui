@@ -8,7 +8,6 @@ import {
   TextField,
 } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
-import PropTypes from 'prop-types';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import swal from 'sweetalert';

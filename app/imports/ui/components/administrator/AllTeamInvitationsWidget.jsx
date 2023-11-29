@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Card, Col, Container } from 'react-bootstrap';
+import * as Icon from 'react-bootstrap-icons';
 import { _ } from 'lodash';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Teams } from '../../../api/team/TeamCollection';
@@ -36,6 +37,21 @@ const AllTeamInvitationsWidget = () => {
     allParticipants: Participants.find({}).fetch(),
     teamParticipants: TeamParticipants.find({}).fetch(),
   }));
+
+  if (teamInvitations.length === 0) {
+    return (
+      <Container id='admin-no-invitations' align={'center'}>
+        <h4 className='text-center'>
+          <Icon.PeopleFill/>
+          {' '}
+          There are no invitations at the moment.
+          <h5>
+            Please check back later.
+          </h5>
+        </h4>
+      </Container>
+    );
+  }
 
   // eslint-disable-next-line no-unused-vars
   const sortBy = [

@@ -11,6 +11,8 @@ import { Participants } from '../user/ParticipantCollection';
 import { Skills } from '../skill/SkillCollection';
 import { Tools } from '../tool/ToolCollection';
 import { ROLE } from '../role/Role';
+import { TeamInvitations } from './TeamInvitationCollection';
+import { WantsToJoin } from './WantToJoinCollection';
 
 /** @namespace api/team */
 
@@ -168,7 +170,9 @@ class TeamCollection extends BaseSlugCollection {
     TeamParticipants.removeTeam(team);
     TeamSkills.removeTeam(team);
     TeamTools.removeTeam(team);
-    this._collection.remove({ _id: docID });
+    TeamInvitations.removeTeam(team);
+    WantsToJoin.removeTeam(team);
+    super.removeIt(docID);
   }
 
   assertValidRoleForMethod(userId) {
