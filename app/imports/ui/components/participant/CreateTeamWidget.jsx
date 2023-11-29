@@ -26,8 +26,6 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { SimpleSchema2Bridge } from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
-
-// import RadioField from '../../components/form-fields/RadioField';
 import { Teams } from '../../../api/team/TeamCollection';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 import { Skills } from '../../../api/skill/SkillCollection';
@@ -69,6 +67,7 @@ class CreateTeamWidget extends React.Component {
         type: String,
         allowedValues: ['Open', 'Close'],
         label: 'Availability',
+        optional: true,
       },
       name: { type: String, label: 'Team Name' },
       challenge: {
@@ -107,13 +106,12 @@ class CreateTeamWidget extends React.Component {
    * @param formData {Object} the results from the form.
    * @param formRef {FormRef} reference to the form.
    */
-  // eslint-disable-next-line no-unused-vars
   submit(formData, formRef) {
-    // console.log('create team submit', formData);
+    // console.log(formData);
     this.setState({ isRegistered: [] });
     this.setState({ notRegistered: [] });
     const owner = this.props.participant.username;
-    const { name, description, challenge, skills, tools, participants } =
+    const { name, description, challenge, skills, tools, participants, open } =
       formData;
     if (/^[a-zA-Z0-9-]*$/.test(name) === false) {
       swal(
@@ -132,7 +130,6 @@ class CreateTeamWidget extends React.Component {
     const currPart = Participants.find({}).fetch();
     const isRegistered = [];
     const notRegistered = [];
-    // console.log(currPart, partArray);
     for (let i = 0; i < partArray.length; i++) {
       let registered = false;
       for (let j = 0; j < currPart.length; j++) {
@@ -157,13 +154,6 @@ class CreateTeamWidget extends React.Component {
     }
     if (notRegistered.length !== 0) {
       this.setState({ errorModal: true });
-    }
-
-    let { open } = formData;
-    if (open === 'Open') {
-      open = true;
-    } else {
-      open = false;
     }
 
     const skillsArr = _.map(skills, (n) => {
@@ -291,7 +281,7 @@ class CreateTeamWidget extends React.Component {
                   </Col>
                   <Col sm={4}>
                     <div className="mb-3">
-                      <Form.Label className="required">
+                      <Form.Label >
                         Availability <span style={{ color: 'red' }}>*</span>
                       </Form.Label>
                       <div key={'inline-radio'} className="mb-3">
@@ -300,6 +290,7 @@ class CreateTeamWidget extends React.Component {
                           label="Open"
                           name="open"
                           type="radio"
+                          value="Open"
                           id={'inline-radio-1'}
                           required
                         />
@@ -308,6 +299,7 @@ class CreateTeamWidget extends React.Component {
                           label="Close"
                           name="open"
                           type="radio"
+                          value="Close"
                           id={'inline-radio-2'}
                           required
                         />
