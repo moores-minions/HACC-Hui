@@ -190,7 +190,7 @@ const EditProfileWidget = () => {
                   </Col>
                   <Col sm={4}>
                     <SelectField id='demographic-level' name="demographicLevel" className="form-control"
-                                    options={demographicLevels.map((val) => ({ label: val, value: val }))}/>
+                                 options={demographicLevels.map((val) => ({ label: val, value: val }))}/>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row}>
@@ -205,17 +205,22 @@ const EditProfileWidget = () => {
                 </Form.Group>
                 <Form.Group as={Row}>
                   <Col sm={4}><SelectField id='challenges' name="challenges" multiple
-                                    options={challengeNames.map((val) => ({ label: val, value: val }))}/></Col>
+                                           options={challengeNames.map((val) => ({ label: val, value: val }))}/></Col>
                   <Col sm={4}><SelectField id='skills' name="skills" multiple
-                                    options={skillNames.map((val) => ({ label: val, value: val }))}/></Col>
+                                           options={skillNames.map((val) => ({ label: val, value: val }))}/></Col>
                   <Col sm={4}><SelectField id='tools' name="tools" multiple
-                                    options={toolNames.map((val) => ({ label: val, value: val }))}/></Col>
+                                           options={toolNames.map((val) => ({ label: val, value: val }))}/></Col>
                 </Form.Group>
                 <ErrorsField/>
-                <Button id="edit-profile-submit" type="submit" style={{
-                  color: 'white', backgroundColor: '#DB2828',
-                  margin: '2rem 0rem',
-                }}>Submit</Button>
+                <Row className='text-center-center'>
+                  <Col className='text-end'>
+                    <Button id="edit-profile-submit" type="submit" variant='success'>Submit</Button>
+                  </Col>
+                  <Col className='text-start'>
+                    <Button id='edit-profile-cancel' variant='danger'
+                             onClick={() => setRedirectToReferer(true)}>Cancel</Button>
+                  </Col>
+                </Row>
               </AutoForm>
             </Card.Body>
           </Card>
