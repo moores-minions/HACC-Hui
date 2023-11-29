@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Button, Card, Col, Row, ListGroup, Modal, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
+import { CheckCircleFill, ExclamationCircleFill } from 'react-bootstrap-icons';
 import { Participants } from '../../../api/user/ParticipantCollection';
-// import { TeamParticipants } from '../../../api/team/TeamParticipantCollection';
 import { TeamChallenges } from '../../../api/team/TeamChallengeCollection';
 import { Challenges } from '../../../api/challenge/ChallengeCollection';
 
@@ -39,7 +39,8 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
             style={{ padding: '1.0rem 1.5rem 1.0rem 1.5rem' }} onClick={() => setModal(true)}>
         <Card.Body>
           <Card.Title>
-            {team.name}
+            {team.name} {isCompliant ? <CheckCircleFill style={{ color: 'green' }}/> :
+            <ExclamationCircleFill style={{ color: 'red' }}/> }
           </Card.Title>
           <Card.Text>
             <strong>Captain:</strong> {captain ? `${captain.firstName} 
@@ -51,7 +52,8 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
 
       <Modal show={modal} onHide={() => setModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{team.name}</Modal.Title>
+          <Modal.Title>{team.name} {isCompliant ? <CheckCircleFill
+            style={{ color: 'green' }}/> : <ExclamationCircleFill style={{ color: 'red' }}/> }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container>
@@ -85,56 +87,6 @@ const ViewTeam = ({ isCompliant, team, teamMembers }) => {
     </>
   );
 };
-
-  // return (
-  //   <>
-  //     <Card style={{ padding: '1.0rem 1.5rem 1.0rem 1.5rem' }}>
-  //       <Card.Body closeIcon trigger={
-  //         <Card.Title>
-// eslint-disable-next-line max-len
-  //           {team.name} {isCompliant ? <Icon className="green check"/> : <Icon name="exclamation circle" color="red"/> }
-  //         </Card.Title>
-  //         // <Card.Text>
-  //         // <strong>Captain:</strong> {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}   `
-  //         // : '   '},
-  //         // <strong>Challenge:</strong> {challenge ? challenge.title : 'None yet.'}
-  //         // </Card.Text>
-  //         </Card.Body>
-  //         </Card>
-  //   </>
-
-        // <Grid padded>
-        //   <Grid.Row>
-        //     <Grid.Column width={4}>
-        //       <Header>{team.name}</Header>
-        //       <List>
-        //         {allteamChallenges.map((c) => <List.Item key={c._id}>{c.title}</List.Item>)}
-        //       </List>
-        //       <Header as="h4">Captain</Header>
-        //       {captain ? `${captain.firstName} ${captain.lastName}: ${captain.username}` : ''}
-        //     </Grid.Column>
-        //     <Grid.Column width={5}>
-        //       <Header>Members</Header>
-        //       <List bulleted>
-        //         {teamMembers.map((t) => <List.Item key={t}>{t}</List.Item>)}
-        //       </List>
-        //     </Grid.Column>
-        //     <Grid.Column width={5}>
-        //       {isCompliant ? <Header>Team is Compliant</Header> : <Header>
-        //         <mark>Team is not Compliant</mark>
-        //       </Header>}
-        //       <Header>Devpost Page</Header>
-        //       {team.devPostPage}
-        //       <Header>Github Repo</Header>
-        //       {team.gitHubRepo}
-        //     </Grid.Column>
-        //     <Grid.Column width={2}>
-        //       {/* eslint-disable-next-line max-len */}
-        //       <Button><Link to={`/admin-edit-team/${team._id}`}
-        //                     style={{ color: 'rgba(0, 0, 0, 0.6)' }}>Edit</Link></Button>
-        //     </Grid.Column>
-        //   </Grid.Row>
-        // </Grid>
 
 ViewTeam.propTypes = {
   team: PropTypes.object.isRequired,
